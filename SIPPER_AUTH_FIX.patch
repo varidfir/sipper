@@ -1,0 +1,290 @@
+--- a/database/seeders/AdminSeeder.php
++++ b/database/seeders/AdminSeeder.php
+@@ -9,52 +9,58 @@
+ class AdminSeeder extends Seeder
+ {
+     /**
+-     * Run the database seeds.
++     * Create the default development accounts only when they do not exist.
++     *
++     * IMPORTANT:
++     * Existing Admin/Petugas credentials are never overwritten by seeding.
++     * This prevents `db:seed` from unexpectedly changing login data.
+      */
+     public function run(): void
+     {
+         $this->ensureUser(
+-            'admin',
+-            'Administrator',
+-            'varid',
+-            'password12345678',
+-            'admin'
++            username: (string) env('SIPPER_ADMIN_USERNAME', 'admin'),
++            name: (string) env('SIPPER_ADMIN_NAME', 'Administrator'),
++            email: (string) env('SIPPER_ADMIN_EMAIL', 'admin@admin.com'),
++            password: (string) env('SIPPER_ADMIN_PASSWORD', 'password12345678'),
++            role: 'admin',
+         );
+ 
+         $this->ensureUser(
+-            'petugas',
+-            'Petugas Demo',
+-            'petugas@admin.com',
+-            'password12345678',
+-            'petugas'
++            username: (string) env('SIPPER_PETUGAS_USERNAME', 'petugas'),
++            name: (string) env('SIPPER_PETUGAS_NAME', 'Petugas Demo'),
++            email: (string) env('SIPPER_PETUGAS_EMAIL', 'petugas@admin.com'),
++            password: (string) env('SIPPER_PETUGAS_PASSWORD', 'password12345678'),
++            role: 'petugas',
+         );
+     }
+ 
+-    protected function ensureUser(string $username, string $name, string $email, string $password, string $role): void
+-    {
+-        $user = User::where('username', $username)->first();
+-
+-        if ($user) {
+-            $user->forceFill([
++    /**
++     * Create an account if the username does not exist.
++     *
++     * Existing rows are deliberately left untouched, including:
++     * - username
++     * - email
++     * - password
++     * - name
++     * - role
++     *
++     * This makes the seeder safe to run repeatedly.
++     */
++    protected function ensureUser(
++        string $username,
++        string $name,
++        string $email,
++        string $password,
++        string $role
++    ): void {
++        User::firstOrCreate(
++            ['username' => $username],
++            [
+                 'name' => $name,
+                 'email' => $email,
++                'password' => Hash::make($password),
+                 'role' => $role,
+-            ])->save();
+-
+-            if (!Hash::check($password, $user->password)) {
+-                $user->password = Hash::make($password);
+-                $user->save();
+-            }
+-
+-            return;
+-        }
+-
+-        User::create([
+-            'username' => $username,
+-            'name' => $name,
+-            'email' => $email,
+-            'password' => Hash::make($password),
+-            'role' => $role,
+-        ]);
++            ]
++        );
+     }
+ }
+--- a/app/Http/Controllers/Auth/LoginController.php
++++ b/app/Http/Controllers/Auth/LoginController.php
+@@ -21,29 +21,28 @@
+         ]);
+ 
+         $loginValue = trim($credentials['login']);
+-        $password = $credentials['password'];
+ 
+-        $attempts = [];
++        $field = filter_var($loginValue, FILTER_VALIDATE_EMAIL)
++            ? 'email'
++            : 'username';
+ 
+-        if (filter_var($loginValue, FILTER_VALIDATE_EMAIL)) {
+-            $attempts[] = ['email' => $loginValue, 'password' => $password];
++        if (!Auth::attempt([
++            $field => $loginValue,
++            'password' => $credentials['password'],
++        ])) {
++            return back()
++                ->withErrors(['login' => 'Login atau password salah.'])
++                ->onlyInput('login');
+         }
+ 
+-        $attempts[] = ['username' => $loginValue, 'password' => $password];
++        // Always regenerate the session after successful authentication.
++        // Do not use "remember me" implicitly; it can create unnecessary
++        // remember-token/session state for a simple internal application.
++        $request->session()->regenerate();
++        $request->session()->put('auth.password_confirmed_at', now()->timestamp);
++        $request->session()->forget('url.intended');
+ 
+-        foreach ($attempts as $attempt) {
+-            if (Auth::attempt($attempt, true)) {
+-                $request->session()->regenerate(true);
+-                $request->session()->put('auth.password_confirmed_at', now()->timestamp);
+-                $request->session()->forget('url.intended');
+-
+-                return redirect('/dashboard');
+-            }
+-        }
+-
+-        return back()->withErrors([
+-            'login' => 'Login atau password salah.',
+-        ])->onlyInput('login');
++        return redirect()->route('dashboard');
+     }
+ 
+     public function logout(Request $request)
+@@ -53,6 +52,6 @@
+         $request->session()->invalidate();
+         $request->session()->regenerateToken();
+ 
+-        return redirect('/login');
++        return redirect()->route('login');
+     }
+ }
+--- a/bootstrap/app.php
++++ b/bootstrap/app.php
+@@ -15,13 +15,8 @@
+         $middleware->alias([
+             'admin' => \App\Http\Middleware\AdminMiddleware::class,
+             'petugas' => \App\Http\Middleware\PetugasMiddleware::class,
+-            'disable-csrf-login' => \App\Http\Middleware\DisableCsrfForLogin::class,
+         ]);
+ 
+-        $middleware->validateCsrfTokens(except: [
+-            'login',
+-            'login/*',
+-        ]);
+     })
+     ->withExceptions(function (Exceptions $exceptions) {
+         //
+--- a/resources/views/auth/login.blade.php
++++ b/resources/views/auth/login.blade.php
+@@ -15,7 +15,6 @@
+ 
+         <form method="POST" action="{{ route('login') }}" class="space-y-4">
+             @csrf
+-            <input type="hidden" name="_token" value="{{ csrf_token() }}">
+             <div>
+                 <label class="block text-sm font-medium text-slate-700 mb-1">Username atau Email</label>
+                 <input type="text" name="login" value="{{ old('login') }}" required
+--- a/.env.example
++++ b/.env.example
+@@ -15,6 +15,19 @@
+ PHP_CLI_SERVER_WORKERS=4
+ 
+ BCRYPT_ROUNDS=12
++
++# SIPPER default development accounts.
++# These values are used only when the account does not exist yet.
++# Existing Admin/Petugas credentials are never overwritten by db:seed.
++SIPPER_ADMIN_NAME=Administrator
++SIPPER_ADMIN_USERNAME=admin
++SIPPER_ADMIN_EMAIL=admin@admin.com
++SIPPER_ADMIN_PASSWORD=password12345678
++
++SIPPER_PETUGAS_NAME=Petugas Demo
++SIPPER_PETUGAS_USERNAME=petugas
++SIPPER_PETUGAS_EMAIL=petugas@admin.com
++SIPPER_PETUGAS_PASSWORD=password12345678
+ 
+ LOG_CHANNEL=stack
+ LOG_STACK=single
+--- a/tests/Feature/AuthDataPersistenceTest.php
++++ b/tests/Feature/AuthDataPersistenceTest.php
+@@ -0,0 +1,87 @@
++<?php
++
++namespace Tests\Feature;
++
++use App\Models\User;
++use Database\Seeders\DatabaseSeeder;
++use Illuminate\Foundation\Testing\RefreshDatabase;
++use Illuminate\Support\Facades\Hash;
++use Tests\TestCase;
++
++class AuthDataPersistenceTest extends TestCase
++{
++    use RefreshDatabase;
++
++    public function test_database_seeder_does_not_overwrite_existing_admin_credentials(): void
++    {
++        $originalPassword = 'AmanPassword123!';
++
++        $admin = User::factory()->create([
++            'name' => 'Admin Lama',
++            'username' => 'admin',
++            'email' => 'admin-lama@example.com',
++            'password' => Hash::make($originalPassword),
++            'role' => 'admin',
++        ]);
++
++        $this->artisan('db:seed', [
++            '--class' => DatabaseSeeder::class,
++        ])->assertExitCode(0);
++
++        $admin->refresh();
++
++        $this->assertSame('Admin Lama', $admin->name);
++        $this->assertSame('admin', $admin->username);
++        $this->assertSame('admin-lama@example.com', $admin->email);
++        $this->assertSame('admin', $admin->role);
++        $this->assertTrue(Hash::check($originalPassword, $admin->password));
++    }
++
++    public function test_database_seeder_does_not_overwrite_existing_petugas_credentials(): void
++    {
++        $originalPassword = 'PetugasPassword123!';
++
++        $petugas = User::factory()->create([
++            'name' => 'Petugas Lama',
++            'username' => 'petugas',
++            'email' => 'petugas-lama@example.com',
++            'password' => Hash::make($originalPassword),
++            'role' => 'petugas',
++        ]);
++
++        $this->artisan('db:seed', [
++            '--class' => DatabaseSeeder::class,
++        ])->assertExitCode(0);
++
++        $petugas->refresh();
++
++        $this->assertSame('Petugas Lama', $petugas->name);
++        $this->assertSame('petugas', $petugas->username);
++        $this->assertSame('petugas-lama@example.com', $petugas->email);
++        $this->assertSame('petugas', $petugas->role);
++        $this->assertTrue(Hash::check($originalPassword, $petugas->password));
++    }
++
++    public function test_login_works_with_existing_admin_credentials_after_seeding(): void
++    {
++        $password = 'AmanPassword123!';
++
++        $admin = User::factory()->create([
++            'username' => 'admin',
++            'email' => 'admin-lama@example.com',
++            'password' => Hash::make($password),
++            'role' => 'admin',
++        ]);
++
++        $this->artisan('db:seed', [
++            '--class' => DatabaseSeeder::class,
++        ])->assertExitCode(0);
++
++        $this->post(route('login.post'), [
++            'login' => 'admin',
++            'password' => $password,
++        ])->assertRedirect(route('dashboard'));
++
++        $this->assertAuthenticatedAs($admin);
++    }
++}

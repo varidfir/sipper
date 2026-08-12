@@ -1,0 +1,73 @@
+SISTEM REKAP
+
+1. KK
+- Nama
+- Desa
+- Kecamatan
+- Keterangan (siapa pemohonnya)
+- Tanggal
+
+Akta:
+Jenis akta:
+- Akta kelahiran anak
+- Akta kelahiran terlambat
+- Akta kelahiran petikan kedua
+- Akta kematian
+- Pembatalan akta
+- Pengesahan anak
+- Akta perkawinan
+- Akta perceraian
+- Akta perubahan nama
+- Akta pengangkatan anak
+- Nama
+- Desa
+- Kecamatan
+- No kendali
+- Tanggal
+
+2. KIA
+- Nama
+- Desa
+- Kecamatan
+- Tanggal
+
+3. KTP
+- Jenis KTP
+  - Hilang
+  - Rusak
+  - Elemen
+  - PRR (pemula)
+
+4. Surat pindah
+- Nama
+- Desa
+- Kecamatan
+- Keterangan (siapa pemohonnya)
+- Tanggal
+
+5. Perekaman
+- Nama
+- Desa/kelurahan
+- Kecamatan
+- Keterangan (pemula)
+- Tanggal
+
+6. LAPORAN KESELURUHAN
+- Kartu keluarga
+- Akta kelahiran umum
+- Akta kelahiran terlambat
+- Akta kelahiran petikan kedua
+- Pembatalan akta
+- Pengesahan anak
+- Akta perkawinan
+- Akta perceraian
+- Akta perubahan nama
+- Akta kematian
+- Surat pindah
+- Perekaman
+- KIA
+- KTP
+- PRR (Print Ready Record)
+- Rusak
+- Hilang
+- Elemen
