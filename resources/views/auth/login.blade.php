@@ -13,7 +13,7 @@
             <p class="text-sm text-slate-500 mt-2">Masuk untuk mengakses sistem rekap permohonan</p>
         </div>
 
-        <form method="POST" action="{{ route('login') }}" class="space-y-4">
+        <form method="POST" action="{{ route('login.post') }}" class="space-y-4">
             @csrf
             <div>
                 <label class="block text-sm font-medium text-slate-700 mb-1">Username atau Email</label>
