@@ -1,42 +1,77 @@
 @include('layouts.sidebar')
 
 <main class="sipper-content">
-    <div style="padding:24px">
-        <div style="display:flex;align-items:center;justify-content:space-between;gap:16px;margin-bottom:12px">
-            <h2 style="margin:0">Data Desa</h2>
-            <a href="{{ route('desa.create') }}" style="padding:8px 12px;border-radius:8px;background:#2563eb;color:#fff;text-decoration:none">Tambah Desa</a>
+    <div class="min-h-screen px-3 py-3 sm:px-4 sm:py-4 lg:px-5 lg:py-5">
+        <div class="w-full overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm">
+
+            {{-- HEADER --}}
+            <div class="border-b border-slate-200 px-5 py-4 sm:px-6">
+                <div class="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+                    <div>
+                        <p class="text-xs font-bold uppercase tracking-[0.2em] text-blue-600">
+                            ADMINISTRASI
+                        </p>
+                        <h1 class="mt-1 text-xl font-bold text-slate-900 sm:text-2xl">
+                            Data Desa/Kelurahan
+                        </h1>
+                        <p class="mt-1 text-xs text-slate-500 sm:text-sm">
+                            Kelola data desa dan kelurahan dalam wilayah kecamatan.
+                        </p>
+                    </div>
+                    <div class="flex flex-wrap gap-2">
+                        <a href="{{ route('desa.create') }}" class="rounded-xl border border-blue-600 bg-blue-600 px-4 py-2 text-center text-sm font-bold text-white transition hover:bg-blue-700">
+                            + Tambah
+                        </a>
+                        <a href="{{ route('dashboard') }}" class="rounded-xl border border-slate-300 px-4 py-2 text-center text-sm font-bold transition hover:bg-slate-50">
+                            ← Kembali
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            {{-- NOTIFIKASI --}}
+            @if(session('status'))
+                <div class="mx-5 mt-4 rounded-xl border border-green-200 bg-green-50 p-4 text-sm text-green-700 sm:mx-6">
+                    <p class="font-bold">✓ Berhasil</p>
+                    <p class="mt-1">{{ session('status') }}</p>
+                </div>
+            @endif
+
+            {{-- DAFTAR DESA --}}
+            <div class="p-5 sm:p-6">
+                <section class="rounded-2xl border border-slate-200 bg-slate-50 p-4 sm:p-5">
+                    <div class="border-b border-slate-200 pb-3">
+                        <h2 class="font-bold text-slate-900">Daftar Desa/Kelurahan</h2>
+                        <p class="mt-1 text-xs text-slate-500 sm:text-sm">{{ $desas->count() }} desa/kelurahan terdaftar</p>
+                    </div>
+
+                    <div class="mt-4">
+                        @forelse($desas as $desa)
+                            <div class="mb-3 flex flex-col gap-2 rounded-xl border border-slate-200 bg-white p-4 sm:flex-row sm:items-center sm:justify-between">
+                                <div class="flex-1">
+                                    <p class="font-semibold text-slate-900">{{ $desa->nama_desa }}</p>
+                                    <p class="mt-1 text-xs text-slate-500">{{ $desa->kecamatan->nama_kecamatan ?? '-' }}</p>
+                                </div>
+                                <div class="flex gap-2">
+                                    <a href="{{ route('desa.edit', $desa) }}" class="rounded-lg border border-blue-200 bg-blue-50 px-3 py-1.5 text-xs font-semibold text-blue-700 transition hover:bg-blue-100">
+                                        Edit
+                                    </a>
+                                    <form method="POST" action="{{ route('desa.destroy', $desa) }}" onsubmit="return confirm('Hapus data ini?')" class="inline">
+                                        @csrf
+                                        @method('DELETE')
+                                        <button type="submit" class="rounded-lg border border-red-200 bg-red-50 px-3 py-1.5 text-xs font-semibold text-red-700 transition hover:bg-red-100">
+                                            Hapus
+                                        </button>
+                                    </form>
+                                </div>
+                            </div>
+                        @empty
+                            <p class="py-8 text-center text-sm text-slate-500">Belum ada data desa/kelurahan</p>
+                        @endforelse
+                    </div>
+                </section>
+            </div>
+
         </div>
-
-        @if(session('status'))
-            <div style="padding:10px;border-radius:8px;background:#ecfdf5;color:#065f46;margin-bottom:12px">{{ session('status') }}</div>
-        @endif
-
-        <table style="width:100%;border-collapse:collapse">
-            <thead>
-                <tr style="text-align:left;border-bottom:1px solid #e6eef8">
-                    <th style="padding:8px">#</th>
-                    <th style="padding:8px">Nama Desa</th>
-                    <th style="padding:8px">Kecamatan</th>
-                    <th style="padding:8px;width:200px">Aksi</th>
-                </tr>
-            </thead>
-            <tbody>
-                @foreach($desas as $desa)
-                    <tr>
-                        <td style="padding:8px">{{ $loop->iteration }}</td>
-                        <td style="padding:8px">{{ $desa->nama_desa }}</td>
-                        <td style="padding:8px">{{ $desa->kecamatan->nama_kecamatan ?? '-' }}</td>
-                        <td style="padding:8px">
-                            <a href="{{ route('desa.edit', $desa) }}" style="margin-right:8px;color:#2563eb">Edit</a>
-                            <form method="POST" action="{{ route('desa.destroy', $desa) }}" style="display:inline">
-                                @csrf
-                                @method('DELETE')
-                                <button type="submit" style="background:transparent;border:none;color:#dc2626;cursor:pointer">Hapus</button>
-                            </form>
-                        </td>
-                    </tr>
-                @endforeach
-            </tbody>
-        </table>
     </div>
 </main>
