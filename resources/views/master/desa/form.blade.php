@@ -1,3 +1,4 @@
+@vite(['resources/css/app.css', 'resources/js/app.js'])
 @include('layouts.sidebar')
 
 <main class="sipper-content">
