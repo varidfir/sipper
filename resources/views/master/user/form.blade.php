@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <title>
-        {{ isset($user) ? 'Edit Petugas' : 'Tambah Petugas' }} - Sistem Rekap
+        {{ isset($user) ? 'Edit Petugas' : 'Tambah Petugas' }} - Berita Acara
     </title>
 
     @vite(['resources/css/app.css', 'resources/js/app.js'])

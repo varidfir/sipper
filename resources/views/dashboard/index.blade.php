@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dashboard | Sistem Rekap</title>
+    <title>Dashboard | Berita Acara</title>
     @vite(['resources/css/app.css', 'resources/js/app.js'])
     <style>
         :root{--primary:#2563eb;--primary-dark:#1d4ed8;--bg:#f5f7fb;--text:#172033;--muted:#718096;--line:#e7ebf2;--white:#fff;}
@@ -33,7 +33,7 @@
 
     <main class="main">
         <header class="topbar">
-            <div class="crumb">Sistem Rekap <span style="margin:0 6px;color:#c1c7d0">/</span> <strong>Dashboard</strong></div>
+            <div class="crumb">Berita Acara <span style="margin:0 6px;color:#c1c7d0">/</span> <strong>Dashboard</strong></div>
             <div class="top-actions"><span class="today">{{ now()->translatedFormat('l, d F Y') }}</span></div>
         </header>
 
@@ -81,7 +81,7 @@
                     </div>
                 </section>
             </div>
-            <div class="footer">Sistem Rekap Dispenduk · Dashboard</div>
+            <div class="footer">Berita Acara Dispenduk · Dashboard</div>
         </div>
     </main>
 </div>

@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Pengaturan Akun | Sistem Rekap</title>
+    <title>Pengaturan Akun | Berita Acara</title>
     @vite(['resources/css/app.css', 'resources/js/app.js'])
     <style>
         :root{--primary:#2563eb;--bg:#f5f7fb;--text:#172033;--muted:#718096;--line:#e7ebf2;--white:#fff;--danger:#dc2626}

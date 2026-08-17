@@ -16,7 +16,8 @@
     }
     .sipper-sidebar * { box-sizing: border-box; }
     .sipper-brand { display:flex; align-items:center; gap:12px; padding:2px 10px 28px; text-decoration:none; color:inherit; }
-    .sipper-brand-icon { width:42px; height:42px; flex:0 0 42px; border-radius:12px; background:#2563eb; display:grid; place-items:center; color:#fff; font-weight:800; font-size:18px; box-shadow:0 8px 20px rgba(37,99,235,.22); }
+    .sipper-brand-icon { width:42px; height:42px; flex:0 0 42px; border-radius:12px; background:#2563eb; display:grid; place-items:center; color:#fff; font-weight:800; font-size:18px; box-shadow:0 8px 20px rgba(37,99,235,.22); overflow:hidden; }
+    .sipper-brand-icon img { width:100%; height:100%; object-fit:cover; display:block; }
     .sipper-brand strong { display:block; font-size:16px; line-height:1.2; }
     .sipper-brand span { display:block; color:#94a0b2; font-size:11px; margin-top:3px; }
     .sipper-nav-title { padding:0 10px 8px; color:#a0a9b8; font-size:10px; font-weight:800; letter-spacing:.12em; text-transform:uppercase; }
@@ -28,7 +29,8 @@
     .sipper-sidebar-bottom { margin-top:22px; border-top:1px solid #e7ebf2; padding-top:16px; }
     .sipper-user-mini { display:flex; align-items:center; gap:10px; padding:9px; text-decoration:none; color:inherit; border-radius:10px; }
     .sipper-user-mini:hover { background:#f8fafc; }
-    .sipper-avatar { width:34px; height:34px; flex:0 0 34px; border-radius:10px; background:#eaf1ff; color:#2563eb; display:grid; place-items:center; font-weight:800; font-size:13px; }
+    .sipper-avatar { width:34px; height:34px; flex:0 0 34px; border-radius:10px; background:#eaf1ff; color:#2563eb; display:grid; place-items:center; font-weight:800; font-size:13px; overflow:hidden; }
+    .sipper-avatar img { width:100%; height:100%; object-fit:cover; display:block; }
     .sipper-user-name { font-size:12px; font-weight:700; }
     .sipper-user-role { font-size:10px; color:#94a0b2; margin-top:2px; }
     .sipper-content { min-height:100vh; margin-left:250px; width:calc(100% - 250px); box-sizing:border-box; }
@@ -47,8 +49,10 @@
 
 <aside class="sipper-sidebar" aria-label="Navigasi utama">
     <a href="{{ route('dashboard') }}" class="sipper-brand">
-        <div class="sipper-brand-icon">SR</div>
-        <div><strong>Sistem Rekap</strong><span>Dispenduk</span></div>
+        <div class="sipper-brand-icon">
+            <img src="{{ asset('images/logo.png') }}" alt="Logo">
+        </div>
+        <div><strong>Berita Acara</strong><span>Dispenduk</span></div>
     </a>
 
     <div class="sipper-nav-title">Menu Utama</div>
@@ -73,7 +77,9 @@
 
     <div class="sipper-sidebar-bottom">
         <a href="{{ route('profile.show') }}" class="sipper-user-mini">
-            <div class="sipper-avatar">{{ strtoupper(substr($sidebarUser?->name ?? 'A', 0, 1)) }}</div>
+            <div class="sipper-avatar">
+                <img src="{{ asset('images/logo.png') }}" alt="Avatar">
+            </div>
             <div><div class="sipper-user-name">{{ $sidebarUser?->name ?? 'Administrator' }}</div><div class="sipper-user-role">{{ ucfirst($sidebarUser?->role ?? '') }}</div></div>
         </a>
         @if($sidebarIsAdmin)

@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <title>
-        {{ isset($permohonan) ? 'Edit Rekap' : 'Input Rekap' }} - Sistem Rekap
+        {{ isset($permohonan) ? 'Edit Rekap' : 'Input Rekap' }} - Berita Acara
     </title>
 
     @vite(['resources/css/app.css', 'resources/js/app.js'])
@@ -62,7 +62,7 @@
                         <div>
 
                             <p class="text-xs font-bold uppercase tracking-[0.2em] text-blue-600">
-                                Sistem Rekap
+                                Berita Acara
                             </p>
 
                             <h1 class="mt-1 text-xl font-bold text-slate-900 sm:text-2xl">
