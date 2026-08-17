@@ -76,13 +76,11 @@
             <div class="sipper-avatar">{{ strtoupper(substr($sidebarUser?->name ?? 'A', 0, 1)) }}</div>
             <div><div class="sipper-user-name">{{ $sidebarUser?->name ?? 'Administrator' }}</div><div class="sipper-user-role">{{ ucfirst($sidebarUser?->role ?? '') }}</div></div>
         </a>
-        @if($sidebarIsAdmin)
-            <div style="margin-top:10px">
-                <form method="POST" action="{{ route('logout') }}" style="margin:0">
-                    @csrf
-                    <button type="submit" style="width:100%;display:flex;align-items:center;justify-content:space-between;border:1px solid #fee2e2;border-radius:10px;padding:10px 12px;background:#fff7f7;color:#dc2626;font-size:12px;font-weight:700;cursor:pointer"> <span class="q-left">↪ Keluar</span><span class="arrow">›</span></button>
-                </form>
-            </div>
-        @endif
+        <div style="margin-top:10px">
+            <form method="POST" action="{{ route('logout') }}" style="margin:0">
+                @csrf
+                <button type="submit" style="width:100%;display:flex;align-items:center;justify-content:space-between;border:1px solid #fee2e2;border-radius:10px;padding:10px 12px;background:#fff7f7;color:#dc2626;font-size:12px;font-weight:700;cursor:pointer"> <span class="q-left">↪ Keluar</span><span class="arrow">›</span></button>
+            </form>
+        </div>
     </div>
 </aside>
