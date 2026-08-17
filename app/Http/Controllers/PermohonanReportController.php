@@ -8,65 +8,175 @@ use Symfony\Component\HttpFoundation\Response;
 
 class PermohonanReportController extends Controller
 {
+    /**
+     * Halaman rekapitulasi permohonan
+     */
     public function recap(Request $request)
     {
-        $period = $request->input('period', 'daily');
+        // ==============================
+        // FILTER
+        // ==============================
+
         $year = $request->input('year', date('Y'));
+        $month = $request->input('month');
+        $kelompokPelayananId = $request->input('kelompok_pelayanan_id');
 
-        $query = Permohonan::query();
+        // ==============================
+        // QUERY DATA
+        // ==============================
 
-        if ($request->filled('year')) {
+        $query = Permohonan::query()
+            ->with([
+                'jenisPelayanan.kelompokPelayanan',
+            ]);
+
+        // Filter tahun
+        if ($year) {
             $query->whereYear('tanggal_permohonan', $year);
         }
 
-        $data = match ($period) {
-            'monthly' => $query->selectRaw('substr(tanggal_permohonan, 1, 7) as period, COUNT(*) as total')
-                ->groupBy('period')
-                ->orderBy('period')
-                ->get(),
-            'yearly' => $query->selectRaw('substr(tanggal_permohonan, 1, 4) as period, COUNT(*) as total')
-                ->groupBy('period')
-                ->orderBy('period')
-                ->get(),
-            default => $query->selectRaw('tanggal_permohonan as period, COUNT(*) as total')
-                ->groupBy('period')
-                ->orderBy('period')
-                ->get(),
-        };
+        // Filter bulan
+        if ($month) {
+            $query->whereMonth('tanggal_permohonan', $month);
+        }
 
-        return view('permohonan.recap', compact('data', 'period', 'year'));
+        // Filter kelompok / kategori pelayanan
+        if ($kelompokPelayananId) {
+            $query->whereHas('jenisPelayanan', function ($q) use ($kelompokPelayananId) {
+                $q->where('kelompok_pelayanan_id', $kelompokPelayananId);
+            });
+        }
+
+        // ==============================
+        // DATA REKAP
+        // ==============================
+
+        $data = $query
+            ->selectRaw('
+                DATE(tanggal_permohonan) as period,
+                COUNT(*) as total
+            ')
+            ->groupByRaw('DATE(tanggal_permohonan)')
+            ->orderBy('period')
+            ->get();
+
+        // ==============================
+        // DATA KATEGORI
+        // ==============================
+
+        $kelompokPelayanans = \App\Models\KelompokPelayanan::query()
+            ->orderBy('kode')
+            ->get();
+
+        // ==============================
+        // DAFTAR TAHUN
+        // ==============================
+
+        $years = Permohonan::query()
+            ->selectRaw('YEAR(tanggal_permohonan) as year')
+            ->whereNotNull('tanggal_permohonan')
+            ->distinct()
+            ->orderByDesc('year')
+            ->pluck('year');
+
+        // Jika belum ada data, tetap tampilkan tahun sekarang
+        if ($years->isEmpty()) {
+            $years = collect([date('Y')]);
+        }
+
+        // ==============================
+        // DAFTAR BULAN
+        // ==============================
+
+        $months = [
+            1  => 'Januari',
+            2  => 'Februari',
+            3  => 'Maret',
+            4  => 'April',
+            5  => 'Mei',
+            6  => 'Juni',
+            7  => 'Juli',
+            8  => 'Agustus',
+            9  => 'September',
+            10 => 'Oktober',
+            11 => 'November',
+            12 => 'Desember',
+        ];
+
+        return view('permohonan.recap', compact(
+            'data',
+            'year',
+            'month',
+            'kelompokPelayananId',
+            'kelompokPelayanans',
+            'years',
+            'months'
+        ));
     }
 
+    /**
+     * Export data permohonan
+     */
     public function export(Request $request)
     {
         $format = $request->input('format', 'csv');
-        $permohonans = Permohonan::with(['kecamatan', 'desa', 'jenisPelayanan', 'user'])
+
+        $permohonans = Permohonan::with([
+            'kecamatan',
+            'desa',
+            'jenisPelayanan',
+            'user'
+        ])
             ->latest()
             ->get();
 
         if ($format === 'csv') {
+
             $headers = [
                 'Content-Type' => 'text/csv; charset=UTF-8',
                 'Content-Disposition' => 'attachment; filename="permohonan.csv"',
             ];
 
-            $content = "nomor_permohonan,nama_pemohon,tanggal_permohonan,jenis_pelayanan,kecamatan,desa,keterangan\n";
+            $content =
+                "nomor_permohonan,nama_pemohon,tanggal_permohonan,jenis_pelayanan,kecamatan,desa,keterangan\n";
 
             foreach ($permohonans as $permohonan) {
+
                 $content .= implode(',', [
-                    $permohonan->nomor_permohonan,
-                    $permohonan->nama_pemohon,
+                    $this->csvEscape($permohonan->nomor_permohonan),
+                    $this->csvEscape($permohonan->nama_pemohon),
                     $permohonan->tanggal_permohonan?->format('Y-m-d'),
-                    $permohonan->jenisPelayanan->nama_pelayanan ?? '-',
-                    $permohonan->kecamatan->nama_kecamatan ?? '-',
-                    $permohonan->desa->nama_desa ?? '-',
-                    $permohonan->keterangan,
+                    $this->csvEscape(
+                        $permohonan->jenisPelayanan->nama_pelayanan ?? '-'
+                    ),
+                    $this->csvEscape(
+                        $permohonan->kecamatan->nama_kecamatan ?? '-'
+                    ),
+                    $this->csvEscape(
+                        $permohonan->desa->nama_desa ?? '-'
+                    ),
+                    $this->csvEscape(
+                        $permohonan->keterangan ?? '-'
+                    ),
                 ]) . "\n";
             }
 
             return new Response($content, 200, $headers);
         }
 
-        return response()->view('permohonan.export', compact('permohonans'));
+        return response()->view(
+            'permohonan.export',
+            compact('permohonans')
+        );
+    }
+
+    /**
+     * Escape data CSV
+     */
+    private function csvEscape($value)
+    {
+        $value = (string) $value;
+
+        return '"' . str_replace('"', '""', $value) . '"';
     }
 }

@@ -60,12 +60,12 @@
 
             <div class="lower">
                 <section class="section">
-                    <div class="section-head"><div><h2>Data Rekap Terbaru</h2><p>Data terakhir yang masuk ke sistem.</p></div><a class="link" href="{{ route('permohonan.index') }}">Lihat semua →</a></div>
+                    <div class="section-head"><div><h2>Data Permohonan Terbaru</h2><p>Data terakhir yang masuk ke sistem.</p></div><a class="link" href="{{ route('permohonan.index') }}">Lihat semua →</a></div>
                     <div class="table-wrap"><table class="table"><thead><tr><th>Tanggal</th><th>Nama</th><th>Jenis</th><th>Desa</th><th>Kecamatan</th></tr></thead><tbody>
                     @forelse($recent as $row)
                         <tr><td>{{ $row->tanggal_permohonan?->format('d/m/Y') }}</td><td class="name">{{ $row->nama_pemohon }}</td><td><span class="badge">{{ $row->jenisPelayanan?->kelompokPelayanan?->kode ?? '-' }}</span></td><td>{{ $row->desa?->nama_desa ?? '-' }}</td><td>{{ $row->kecamatan?->nama_kecamatan ?? '-' }}</td></tr>
                     @empty
-                        <tr><td colspan="5" style="text-align:center;padding:35px;color:#9aa3b2">Belum ada data rekap.</td></tr>
+                        <tr><td colspan="5" style="text-align:center;padding:35px;color:#9aa3b2">Belum ada data permohonan.</td></tr>
                     @endforelse
                     </tbody></table></div>
                 </section>
@@ -74,8 +74,8 @@
                     <div class="section-head"><div><h2>Akses Cepat</h2><p>Menu yang sering digunakan.</p></div></div>
                     <div class="quick">
                         <a href="{{ route('permohonan.create') }}"><span class="q-left"><span class="q-icon">＋</span>Input rekap baru</span><span class="arrow">›</span></a>
-                        <a href="{{ route('permohonan.index') }}"><span class="q-left"><span class="q-icon">▤</span>Daftar semua rekap</span><span class="arrow">›</span></a>
-                        <a href="{{ route('permohonan.recap') }}"><span class="q-left"><span class="q-icon">▥</span>Rekapitulasi</span><span class="arrow">›</span></a>
+                        <a href="{{ route('permohonan.index') }}"><span class="q-left"><span class="q-icon">▤</span>Daftar Permohonan</span><span class="arrow">›</span></a>
+                        <a href="{{ route('permohonan.recap') }}"><span class="q-left"><span class="q-icon">▥</span>Ringkasan Rekap</span><span class="arrow">›</span></a>
                         <a href="{{ route('profile.show') }}"><span class="q-left"><span class="q-icon">♙</span>Profil saya</span><span class="arrow">›</span></a>
                         <form method="POST" action="{{ route('logout') }}" style="margin:0">@csrf<button type="submit" style="width:100%;display:flex;align-items:center;justify-content:space-between;border:1px solid #fee2e2;border-radius:10px;padding:12px 13px;background:#fff7f7;color:#dc2626;font-size:11px;font-weight:700;cursor:pointer"><span class="q-left"><span class="q-icon" style="background:#fee2e2;color:#dc2626">↪</span>Keluar</span><span class="arrow">›</span></button></form>
                     </div>

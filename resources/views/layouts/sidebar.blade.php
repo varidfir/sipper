@@ -54,9 +54,9 @@
     <div class="sipper-nav-title">Menu Utama</div>
     <nav class="sipper-nav">
         <a class="{{ request()->routeIs('dashboard') ? 'active' : '' }}" href="{{ route('dashboard') }}"><span class="sipper-nav-icon">⌂</span>Dashboard</a>
-        <a class="{{ request()->routeIs('permohonan.index') || request()->routeIs('permohonan.show') || request()->routeIs('permohonan.edit') ? 'active' : '' }}" href="{{ route('permohonan.index') }}"><span class="sipper-nav-icon">▤</span>Data Rekap</a>
+        <a class="{{ request()->routeIs('permohonan.index') || request()->routeIs('permohonan.show') || request()->routeIs('permohonan.edit') ? 'active' : '' }}" href="{{ route('permohonan.index') }}"><span class="sipper-nav-icon">▤</span>Data Permohonan</a>
         <a class="{{ request()->routeIs('permohonan.create') ? 'active' : '' }}" href="{{ route('permohonan.create') }}"><span class="sipper-nav-icon">＋</span>Input Rekap</a>
-        <a class="{{ request()->routeIs('permohonan.recap') ? 'active' : '' }}" href="{{ route('permohonan.recap') }}"><span class="sipper-nav-icon">▥</span>Rekapitulasi</a>
+        <a class="{{ request()->routeIs('permohonan.recap') ? 'active' : '' }}" href="{{ route('permohonan.recap') }}"><span class="sipper-nav-icon">▥</span>Ringkasan Rekap</a>
         <a class="{{ request()->routeIs('permohonan.export') ? 'active' : '' }}" href="{{ route('permohonan.export') }}"><span class="sipper-nav-icon">⇩</span>Export Data</a>
     </nav>
 
