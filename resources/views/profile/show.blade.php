@@ -13,6 +13,7 @@
 <body>
 @include('layouts.sidebar')
 <main class="sipper-content">
+@include('layouts.header', ['pageTitle' => 'Pengaturan Akun'])
 <div class="page">
     <div class="top">
         <div><a class="back" href="{{ route('dashboard') }}">← Kembali ke Dashboard</a><h1>Pengaturan Akun</h1><p class="sub">Kelola profil dan keamanan akun {{ $user->role === 'admin' ? 'admin' : 'petugas' }}.</p></div>

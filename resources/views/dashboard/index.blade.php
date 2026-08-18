@@ -12,8 +12,6 @@
         a{text-decoration:none;color:inherit}
         .app{min-height:100vh;display:flex}
         .main{margin-left:250px;min-width:0;width:calc(100% - 250px)}
-        .topbar{height:74px;background:#fff;border-bottom:1px solid var(--line);display:flex;align-items:center;justify-content:space-between;padding:0 34px;position:sticky;top:0;z-index:10}
-        .crumb{font-size:12px;color:#8b95a5}.crumb strong{color:#273244}.top-actions{display:flex;align-items:center;gap:10px}.today{font-size:11px;color:#8791a2;background:#f7f8fb;border:1px solid var(--line);padding:9px 12px;border-radius:10px}
         .content{max-width:1440px;margin:0 auto;padding:30px 34px 42px}
         .hero{display:flex;justify-content:space-between;gap:24px;align-items:flex-end;margin-bottom:24px}.eyebrow{font-size:11px;font-weight:800;color:var(--primary);text-transform:uppercase;letter-spacing:.1em}.hero h1{font-size:28px;line-height:1.15;margin:6px 0 7px;letter-spacing:-.02em}.hero p{margin:0;color:var(--muted);font-size:13px}.primary-btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;background:var(--primary);color:#fff;border:0;border-radius:10px;padding:11px 16px;font-size:12px;font-weight:700;box-shadow:0 7px 18px rgba(37,99,235,.18)}.primary-btn:hover{background:var(--primary-dark)}
         .stats{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px;margin-bottom:24px}.stat{background:#fff;border:1px solid var(--line);border-radius:14px;padding:19px 20px;display:flex;justify-content:space-between;align-items:center;box-shadow:0 3px 12px rgba(20,32,56,.025)}.stat.primary{background:linear-gradient(135deg,#2563eb,#1d4ed8);border-color:#2563eb;color:#fff}.stat-label{font-size:11px;font-weight:700;color:#8a95a6}.stat.primary .stat-label{color:#dbeafe}.stat-value{font-size:28px;font-weight:800;line-height:1;margin-top:7px}.stat-icon{width:42px;height:42px;border-radius:11px;background:#f1f5ff;color:var(--primary);display:grid;place-items:center;font-weight:800}.stat.primary .stat-icon{background:rgba(255,255,255,.16);color:#fff}
@@ -23,7 +21,7 @@
         .quick{padding:18px 20px;display:grid;gap:9px}.quick a{display:flex;align-items:center;justify-content:space-between;border:1px solid var(--line);border-radius:10px;padding:12px 13px;font-size:11px;font-weight:700;color:#4b5565}.quick a:hover{background:#f8faff;border-color:#cbd8f4;color:var(--primary)}.quick .q-left{display:flex;align-items:center;gap:9px}.q-icon{width:28px;height:28px;border-radius:8px;background:#eff5ff;color:var(--primary);display:grid;place-items:center;font-size:12px}.arrow{color:#a1aaba}
         .footer{margin-top:22px;color:#9aa3b2;font-size:10px;text-align:center}
         @media(max-width:1100px){.categories{grid-template-columns:repeat(3,minmax(0,1fr))}.lower{grid-template-columns:1fr}.main{margin-left:220px;width:calc(100% - 220px)}}
-        @media(max-width:760px){.app{display:flex}.main{margin-left:220px;width:calc(100% - 220px)}.sidebar-bottom{position:static;margin-top:22px}.nav{grid-template-columns:1fr}.nav-title{margin-top:5px}.topbar{padding:0 18px}.today{display:none}.content{padding:22px 16px}.hero{align-items:flex-start;flex-direction:column}.hero h1{font-size:24px}.stats{grid-template-columns:1fr}.categories{grid-template-columns:repeat(2,minmax(0,1fr))}}
+        @media(max-width:760px){.app{display:flex}.main{margin-left:220px;width:calc(100% - 220px)}.sidebar-bottom{position:static;margin-top:22px}.nav{grid-template-columns:1fr}.nav-title{margin-top:5px}.content{padding:22px 16px}.hero{align-items:flex-start;flex-direction:column}.hero h1{font-size:24px}.stats{grid-template-columns:1fr}.categories{grid-template-columns:repeat(2,minmax(0,1fr))}}
         @media(max-width:420px){.categories{grid-template-columns:1fr}.section-head{align-items:flex-start;flex-direction:column}}
     </style>
 </head>
@@ -31,11 +29,8 @@
 <div class="app">
     @include('layouts.sidebar')
 
-    <main class="main">
-        <header class="topbar">
-            <div class="crumb">Sistem Rekap <span style="margin:0 6px;color:#c1c7d0">/</span> <strong>Dashboard</strong></div>
-            <div class="top-actions"><span class="today">{{ now()->translatedFormat('l, d F Y') }}</span></div>
-        </header>
+    <main class="sipper-content">
+        @include('layouts.header', ['pageTitle' => 'Dashboard'])
 
         <div class="content">
             <section class="hero">
@@ -60,12 +55,12 @@
 
             <div class="lower">
                 <section class="section">
-                    <div class="section-head"><div><h2>Data Permohonan Terbaru</h2><p>Data terakhir yang masuk ke sistem.</p></div><a class="link" href="{{ route('permohonan.index') }}">Lihat semua →</a></div>
+                    <div class="section-head"><div><h2>Data Rekap Terbaru</h2><p>Data terakhir yang masuk ke sistem.</p></div><a class="link" href="{{ route('permohonan.index') }}">Lihat semua →</a></div>
                     <div class="table-wrap"><table class="table"><thead><tr><th>Tanggal</th><th>Nama</th><th>Jenis</th><th>Desa</th><th>Kecamatan</th></tr></thead><tbody>
                     @forelse($recent as $row)
                         <tr><td>{{ $row->tanggal_permohonan?->format('d/m/Y') }}</td><td class="name">{{ $row->nama_pemohon }}</td><td><span class="badge">{{ $row->jenisPelayanan?->kelompokPelayanan?->kode ?? '-' }}</span></td><td>{{ $row->desa?->nama_desa ?? '-' }}</td><td>{{ $row->kecamatan?->nama_kecamatan ?? '-' }}</td></tr>
                     @empty
-                        <tr><td colspan="5" style="text-align:center;padding:35px;color:#9aa3b2">Belum ada data permohonan.</td></tr>
+                        <tr><td colspan="5" style="text-align:center;padding:35px;color:#9aa3b2">Belum ada data rekap.</td></tr>
                     @endforelse
                     </tbody></table></div>
                 </section>
@@ -74,8 +69,8 @@
                     <div class="section-head"><div><h2>Akses Cepat</h2><p>Menu yang sering digunakan.</p></div></div>
                     <div class="quick">
                         <a href="{{ route('permohonan.create') }}"><span class="q-left"><span class="q-icon">＋</span>Input rekap baru</span><span class="arrow">›</span></a>
-                        <a href="{{ route('permohonan.index') }}"><span class="q-left"><span class="q-icon">▤</span>Daftar Permohonan</span><span class="arrow">›</span></a>
-                        <a href="{{ route('permohonan.recap') }}"><span class="q-left"><span class="q-icon">▥</span>Ringkasan Rekap</span><span class="arrow">›</span></a>
+                        <a href="{{ route('permohonan.index') }}"><span class="q-left"><span class="q-icon">▤</span>Daftar semua rekap</span><span class="arrow">›</span></a>
+                        <a href="{{ route('permohonan.recap') }}"><span class="q-left"><span class="q-icon">▥</span>Rekapitulasi</span><span class="arrow">›</span></a>
                         <a href="{{ route('profile.show') }}"><span class="q-left"><span class="q-icon">♙</span>Profil saya</span><span class="arrow">›</span></a>
                         <form method="POST" action="{{ route('logout') }}" style="margin:0">@csrf<button type="submit" style="width:100%;display:flex;align-items:center;justify-content:space-between;border:1px solid #fee2e2;border-radius:10px;padding:12px 13px;background:#fff7f7;color:#dc2626;font-size:11px;font-weight:700;cursor:pointer"><span class="q-left"><span class="q-icon" style="background:#fee2e2;color:#dc2626">↪</span>Keluar</span><span class="arrow">›</span></button></form>
                     </div>

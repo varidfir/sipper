@@ -1,3 +1,1360 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+/* =========================================================
+   SIPPER - GLOBAL VARIABLES
+========================================================= */
+
+:root {
+    --sip-bg: #f4f6f9;
+
+    --sip-sidebar-bg: #0d2348;
+    --sip-sidebar-hover: rgba(255, 255, 255, 0.07);
+    --sip-sidebar-active: #2874dc;
+
+    --sip-sidebar-text: rgba(239, 246, 255, 0.92);
+    --sip-sidebar-title: rgba(203, 219, 239, 0.72);
+
+    --sip-panel: #ffffff;
+    --sip-border: #e2e8f0;
+    --sip-input-bg: #ffffff;
+
+    --sip-text: #0f172a;
+    --sip-muted: #64748b;
+
+    --sip-primary: #1d61e8;
+    --sip-primary-hover: #1752ca;
+
+    --sip-danger: #ef4444;
+
+    --sip-sidebar-width: 238px;
+}
+
+
+/* =========================================================
+   GLOBAL
+========================================================= */
+
+html,
+body {
+    margin: 0;
+    min-height: 100%;
+
+    background: var(--sip-bg);
+    color: var(--sip-text);
+
+    font-family:
+        "Inter",
+        system-ui,
+        -apple-system,
+        BlinkMacSystemFont,
+        "Segoe UI",
+        Roboto,
+        sans-serif;
+
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+    min-height: 100vh;
+}
+
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+}
+
+button,
+input,
+select,
+textarea {
+    font: inherit;
+}
+
+
+/* =========================================================
+   SIPPER SIDEBAR
+========================================================= */
+
+.sipper-sidebar {
+    position: fixed;
+    inset: 0 auto 0 0;
+
+    width: var(--sip-sidebar-width);
+    height: 100vh;
+
+    display: flex;
+    flex-direction: column;
+
+    padding: 20px 12px 12px;
+
+    color: #ffffff;
+
+    background:
+        linear-gradient(
+            180deg,
+            #103f73 0%,
+            #0d3969 48%,
+            #0c3766 100%
+        );
+
+    border-right: 1px solid rgba(255, 255, 255, 0.05);
+
+    z-index: 50;
+
+    /*
+     * Sidebar utama TIDAK ikut scroll.
+     * Yang scroll hanya bagian menu.
+     */
+    overflow: hidden;
+}
+
+
+/* =========================================================
+   BRAND
+========================================================= */
+
+.sipper-brand {
+    display: flex;
+    align-items: center;
+
+    gap: 11px;
+
+    flex: 0 0 auto;
+
+    padding: 1px 9px 20px;
+
+    margin-bottom: 18px;
+
+    border-bottom: 1px solid rgba(255, 255, 255, 0.09);
+
+    text-decoration: none;
+    color: #ffffff;
+}
+
+.sipper-brand-logo {
+    width: 36px;
+    height: 44px;
+
+    flex: 0 0 36px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.sipper-brand-logo img,
+.sipper-brand-logo svg {
+    width: 100%;
+    height: 100%;
+
+    object-fit: contain;
+}
+
+.sipper-brand-text {
+    min-width: 0;
+
+    line-height: 1.2;
+}
+
+.sipper-brand-name {
+    display: block;
+
+    color: #ffffff;
+
+    font-size: 15px;
+    font-weight: 700;
+
+    letter-spacing: -0.015em;
+
+    white-space: nowrap;
+}
+
+.sipper-brand-sub {
+    display: block;
+
+    margin-top: 3px;
+
+    color: rgba(255, 255, 255, 0.78);
+
+    font-size: 11.5px;
+    font-weight: 400;
+
+    white-space: nowrap;
+}
+
+
+/* =========================================================
+   SIDEBAR MENU AREA
+   HANYA BAGIAN INI YANG BOLEH SCROLL
+========================================================= */
+
+.sipper-sidebar-menu {
+    flex: 1 1 auto;
+
+    min-height: 0;
+
+    overflow-y: auto;
+    overflow-x: hidden;
+
+    padding-right: 2px;
+
+    /*
+     * Firefox
+     */
+    scrollbar-width: thin;
+    scrollbar-color:
+        rgba(255, 255, 255, 0.15)
+        transparent;
+}
+
+
+/* Chrome / Edge / Brave */
+
+.sipper-sidebar-menu::-webkit-scrollbar {
+    width: 4px;
+}
+
+.sipper-sidebar-menu::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+.sipper-sidebar-menu::-webkit-scrollbar-thumb {
+    background: rgba(255, 255, 255, 0.15);
+
+    border-radius: 10px;
+}
+
+.sipper-sidebar-menu::-webkit-scrollbar-thumb:hover {
+    background: rgba(255, 255, 255, 0.25);
+}
+
+
+/* =========================================================
+   NAVIGATION SECTION
+========================================================= */
+
+.sipper-nav-section {
+    margin-bottom: 24px;
+}
+
+.sipper-nav-section:last-child {
+    margin-bottom: 12px;
+}
+
+
+/* =========================================================
+   NAVIGATION TITLE
+========================================================= */
+
+.sipper-nav-title {
+    padding: 0 11px;
+
+    margin-bottom: 8px;
+
+    color: var(--sip-sidebar-title);
+
+    font-size: 11px;
+    font-weight: 600;
+
+    line-height: 1.2;
+
+    letter-spacing: 0.075em;
+
+    text-transform: uppercase;
+}
+
+
+/* =========================================================
+   NAVIGATION
+========================================================= */
+
+.sipper-nav {
+    display: flex;
+    flex-direction: column;
+
+    gap: 3px;
+}
+
+
+/* =========================================================
+   NAVIGATION ITEM
+========================================================= */
+
+.sipper-nav a {
+    position: relative;
+
+    display: flex;
+    align-items: center;
+
+    width: 100%;
+    min-height: 42px;
+
+    gap: 12px;
+
+    padding: 9px 11px;
+
+    border-radius: 7px;
+
+    color: var(--sip-sidebar-text);
+
+    text-decoration: none;
+
+    font-size: 13px;
+    font-weight: 500;
+
+    transition:
+        background 0.16s ease,
+        color 0.16s ease,
+        transform 0.16s ease;
+}
+
+
+/* Hover */
+
+.sipper-nav a:hover {
+    background: rgba(255, 255, 255, 0.065);
+
+    color: #ffffff;
+}
+
+
+/* Active */
+
+.sipper-nav a.active {
+    background: var(--sip-sidebar-active);
+
+    color: #ffffff;
+
+    font-weight: 600;
+
+    box-shadow:
+        0 4px 12px rgba(0, 0, 0, 0.10);
+}
+
+
+/* =========================================================
+   NAVIGATION ICON
+========================================================= */
+
+.sipper-nav-icon {
+    width: 20px;
+    height: 20px;
+
+    flex: 0 0 20px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    color: currentColor;
+}
+
+.sipper-nav-icon svg {
+    width: 18px;
+    height: 18px;
+
+    stroke-width: 1.7;
+
+    fill: none;
+}
+
+
+/* =========================================================
+   NAVIGATION LABEL
+========================================================= */
+
+.sipper-nav-label {
+    min-width: 0;
+
+    white-space: nowrap;
+
+    overflow: hidden;
+
+    text-overflow: ellipsis;
+}
+
+
+/* =========================================================
+   SIDEBAR BOTTOM
+   USER + LOGOUT
+   TIDAK IKUT SCROLL
+========================================================= */
+
+.sipper-sidebar-bottom {
+    flex: 0 0 auto;
+
+    padding: 12px 5px 0;
+
+    margin-top: 8px;
+
+    border-top: 1px solid rgba(255, 255, 255, 0.08);
+
+    background: transparent;
+}
+
+
+/* =========================================================
+   USER PROFILE
+========================================================= */
+
+.sipper-user-profile {
+    display: flex;
+    align-items: center;
+
+    gap: 11px;
+
+    width: 100%;
+
+    padding: 6px 7px;
+
+    border-radius: 8px;
+
+    color: #ffffff;
+
+    text-decoration: none;
+
+    transition:
+        background 0.16s ease;
+}
+
+.sipper-user-profile:hover {
+    background: rgba(255, 255, 255, 0.06);
+}
+
+
+/* =========================================================
+   AVATAR
+========================================================= */
+
+.sipper-avatar {
+    width: 42px;
+    height: 42px;
+
+    flex: 0 0 42px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    overflow: hidden;
+
+    border-radius: 50%;
+
+    background: #edf2f7;
+
+    color: #64748b;
+
+    box-shadow:
+        0 0 0 1px rgba(255, 255, 255, 0.45);
+}
+
+.sipper-avatar svg {
+    width: 29px;
+    height: 29px;
+
+    fill: #64748b;
+}
+
+
+/* =========================================================
+   USER INFORMATION
+========================================================= */
+
+.sipper-user-info {
+    flex: 1;
+
+    min-width: 0;
+}
+
+.sipper-user-name {
+    color: #ffffff;
+
+    font-size: 13px;
+    font-weight: 700;
+
+    line-height: 1.25;
+
+    white-space: nowrap;
+
+    overflow: hidden;
+
+    text-overflow: ellipsis;
+}
+
+.sipper-user-role {
+    margin-top: 2px;
+
+    color: rgba(226, 236, 249, 0.76);
+
+    font-size: 11px;
+    font-weight: 400;
+
+    line-height: 1.2;
+
+    white-space: nowrap;
+}
+
+
+/* =========================================================
+   USER CHEVRON
+========================================================= */
+
+.sipper-user-chevron {
+    width: 16px;
+    height: 16px;
+
+    flex: 0 0 16px;
+
+    color: rgba(226, 236, 249, 0.85);
+}
+
+
+/* =========================================================
+   LOGOUT FORM
+========================================================= */
+
+.sipper-logout-form {
+    display: block;
+
+    width: 100%;
+
+    margin-top: 6px;
+}
+
+
+/* =========================================================
+   LOGOUT BUTTON
+========================================================= */
+
+.sipper-logout {
+    width: 100%;
+
+    min-height: 34px;
+
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+
+    gap: 10px;
+
+    padding: 7px 10px;
+
+    border: 1px solid rgba(255, 255, 255, 0.10);
+
+    border-radius: 7px;
+
+    background: rgba(255, 255, 255, 0.035);
+
+    color: rgba(239, 246, 255, 0.85);
+
+    font-size: 12px;
+    font-weight: 600;
+
+    cursor: pointer;
+
+    transition:
+        background 0.16s ease,
+        border-color 0.16s ease,
+        color 0.16s ease;
+}
+
+.sipper-logout:hover {
+    background: rgba(239, 68, 68, 0.15);
+
+    border-color: rgba(239, 68, 68, 0.25);
+
+    color: #ffffff;
+}
+
+.sipper-logout svg {
+    width: 16px;
+    height: 16px;
+
+    flex: 0 0 16px;
+}
+
+
+/* =========================================================
+   MAIN CONTENT
+========================================================= */
+
+.sipper-content {
+    margin-left: var(--sip-sidebar-width);
+
+    width: calc(100% - var(--sip-sidebar-width));
+
+    min-height: 100vh;
+
+    display: flex;
+    flex-direction: column;
+
+    min-width: 0;
+}
+
+
+/* =========================================================
+   TOPBAR
+========================================================= */
+
+.topbar {
+    height: 64px;
+
+    flex: 0 0 64px;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    padding: 0 32px;
+
+    background: var(--sip-bg);
+
+    position: sticky;
+
+    top: 0;
+
+    z-index: 40;
+}
+
+
+/* =========================================================
+   BREADCRUMB
+========================================================= */
+
+.crumb {
+    font-size: 13px;
+
+    color: #64748b;
+
+    font-weight: 500;
+}
+
+.crumb strong {
+    color: #0f172a;
+
+    font-weight: 700;
+}
+
+
+/* =========================================================
+   TOP ACTIONS
+========================================================= */
+
+.top-actions {
+    display: flex;
+    align-items: center;
+
+    gap: 12px;
+}
+
+
+/* =========================================================
+   TODAY
+========================================================= */
+
+.today {
+    display: inline-flex;
+    align-items: center;
+
+    gap: 8px;
+
+    background: #ffffff;
+
+    border: 1px solid var(--sip-border);
+
+    color: #475569;
+
+    font-size: 12px;
+
+    font-weight: 500;
+
+    padding: 7px 14px;
+
+    border-radius: 10px;
+
+    box-shadow:
+        0 1px 2px rgba(0, 0, 0, 0.03);
+}
+
+.today svg {
+    width: 15px;
+    height: 15px;
+
+    color: #64748b;
+}
+
+
+/* =========================================================
+   PAGE SHELL
+========================================================= */
+
+.page-shell {
+    flex: 1;
+
+    min-width: 0;
+
+    padding: 8px 32px 32px;
+}
+
+
+/* =========================================================
+   FORM PAGE CONTAINER
+========================================================= */
+
+.form-page-container {
+    width: 100%;
+
+    max-width: 1280px;
+
+    margin: 0 auto;
+}
+
+
+/* =========================================================
+   FORM HEADER
+========================================================= */
+
+.form-header {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+
+    gap: 16px;
+
+    margin-bottom: 24px;
+}
+
+.form-title-group h1 {
+    margin: 0;
+
+    color: #0f172a;
+
+    font-size: 24px;
+
+    font-weight: 800;
+
+    letter-spacing: -0.02em;
+}
+
+.form-title-group p {
+    margin: 4px 0 0;
+
+    color: #64748b;
+
+    font-size: 13px;
+}
+
+
+/* =========================================================
+   BACK BUTTON
+========================================================= */
+
+.btn-back {
+    display: inline-flex;
+    align-items: center;
+
+    gap: 6px;
+
+    height: 38px;
+
+    padding: 0 16px;
+
+    background: #ffffff;
+
+    border: 1px solid var(--sip-border);
+
+    border-radius: 10px;
+
+    color: #1e293b;
+
+    font-size: 13px;
+
+    font-weight: 600;
+
+    text-decoration: none;
+
+    box-shadow:
+        0 1px 2px rgba(0, 0, 0, 0.03);
+
+    transition:
+        background 0.15s ease,
+        border-color 0.15s ease;
+}
+
+.btn-back:hover {
+    background: #f8fafc;
+
+    border-color: #cbd5e1;
+}
+
+
+/* =========================================================
+   SERVICE SECTION
+========================================================= */
+
+.service-section-title {
+    margin-bottom: 12px;
+
+    color: #0f172a;
+
+    font-size: 13px;
+
+    font-weight: 700;
+}
+
+
+/* =========================================================
+   SERVICE GRID
+========================================================= */
+
+.service-grid {
+    display: grid;
+
+    grid-template-columns:
+        repeat(6, minmax(0, 1fr));
+
+    gap: 14px;
+
+    margin-bottom: 24px;
+}
+
+
+/* =========================================================
+   SERVICE CARD
+========================================================= */
+
+.service-card {
+    display: flex;
+
+    flex-direction: column;
+
+    align-items: center;
+
+    justify-content: center;
+
+    height: 100px;
+
+    padding: 12px 8px;
+
+    background: #ffffff;
+
+    border: 1px solid var(--sip-border);
+
+    border-radius: 12px;
+
+    cursor: pointer;
+
+    text-decoration: none;
+
+    color: #1e293b;
+
+    text-align: center;
+
+    transition:
+        border-color 0.18s ease,
+        transform 0.18s ease,
+        box-shadow 0.18s ease;
+}
+
+.service-card:hover {
+    border-color: #cbd5e1;
+
+    transform: translateY(-1px);
+
+    box-shadow:
+        0 4px 12px rgba(0, 0, 0, 0.04);
+}
+
+
+/* =========================================================
+   SERVICE ICON
+========================================================= */
+
+.service-card-icon {
+    width: 28px;
+    height: 28px;
+
+    display: grid;
+    place-items: center;
+
+    margin-bottom: 8px;
+
+    color: #475569;
+}
+
+.service-card-icon svg {
+    width: 24px;
+    height: 24px;
+
+    stroke-width: 1.8;
+}
+
+
+/* =========================================================
+   SERVICE LABEL
+========================================================= */
+
+.service-card-label {
+    font-size: 12px;
+
+    font-weight: 700;
+
+    letter-spacing: 0.02em;
+}
+
+
+/* =========================================================
+   SERVICE ACTIVE
+========================================================= */
+
+.service-card.is-active {
+    background: var(--sip-primary);
+
+    border-color: var(--sip-primary);
+
+    color: #ffffff;
+
+    box-shadow:
+        0 6px 16px rgba(29, 97, 232, 0.30);
+}
+
+.service-card.is-active .service-card-icon {
+    color: #ffffff;
+}
+
+
+/* =========================================================
+   FORM PANEL CARD
+========================================================= */
+
+.form-panel-card {
+    background: #ffffff;
+
+    border: 1px solid var(--sip-border);
+
+    border-radius: 16px;
+
+    padding: 20px 28px;
+
+    margin-bottom: 20px;
+
+    box-shadow:
+        0 1px 3px rgba(0, 0, 0, 0.02);
+}
+
+
+/* =========================================================
+   PANEL HEADER
+========================================================= */
+
+.panel-card-head {
+    margin-bottom: 20px;
+}
+
+.panel-card-head h2 {
+    margin: 0;
+
+    color: #0f172a;
+
+    font-size: 16px;
+
+    font-weight: 700;
+}
+
+.panel-card-head p {
+    margin: 3px 0 0;
+
+    color: #64748b;
+
+    font-size: 12px;
+}
+
+
+/* =========================================================
+   FIELD GRID
+========================================================= */
+
+.field-grid {
+    display: grid;
+
+    grid-template-columns:
+        repeat(4, minmax(0, 1fr));
+
+    gap: 14px 24px;
+}
+
+
+/* =========================================================
+   FIELD GROUP
+========================================================= */
+
+.field-group {
+    display: flex;
+
+    flex-direction: column;
+
+    gap: 6px;
+
+    min-width: 0;
+}
+
+.field-group.is-full {
+    grid-column: 1 / -1;
+}
+
+.field-group.is-wide {
+    grid-column: span 2;
+}
+
+
+/* =========================================================
+   FIELD LABEL
+========================================================= */
+
+.field-group label {
+    color: #0f172a;
+
+    font-size: 12px;
+
+    font-weight: 600;
+}
+
+.field-group label .req {
+    margin-left: 2px;
+
+    color: #ef4444;
+}
+
+
+/* =========================================================
+   INPUT
+========================================================= */
+
+.input-control {
+    width: 100%;
+
+    height: 42px;
+
+    padding: 8px 14px;
+
+    background: #ffffff;
+
+    border: 1px solid #cbd5e1;
+
+    border-radius: 8px;
+
+    outline: none;
+
+    color: #0f172a;
+
+    font-size: 13px;
+
+    transition:
+        border-color 0.15s ease,
+        box-shadow 0.15s ease;
+}
+
+.input-control:focus {
+    border-color: var(--sip-primary);
+
+    box-shadow:
+        0 0 0 3px rgba(29, 97, 232, 0.12);
+}
+
+.input-control::placeholder {
+    color: #94a3b8;
+}
+
+
+/* =========================================================
+   SELECT
+========================================================= */
+
+select.input-control {
+    appearance: none;
+
+    background-color: #ffffff;
+
+    background-image:
+        url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='%2364748b'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M19 9l-7 7-7-7'/%3E%3C/svg%3E");
+
+    background-repeat: no-repeat;
+
+    background-position: right 12px center;
+
+    background-size: 16px 16px;
+
+    padding-right: 36px;
+}
+
+
+/* =========================================================
+   TEXTAREA
+========================================================= */
+
+textarea.input-control {
+    height: auto;
+
+    min-height: 80px;
+
+    padding-top: 10px;
+
+    resize: vertical;
+}
+
+
+/* =========================================================
+   DATE INPUT
+========================================================= */
+
+.date-input-wrapper {
+    position: relative;
+
+    display: flex;
+
+    align-items: center;
+}
+
+.date-input-wrapper input {
+    padding-right: 40px;
+}
+
+.date-input-wrapper .calendar-icon {
+    position: absolute;
+
+    right: 12px;
+
+    width: 18px;
+    height: 18px;
+
+    color: #64748b;
+
+    pointer-events: none;
+}
+
+
+/* =========================================================
+   FORM ACTIONS
+========================================================= */
+
+.form-actions {
+    display: flex;
+
+    align-items: center;
+
+    justify-content: flex-end;
+
+    gap: 12px;
+
+    margin-top: 24px;
+}
+
+
+/* =========================================================
+   BUTTON BATAL
+========================================================= */
+
+.btn-batal {
+    display: inline-flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    height: 42px;
+
+    padding: 0 24px;
+
+    background: #ffffff;
+
+    border: 1px solid var(--sip-border);
+
+    border-radius: 10px;
+
+    color: #1e293b;
+
+    font-size: 13px;
+
+    font-weight: 600;
+
+    text-decoration: none;
+
+    cursor: pointer;
+
+    transition:
+        background 0.15s ease,
+        border-color 0.15s ease;
+}
+
+.btn-batal:hover {
+    background: #f8fafc;
+
+    border-color: #cbd5e1;
+}
+
+
+/* =========================================================
+   BUTTON SIMPAN
+========================================================= */
+
+.btn-simpan {
+    display: inline-flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    gap: 8px;
+
+    height: 42px;
+
+    padding: 0 24px;
+
+    background: var(--sip-primary);
+
+    border: 1px solid var(--sip-primary);
+
+    border-radius: 10px;
+
+    color: #ffffff;
+
+    font-size: 13px;
+
+    font-weight: 600;
+
+    cursor: pointer;
+
+    box-shadow:
+        0 4px 12px rgba(29, 97, 232, 0.25);
+
+    transition:
+        background 0.15s ease,
+        border-color 0.15s ease;
+}
+
+.btn-simpan:hover {
+    background: var(--sip-primary-hover);
+
+    border-color: var(--sip-primary-hover);
+}
+
+.btn-simpan svg {
+    width: 16px;
+    height: 16px;
+}
+
+
+/* =========================================================
+   FOOTER
+========================================================= */
+
+.sipper-footer {
+    margin-top: 40px;
+
+    padding-bottom: 24px;
+
+    text-align: center;
+
+    color: #94a3b8;
+
+    font-size: 12px;
+}
+
+
+/* =========================================================
+   TABLET
+========================================================= */
+
+@media (max-width: 1200px) {
+
+    .service-grid {
+        grid-template-columns:
+            repeat(3, minmax(0, 1fr));
+    }
+
+    .field-grid {
+        grid-template-columns:
+            repeat(2, minmax(0, 1fr));
+    }
+
+    .field-group.is-wide {
+        grid-column: span 2;
+    }
+}
+
+
+/* =========================================================
+   MOBILE
+========================================================= */
+
+@media (max-width: 768px) {
+
+    .sipper-sidebar {
+        display: none;
+    }
+
+    .sipper-content {
+        margin-left: 0;
+
+        width: 100%;
+
+        min-width: 0;
+    }
+
+    .topbar {
+        height: 60px;
+
+        padding: 0 16px;
+    }
+
+    .page-shell {
+        padding: 16px;
+    }
+
+    .service-grid {
+        grid-template-columns:
+            repeat(2, minmax(0, 1fr));
+
+        gap: 10px;
+    }
+
+    .service-card {
+        height: 90px;
+    }
+
+    .field-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .field-group.is-full,
+    .field-group.is-wide {
+        grid-column: auto;
+    }
+
+    .form-panel-card {
+        padding: 18px;
+    }
+
+    .form-header {
+        flex-direction: column;
+    }
+
+    .btn-back {
+        align-self: flex-start;
+    }
+
+    .form-actions {
+        flex-direction: column-reverse;
+
+        align-items: stretch;
+    }
+
+    .btn-batal,
+    .btn-simpan {
+        width: 100%;
+    }
+}

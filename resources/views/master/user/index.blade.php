@@ -23,6 +23,7 @@
         KONTEN UTAMA
     ========================================================== --}}
     <main class="sipper-content">
+        @include('layouts.header', ['pageTitle' => 'Kelola Pengguna'])
 
         <div class="min-h-screen px-3 py-3 sm:px-4 sm:py-4 lg:px-5 lg:py-5">
 

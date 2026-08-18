@@ -19,6 +19,7 @@
 
     {{-- KONTEN UTAMA --}}
     <main class="sipper-content">
+        @include('layouts.header', ['pageTitle' => isset($user) ? 'Edit Petugas' : 'Tambah Petugas'])
 
         <div class="min-h-screen p-4 sm:p-6 lg:p-8">
 
