@@ -293,6 +293,197 @@
                 align-items: stretch;
             }
         }
+
+        /* Simple blue administrative layout */
+        .sipper-page {
+            padding: 18px clamp(16px, 3vw, 32px) 32px;
+        }
+
+        .sipper-panel {
+            padding: 0;
+            border-radius: 3px;
+            box-shadow: 0 1px 3px rgba(15, 23, 42, .04);
+        }
+
+        .page-top {
+            align-items: center;
+            padding: 18px 20px;
+            margin-bottom: 0;
+            border-bottom: 1px solid var(--line);
+        }
+
+        .page-badge {
+            margin-bottom: 5px;
+            color: var(--primary);
+            font-size: 10px;
+        }
+
+        .page-title {
+            font-size: 22px;
+        }
+
+        .page-subtitle {
+            margin-top: 5px;
+            font-size: 12px;
+        }
+
+        .primary-btn {
+            min-height: 36px;
+            padding: 0 14px;
+            border-radius: 4px;
+            background: var(--primary);
+            box-shadow: none;
+            font-size: 12px;
+        }
+
+        .primary-btn:hover {
+            background: var(--primary-dark);
+        }
+
+        .filter-card {
+            margin: 16px 20px 0;
+            border-radius: 3px;
+            background: #f8fafc;
+        }
+
+        .filter-head {
+            padding: 12px 14px;
+            border-bottom: 1px solid var(--line);
+            background: var(--primary);
+        }
+
+        .filter-head h2 {
+            color: #fff;
+            font-size: 13px;
+        }
+
+        .filter-grid {
+            grid-template-columns: repeat(4, minmax(0, 1fr));
+            gap: 12px 16px;
+            padding: 14px;
+        }
+
+        .field {
+            gap: 5px;
+        }
+
+        .field label {
+            color: #475569;
+            font-size: 11px;
+        }
+
+        .field input,
+        .field select {
+            min-height: 34px;
+            padding: 7px 9px;
+            border-radius: 2px;
+            font-size: 12px;
+        }
+
+        .field input:focus,
+        .field select:focus {
+            border-color: #60a5fa;
+            box-shadow: 0 0 0 2px rgba(59, 130, 246, .12);
+        }
+
+        .filter-actions {
+            padding: 0 14px 14px;
+        }
+
+        .btn-secondary {
+            min-height: 34px;
+            padding: 0 14px;
+            border-radius: 2px;
+            background: #fff;
+            font-size: 12px;
+        }
+
+        .table-section {
+            margin: 20px;
+        }
+
+        .table-top {
+            margin-bottom: 8px;
+        }
+
+        .table-top h3 {
+            font-size: 15px;
+        }
+
+        .table-top small {
+            font-size: 10px;
+        }
+
+        .table-wrap {
+            border-radius: 3px;
+        }
+
+        thead th {
+            padding: 10px 12px;
+            background: #eff6ff;
+            color: #1e40af;
+            font-size: 10px;
+        }
+
+        tbody td {
+            padding: 11px 12px;
+            font-size: 11px;
+        }
+
+        tbody tr:hover {
+            background: #f8fbff;
+        }
+
+        .applicant-name {
+            color: #1f2937;
+            font-weight: 700;
+        }
+
+        .application-number {
+            margin-top: 3px;
+            color: #8b93a4;
+            font-size: 10px;
+        }
+
+        .status-badge {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            padding: 4px 8px;
+            border: 1px solid #bfdbfe;
+            border-radius: 3px;
+            background: #eff6ff;
+            color: #1d4ed8;
+            font-size: 10px;
+            font-weight: 700;
+        }
+
+        .empty-icon {
+            width: 44px;
+            height: 44px;
+            margin-bottom: 10px;
+            border-radius: 4px;
+            background: var(--primary-soft);
+            border-color: #bfdbfe;
+            color: var(--primary);
+            font-size: 18px;
+        }
+
+        .empty-text {
+            font-size: 13px;
+        }
+
+        @media (max-width: 980px) {
+            .filter-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+        }
+
+        @media (max-width: 720px) {
+            .sipper-page { padding: 12px 14px 22px; }
+            .page-top { align-items: flex-start; flex-direction: column; padding: 16px; }
+            .filter-card { margin: 12px 14px 0; }
+            .table-section { margin: 16px 14px; }
+            .filter-grid { grid-template-columns: 1fr; }
+        }
     </style>
 </head>
 <body>
@@ -323,19 +514,19 @@
                 <form method="GET" action="{{ route('permohonan.index') }}">
                     <div class="filter-grid">
                         <div class="field wide">
-                            <label for="search">Search</label>
+                            <label for="search">Pencarian</label>
                             <input id="search" name="search" value="{{ request('search') }}" placeholder="Nomor, nama, keterangan">
                         </div>
 
                         <div class="field">
-                            <label for="date">Date (refined date picker)</label>
+                            <label for="date">Tanggal Pengajuan</label>
                             <input id="date" type="date" name="date" value="{{ request('date') }}">
                         </div>
 
                         <div class="field">
-                            <label for="year">Year</label>
+                            <label for="year">Tahun</label>
                             <select id="year" name="year">
-                                <option value="">Year</option>
+                                <option value="">Semua Tahun</option>
                                 @foreach(range(2020, date('Y') + 2) as $year)
                                     <option value="{{ $year }}" {{ request('year') == $year ? 'selected' : '' }}>{{ $year }}</option>
                                 @endforeach
@@ -355,7 +546,7 @@
                         </div>
 
                         <div class="field">
-                            <label for="kelompok_pelayanan_id">Category</label>
+                            <label for="kelompok_pelayanan_id">Kategori Layanan</label>
                             <select id="kelompok_pelayanan_id" name="kelompok_pelayanan_id">
                                 <option value="">Semua Kategori</option>
                                 @foreach($kelompokPelayanans as $group)
@@ -365,7 +556,7 @@
                         </div>
 
                         <div class="field">
-                            <label for="jenis_pelayanan_id">Service Type</label>
+                            <label for="jenis_pelayanan_id">Jenis Layanan</label>
                             <select id="jenis_pelayanan_id" name="jenis_pelayanan_id">
                                 <option value="">Semua Jenis</option>
                                 @foreach($kelompokPelayanans as $group)
@@ -379,7 +570,7 @@
                         </div>
 
                         <div class="field">
-                            <label for="kecamatan_id">District</label>
+                            <label for="kecamatan_id">Kecamatan</label>
                             <select id="kecamatan_id" name="kecamatan_id">
                                 <option value="">Semua Kecamatan</option>
                                 @foreach($kecamatans as $kecamatan)
@@ -400,7 +591,7 @@
                     </div>
 
                     <div class="filter-actions">
-                        <button type="submit" class="primary-btn" style="min-height: 38px; padding: 0 18px; border-radius: 10px;">Terapkan Filter</button>
+                        <button type="submit" class="primary-btn">Terapkan Filter</button>
                         <a href="{{ route('permohonan.index') }}" class="btn-secondary">Reset</a>
                     </div>
                 </form>
@@ -432,15 +623,15 @@
                                 <td>{{ $i + 1 }}</td>
                                 <td>{{ $permohonan->tanggal_permohonan?->format('d/m/Y') ?? '-' }}</td>
                                 <td>
-                                    <div style="font-weight:700; color:#1f2937;">{{ $permohonan->nama_pemohon }}</div>
-                                    <div style="font-size:11px; color:#8b93a4; margin-top:4px;">{{ $permohonan->nomor_permohonan ?? '-' }}</div>
+                                    <div class="applicant-name">{{ $permohonan->nama_pemohon }}</div>
+                                    <div class="application-number">{{ $permohonan->nomor_permohonan ?? '-' }}</div>
                                 </td>
                                 <td>{{ $permohonan->jenisPelayanan?->kelompokPelayanan?->nama ?? '-' }}</td>
                                 <td>{{ $permohonan->jenisPelayanan?->nama_pelayanan ?? '-' }}</td>
                                 <td>{{ $permohonan->kecamatan?->nama_kecamatan ?? '-' }}</td>
                                 <td>{{ $permohonan->desa?->nama_desa ?? '-' }}</td>
                                 <td>
-                                    <span style="display:inline-flex;align-items:center;justify-content:center;border-radius:999px;padding:4px 8px;background:#ecfdf5;color:#16a34a;font-size:11px;font-weight:700;">Aktif</span>
+                                    <span class="status-badge">Aktif</span>
                                 </td>
                             </tr>
                         @empty

@@ -1,76 +1,115 @@
 @vite(['resources/css/app.css', 'resources/js/app.js'])
 @include('layouts.sidebar')
 
+<style>
+    .jenis-page { min-height: 100vh; padding: 18px clamp(16px, 3vw, 32px) 32px; background: #f4f6f9; }
+    .jenis-panel { max-width: 1360px; margin: 0 auto; overflow: hidden; border: 1px solid #dbe3ed; border-radius: 3px; background: #fff; box-shadow: 0 1px 3px rgba(15, 23, 42, .04); }
+    .jenis-header { display: flex; align-items: center; justify-content: space-between; gap: 16px; padding: 18px 20px; border-bottom: 1px solid #dbe3ed; }
+    .jenis-kicker { margin: 0 0 4px; color: #1d61e8; font-size: 10px; font-weight: 800; letter-spacing: .12em; text-transform: uppercase; }
+    .jenis-title { margin: 0; color: #0f172a; font-size: 22px; line-height: 1.2; }
+    .jenis-subtitle { margin: 5px 0 0; color: #64748b; font-size: 12px; }
+    .jenis-actions { display: flex; gap: 8px; }
+    .jenis-button { display: inline-flex; align-items: center; justify-content: center; min-height: 35px; padding: 0 14px; border-radius: 3px; font-size: 12px; font-weight: 700; text-decoration: none; }
+    .jenis-primary { border: 1px solid #1d61e8; background: #1d61e8; color: #fff; }
+    .jenis-primary:hover { background: #1752ca; }
+    .jenis-secondary { border: 1px solid #cbd5e1; background: #fff; color: #334155; }
+    .jenis-secondary:hover { background: #f8fafc; }
+    .jenis-alert { margin: 14px 20px 0; padding: 10px 12px; border: 1px solid #bbf7d0; border-radius: 3px; background: #f0fdf4; color: #166534; font-size: 12px; }
+    .jenis-alert strong { display: block; margin-bottom: 2px; }
+    .jenis-content { padding: 18px 20px 20px; }
+    .jenis-list-head { display: flex; align-items: center; justify-content: space-between; gap: 12px; margin-bottom: 8px; }
+    .jenis-list-head h2 { margin: 0; color: #0f172a; font-size: 14px; }
+    .jenis-count { color: #64748b; font-size: 11px; font-weight: 700; }
+    .jenis-table-wrap { overflow-x: auto; border: 1px solid #dbe3ed; border-radius: 3px; }
+    .jenis-table { width: 100%; border-collapse: collapse; font-size: 12px; }
+    .jenis-table th { padding: 10px 12px; border-bottom: 1px solid #dbe3ed; background: #eff6ff; color: #1e40af; font-size: 10px; text-align: left; text-transform: uppercase; }
+    .jenis-table td { padding: 11px 12px; border-bottom: 1px solid #edf2f7; color: #475569; }
+    .jenis-table tr:last-child td { border-bottom: 0; }
+    .jenis-table tbody tr:hover { background: #f8fbff; }
+    .jenis-number { width: 60px; color: #94a3b8 !important; }
+    .jenis-name { color: #1f2937 !important; font-weight: 700; }
+    .jenis-badge { display: inline-flex; padding: 4px 8px; border: 1px solid #bfdbfe; border-radius: 3px; background: #eff6ff; color: #1d4ed8; font-size: 10px; font-weight: 700; }
+    .jenis-row-actions { display: flex; justify-content: flex-end; gap: 6px; }
+    .jenis-action { display: inline-flex; align-items: center; justify-content: center; min-height: 29px; padding: 0 10px; border-radius: 3px; font-size: 11px; font-weight: 700; text-decoration: none; }
+    .jenis-edit { border: 1px solid #bfdbfe; background: #eff6ff; color: #1d4ed8; }
+    .jenis-edit:hover { background: #dbeafe; }
+    .jenis-delete { border: 1px solid #fecaca; background: #fff1f2; color: #b91c1c; cursor: pointer; }
+    .jenis-delete:hover { background: #fee2e2; }
+    .jenis-empty { padding: 38px 16px !important; color: #64748b !important; text-align: center; }
+    @media (max-width: 640px) { .jenis-page { padding: 12px; } .jenis-panel { width: 100%; } .jenis-header { align-items: flex-start; flex-direction: column; padding: 16px; } .jenis-title { font-size: 19px; } .jenis-actions { width: 100%; } .jenis-button { flex: 1; padding: 0 8px; } .jenis-content { padding: 16px; } .jenis-list-head { align-items: flex-start; flex-direction: column; } .jenis-table { min-width: 560px; } }
+</style>
+
 <main class="sipper-content">
-    <div class="min-h-screen px-3 py-3 sm:px-4 sm:py-4 lg:px-5 lg:py-5">
-        <div class="w-full overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm">
+    @include('layouts.header', ['pageTitle' => 'Jenis Pelayanan'])
+    <div class="jenis-page">
+        <div class="jenis-panel">
 
             {{-- HEADER --}}
-            <div class="border-b border-slate-200 px-5 py-4 sm:px-6">
-                <div class="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+            <div class="jenis-header">
                     <div>
-                        <p class="text-xs font-bold uppercase tracking-[0.2em] text-blue-600">
+                        <p class="jenis-kicker">
                             ADMINISTRASI
                         </p>
-                        <h1 class="mt-1 text-xl font-bold text-slate-900 sm:text-2xl">
+                        <h1 class="jenis-title">
                             Jenis Pelayanan
                         </h1>
-                        <p class="mt-1 text-xs text-slate-500 sm:text-sm">
+                        <p class="jenis-subtitle">
                             Kelola jenis-jenis pelayanan yang tersedia di sistem.
                         </p>
                     </div>
-                    <div class="flex flex-wrap gap-2">
-                        <a href="{{ route('jenis-pelayanan.create') }}" class="rounded-xl border border-blue-600 bg-blue-600 px-4 py-2 text-center text-sm font-bold text-white transition hover:bg-blue-700">
+                    <div class="jenis-actions">
+                        <a href="{{ route('jenis-pelayanan.create') }}" class="jenis-button jenis-primary">
                             + Tambah
                         </a>
-                        <a href="{{ route('dashboard') }}" class="rounded-xl border border-slate-300 px-4 py-2 text-center text-sm font-bold transition hover:bg-slate-50">
+                        <a href="{{ route('dashboard') }}" class="jenis-button jenis-secondary">
                             ← Kembali
                         </a>
                     </div>
-                </div>
             </div>
 
             {{-- NOTIFIKASI --}}
             @if(session('status'))
-                <div class="mx-5 mt-4 rounded-xl border border-green-200 bg-green-50 p-4 text-sm text-green-700 sm:mx-6">
-                    <p class="font-bold">✓ Berhasil</p>
-                    <p class="mt-1">{{ session('status') }}</p>
+                <div class="jenis-alert">
+                    <strong>Berhasil</strong>
+                    <span>{{ session('status') }}</span>
                 </div>
             @endif
 
             {{-- DAFTAR JENIS PELAYANAN --}}
-            <div class="p-5 sm:p-6">
-                <section class="rounded-2xl border border-slate-200 bg-slate-50 p-4 sm:p-5">
-                    <div class="border-b border-slate-200 pb-3">
-                        <h2 class="font-bold text-slate-900">Daftar Jenis Pelayanan</h2>
-                        <p class="mt-1 text-xs text-slate-500 sm:text-sm">{{ $jenisPelayanans->count() }} jenis pelayanan terdaftar</p>
+            <div class="jenis-content">
+                <section>
+                    <div class="jenis-list-head">
+                        <h2>Daftar Jenis Pelayanan</h2>
+                        <span class="jenis-count">{{ $jenisPelayanans->count() }} jenis pelayanan terdaftar</span>
                     </div>
 
-                    <div class="mt-4">
+                    <div class="jenis-table-wrap">
+                        <table class="jenis-table">
+                            <thead><tr><th class="jenis-number">No</th><th>Nama Pelayanan</th><th>Kategori</th><th style="text-align:right">Aksi</th></tr></thead>
+                            <tbody>
                         @forelse($jenisPelayanans as $jenisPelayanan)
-                            <div class="mb-3 flex flex-col gap-2 rounded-xl border border-slate-200 bg-white p-4 sm:flex-row sm:items-center sm:justify-between">
-                                <div class="flex-1">
-                                    <p class="font-semibold text-slate-900">{{ $jenisPelayanan->nama_pelayanan }}</p>
-                                    <p class="mt-1 text-xs text-slate-500">
-                                        <span class="rounded-full bg-slate-200 px-2 py-0.5">{{ $jenisPelayanan->kategori }}</span>
-                                    </p>
-                                </div>
-                                <div class="flex gap-2">
-                                    <a href="{{ route('jenis-pelayanan.edit', $jenisPelayanan) }}" class="rounded-lg border border-blue-200 bg-blue-50 px-3 py-1.5 text-xs font-semibold text-blue-700 transition hover:bg-blue-100">
+                            <tr>
+                                <td class="jenis-number">{{ $loop->iteration }}</td>
+                                <td class="jenis-name">{{ $jenisPelayanan->nama_pelayanan }}</td>
+                                <td><span class="jenis-badge">{{ $jenisPelayanan->kategori }}</span></td>
+                                <td><div class="jenis-row-actions">
+                                    <a href="{{ route('jenis-pelayanan.edit', $jenisPelayanan) }}" class="jenis-action jenis-edit">
                                         Edit
                                     </a>
-                                    <form method="POST" action="{{ route('jenis-pelayanan.destroy', $jenisPelayanan) }}" onsubmit="return confirm('Hapus data ini?')" class="inline">
+                                    <form method="POST" action="{{ route('jenis-pelayanan.destroy', $jenisPelayanan) }}" onsubmit="return confirm('Hapus data ini?')">
                                         @csrf
                                         @method('DELETE')
-                                        <button type="submit" class="rounded-lg border border-red-200 bg-red-50 px-3 py-1.5 text-xs font-semibold text-red-700 transition hover:bg-red-100">
+                                        <button type="submit" class="jenis-action jenis-delete">
                                             Hapus
                                         </button>
                                     </form>
-                                </div>
-                            </div>
+                                </div></td>
+                            </tr>
                         @empty
-                            <p class="py-8 text-center text-sm text-slate-500">Belum ada jenis pelayanan</p>
+                            <tr><td colspan="4" class="jenis-empty">Belum ada jenis pelayanan.</td></tr>
                         @endforelse
+                            </tbody>
+                        </table>
                     </div>
                 </section>
             </div>

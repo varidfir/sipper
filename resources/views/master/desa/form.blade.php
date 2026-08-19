@@ -1,35 +1,60 @@
 @vite(['resources/css/app.css', 'resources/js/app.js'])
 @include('layouts.sidebar')
 
+<style>
+    .wilayah-form-page { min-height: 100vh; padding: 18px clamp(16px, 3vw, 32px) 32px; background: #f4f6f9; }
+    .wilayah-form-panel { max-width: 920px; margin: 0 auto; overflow: hidden; border: 1px solid #dbe3ed; border-radius: 3px; background: #fff; box-shadow: 0 1px 3px rgba(15, 23, 42, .04); }
+    .wilayah-form-header { display: flex; align-items: center; justify-content: space-between; gap: 16px; padding: 18px 20px; border-bottom: 1px solid #dbe3ed; }
+    .wilayah-kicker { margin: 0 0 4px; color: #1d61e8; font-size: 10px; font-weight: 800; letter-spacing: .12em; text-transform: uppercase; }
+    .wilayah-form-title { margin: 0; color: #0f172a; font-size: 22px; line-height: 1.2; }
+    .wilayah-form-subtitle { margin: 5px 0 0; color: #64748b; font-size: 12px; }
+    .wilayah-back, .wilayah-cancel { display: inline-flex; align-items: center; justify-content: center; min-height: 35px; padding: 0 14px; border: 1px solid #cbd5e1; border-radius: 3px; background: #fff; color: #334155; font-size: 12px; font-weight: 700; text-decoration: none; }
+    .wilayah-back:hover, .wilayah-cancel:hover { background: #f8fafc; }
+    .wilayah-error { margin: 14px 20px 0; padding: 10px 12px; border: 1px solid #fecaca; border-radius: 3px; background: #fff1f2; color: #b91c1c; font-size: 12px; }
+    .wilayah-error p { margin: 0 0 4px; font-weight: 700; }
+    .wilayah-error ul { margin: 0; padding-left: 18px; }
+    .wilayah-form-content { padding: 18px 20px 20px; }
+    .wilayah-form-section { overflow: hidden; border: 1px solid #dbe3ed; border-radius: 3px; }
+    .wilayah-section-title { padding: 10px 12px; background: #1d61e8; color: #fff; font-size: 13px; font-weight: 700; }
+    .wilayah-fields { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 14px 20px; padding: 16px; }
+    .wilayah-field label { display: block; margin-bottom: 5px; color: #334155; font-size: 11px; font-weight: 700; }
+    .wilayah-field input, .wilayah-field select { width: 100%; height: 36px; border: 1px solid #cbd5e1; border-radius: 2px; background: #fff; padding: 0 10px; color: #334155; font-size: 12px; }
+    .wilayah-field input:focus, .wilayah-field select:focus { border-color: #60a5fa; outline: 0; box-shadow: 0 0 0 2px rgba(59, 130, 246, .12); }
+    .wilayah-field-wide { grid-column: 1 / -1; }
+    .wilayah-form-actions { display: flex; justify-content: flex-end; gap: 8px; padding: 0 16px 16px; }
+    .wilayah-save { min-height: 35px; padding: 0 16px; border: 1px solid #1d61e8; border-radius: 3px; background: #1d61e8; color: #fff; font-size: 12px; font-weight: 700; cursor: pointer; }
+    .wilayah-save:hover { background: #1752ca; }
+    @media (max-width: 640px) { .wilayah-form-page { padding: 12px; } .wilayah-form-panel { width: 100%; } .wilayah-form-header { align-items: flex-start; flex-direction: column; padding: 16px; } .wilayah-form-title { font-size: 19px; } .wilayah-form-content { padding: 16px; } .wilayah-fields { grid-template-columns: 1fr; padding: 14px; } .wilayah-field-wide { grid-column: auto; } .wilayah-form-actions { align-items: stretch; flex-direction: column-reverse; padding: 0 14px 14px; } .wilayah-save, .wilayah-cancel { width: 100%; } }
+</style>
+
 <main class="sipper-content">
-    <div class="min-h-screen px-3 py-3 sm:px-4 sm:py-4 lg:px-5 lg:py-5">
-        <div class="w-full overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm">
+    @include('layouts.header', ['pageTitle' => isset($desa) ? 'Edit Desa' : 'Tambah Desa'])
+    <div class="wilayah-form-page">
+        <div class="wilayah-form-panel">
 
             {{-- HEADER --}}
-            <div class="border-b border-slate-200 px-5 py-4 sm:px-6">
-                <div class="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+            <div class="wilayah-form-header">
                     <div>
-                        <p class="text-xs font-bold uppercase tracking-[0.2em] text-blue-600">
+                        <p class="wilayah-kicker">
                             ADMINISTRASI
                         </p>
-                        <h1 class="mt-1 text-xl font-bold text-slate-900 sm:text-2xl">
+                        <h1 class="wilayah-form-title">
                             {{ isset($desa) ? 'Edit Desa' : 'Tambah Desa' }}
                         </h1>
-                        <p class="mt-1 text-xs text-slate-500 sm:text-sm">
+                        <p class="wilayah-form-subtitle">
                             {{ isset($desa) ? 'Perbarui data desa yang sudah ada' : 'Tambahkan desa/kelurahan baru ke sistem' }}
                         </p>
                     </div>
-                    <a href="{{ route('desa.index') }}" class="rounded-xl border border-slate-300 px-4 py-2 text-center text-sm font-bold transition hover:bg-slate-50">
+                    <a href="{{ route('desa.index') }}" class="wilayah-back">
                         ← Kembali
                     </a>
-                </div>
             </div>
 
             {{-- ERROR --}}
             @if($errors->any())
-                <div class="mx-5 mt-4 rounded-xl border border-red-200 bg-red-50 p-4 text-sm text-red-700 sm:mx-6">
-                    <p class="font-bold">Terjadi kesalahan:</p>
-                    <ul class="mt-2 list-disc pl-5">
+                <div class="wilayah-error">
+                    <p>Terjadi kesalahan:</p>
+                    <ul>
                         @foreach($errors->all() as $err)
                             <li>{{ $err }}</li>
                         @endforeach
@@ -38,25 +63,24 @@
             @endif
 
             {{-- FORM --}}
-            <div class="p-5 sm:p-6">
+            <div class="wilayah-form-content">
                 <form method="POST" action="{{ isset($desa) ? route('desa.update', $desa) : route('desa.store') }}">
                     @csrf
                     @if(isset($desa)) @method('PUT') @endif
 
-                    <section class="rounded-2xl border border-slate-200 bg-slate-50 p-4 sm:p-5">
-                        <div class="border-b border-slate-200 pb-3">
-                            <h2 class="font-bold text-slate-900">
+                    <section class="wilayah-form-section">
+                        <div class="wilayah-section-title">
                                 {{ isset($desa) ? 'Data Desa' : 'Data Desa Baru' }}
                             </h2>
                         </div>
 
-                        <div class="mt-4 space-y-4">
+                        <div class="wilayah-fields">
                             {{-- Pilih Kecamatan --}}
-                            <div>
-                                <label class="mb-2 block text-sm font-semibold text-slate-800">
+                            <div class="wilayah-field">
+                                <label>
                                     Pilih Kecamatan <span class="text-red-500">*</span>
                                 </label>
-                                <select name="kecamatan_id" class="w-full rounded-xl border border-slate-300 bg-white px-4 py-2.5 text-sm text-slate-700 shadow-sm focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-100">
+                                <select name="kecamatan_id">
                                     <option value="">-- Pilih atau Tulis Manual --</option>
                                     @foreach($kecamatans as $kecamatan)
                                         <option value="{{ $kecamatan->id }}" {{ old('kecamatan_id', $desa->kecamatan_id ?? '') == $kecamatan->id ? 'selected' : '' }}>{{ $kecamatan->nama_kecamatan }}</option>
@@ -65,28 +89,28 @@
                             </div>
 
                             {{-- Kecamatan Manual --}}
-                            <div>
-                                <label class="mb-2 block text-sm font-semibold text-slate-800">
+                            <div class="wilayah-field">
+                                <label>
                                     Atau Ketik Nama Kecamatan Baru
                                 </label>
-                                <input type="text" name="kecamatan_manual" value="{{ old('kecamatan_manual') }}" placeholder="Jika ingin membuat kecamatan baru" class="w-full rounded-xl border border-slate-300 bg-white px-4 py-2.5 text-sm text-slate-700 shadow-sm placeholder:text-slate-400 focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-100">
+                                <input type="text" name="kecamatan_manual" value="{{ old('kecamatan_manual') }}" placeholder="Jika ingin membuat kecamatan baru">
                             </div>
 
                             {{-- Nama Desa --}}
-                            <div>
-                                <label class="mb-2 block text-sm font-semibold text-slate-800">
+                            <div class="wilayah-field wilayah-field-wide">
+                                <label>
                                     Nama Desa/Kelurahan <span class="text-red-500">*</span>
                                 </label>
-                                <input type="text" name="nama_desa" value="{{ old('nama_desa', $desa->nama_desa ?? '') }}" placeholder="Ketik nama desa/kelurahan" class="w-full rounded-xl border border-slate-300 bg-white px-4 py-2.5 text-sm text-slate-700 shadow-sm placeholder:text-slate-400 focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-100" required>
+                                <input type="text" name="nama_desa" value="{{ old('nama_desa', $desa->nama_desa ?? '') }}" placeholder="Ketik nama desa/kelurahan" required>
                             </div>
                         </div>
 
                         {{-- TOMBOL --}}
-                        <div class="mt-6 flex flex-wrap gap-3 border-t border-slate-200 pt-4">
-                            <button type="submit" class="rounded-xl bg-blue-600 px-6 py-2.5 text-sm font-bold text-white shadow-sm transition hover:bg-blue-700">
+                        <div class="wilayah-form-actions">
+                            <button type="submit" class="wilayah-save">
                                 {{ isset($desa) ? 'Perbarui' : 'Tambah' }} Desa
                             </button>
-                            <a href="{{ route('desa.index') }}" class="rounded-xl border border-slate-300 bg-white px-6 py-2.5 text-sm font-bold text-slate-700 transition hover:bg-slate-50">
+                            <a href="{{ route('desa.index') }}" class="wilayah-cancel">
                                 Batal
                             </a>
                         </div>
