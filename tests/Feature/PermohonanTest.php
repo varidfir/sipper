@@ -348,6 +348,6 @@ class PermohonanTest extends TestCase
 
         $exportResponse = $this->actingAs($user)->get(route('permohonan.export', ['format' => 'csv']));
         $exportResponse->assertOk();
-        $exportResponse->assertSee('nomor_permohonan');
+        $exportResponse->assertHeader('content-type', 'application/pdf');
     }
 }

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Permohonan;
+use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -20,6 +21,7 @@ class PermohonanReportController extends Controller
         $year = $request->input('year', date('Y'));
         $month = $request->input('month');
         $kelompokPelayananId = $request->input('kelompok_pelayanan_id');
+        $period = $request->input('period', 'daily');
 
         // ==============================
         // QUERY DATA
@@ -51,12 +53,15 @@ class PermohonanReportController extends Controller
         // DATA REKAP
         // ==============================
 
+        $periodExpression = match ($period) {
+            'monthly' => "DATE_FORMAT(tanggal_permohonan, '%Y-%m-01')",
+            'yearly' => "DATE_FORMAT(tanggal_permohonan, '%Y-01-01')",
+            default => 'DATE(tanggal_permohonan)',
+        };
+
         $data = $query
-            ->selectRaw('
-                DATE(tanggal_permohonan) as period,
-                COUNT(*) as total
-            ')
-            ->groupByRaw('DATE(tanggal_permohonan)')
+            ->selectRaw("{$periodExpression} as period, COUNT(*) as total")
+            ->groupByRaw($periodExpression)
             ->orderBy('period')
             ->get();
 
@@ -108,6 +113,7 @@ class PermohonanReportController extends Controller
             'year',
             'month',
             'kelompokPelayananId',
+            'period',
             'kelompokPelayanans',
             'years',
             'months'
@@ -119,64 +125,60 @@ class PermohonanReportController extends Controller
      */
     public function export(Request $request)
     {
-        $format = $request->input('format', 'csv');
+        $year = $request->input('year', date('Y'));
+        $month = $request->input('month');
+        $kelompokPelayananId = $request->input('kelompok_pelayanan_id');
+        $period = $request->input('period', 'daily');
 
-        $permohonans = Permohonan::with([
-            'kecamatan',
-            'desa',
-            'jenisPelayanan',
-            'user'
-        ])
-            ->latest()
-            ->get();
+        $query = Permohonan::query();
 
-        if ($format === 'csv') {
-
-            $headers = [
-                'Content-Type' => 'text/csv; charset=UTF-8',
-                'Content-Disposition' => 'attachment; filename="permohonan.csv"',
-            ];
-
-            $content =
-                "nomor_permohonan,nama_pemohon,tanggal_permohonan,jenis_pelayanan,kecamatan,desa,keterangan\n";
-
-            foreach ($permohonans as $permohonan) {
-
-                $content .= implode(',', [
-                    $this->csvEscape($permohonan->nomor_permohonan),
-                    $this->csvEscape($permohonan->nama_pemohon),
-                    $permohonan->tanggal_permohonan?->format('Y-m-d'),
-                    $this->csvEscape(
-                        $permohonan->jenisPelayanan->nama_pelayanan ?? '-'
-                    ),
-                    $this->csvEscape(
-                        $permohonan->kecamatan->nama_kecamatan ?? '-'
-                    ),
-                    $this->csvEscape(
-                        $permohonan->desa->nama_desa ?? '-'
-                    ),
-                    $this->csvEscape(
-                        $permohonan->keterangan ?? '-'
-                    ),
-                ]) . "\n";
-            }
-
-            return new Response($content, 200, $headers);
+        if ($year) {
+            $query->whereYear('tanggal_permohonan', $year);
         }
 
-        return response()->view(
-            'permohonan.export',
-            compact('permohonans')
-        );
-    }
+        if ($month) {
+            $query->whereMonth('tanggal_permohonan', $month);
+        }
 
-    /**
-     * Escape data CSV
-     */
-    private function csvEscape($value)
-    {
-        $value = (string) $value;
+        if ($kelompokPelayananId) {
+            $query->whereHas('jenisPelayanan', function ($q) use ($kelompokPelayananId) {
+                $q->where('kelompok_pelayanan_id', $kelompokPelayananId);
+            });
+        }
 
-        return '"' . str_replace('"', '""', $value) . '"';
+        $periodExpression = match ($period) {
+            'monthly' => "DATE_FORMAT(tanggal_permohonan, '%Y-%m-01')",
+            'yearly' => "DATE_FORMAT(tanggal_permohonan, '%Y-01-01')",
+            default => 'DATE(tanggal_permohonan)',
+        };
+
+        $data = $query
+            ->selectRaw("{$periodExpression} as period, COUNT(*) as total")
+            ->groupByRaw($periodExpression)
+            ->orderBy('period')
+            ->get();
+
+        $kelompokPelayanans = \App\Models\KelompokPelayanan::query()
+            ->orderBy('kode')
+            ->get();
+
+        $months = [
+            1 => 'Januari', 2 => 'Februari', 3 => 'Maret', 4 => 'April',
+            5 => 'Mei', 6 => 'Juni', 7 => 'Juli', 8 => 'Agustus',
+            9 => 'September', 10 => 'Oktober', 11 => 'November', 12 => 'Desember',
+        ];
+
+        $selectedKelompok = $kelompokPelayanans->firstWhere('id', $kelompokPelayananId);
+
+        return Pdf::loadView('permohonan.recap-pdf', compact(
+            'data',
+            'year',
+            'month',
+            'period',
+            'months',
+            'selectedKelompok'
+        ))
+            ->setPaper('a4', 'portrait')
+            ->download('rekapitulasi-' . $year . '.pdf');
     }
 }

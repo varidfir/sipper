@@ -93,13 +93,7 @@ textarea {
 
     color: #ffffff;
 
-    background:
-        linear-gradient(
-            180deg,
-            #103f73 0%,
-            #0d3969 48%,
-            #0c3766 100%
-        );
+    background: #0d3969;
 
     border-right: 1px solid rgba(255, 255, 255, 0.05);
 

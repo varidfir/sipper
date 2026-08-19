@@ -24,24 +24,32 @@
     <main class="sipper-content">
         @include('layouts.header', ['pageTitle' => 'Rekapitulasi'])
 
-        <div class="min-h-screen px-4 py-4 sm:px-6 lg:px-6">
+        <div class="min-h-screen px-4 py-5 sm:px-6 lg:px-8">
 
-
+            <div class="mx-auto w-full max-w-7xl">
+                <div class="mb-5">
+                    <p class="text-xs font-bold uppercase tracking-[0.14em] text-blue-600">Laporan pelayanan</p>
+                    <h1 class="mt-1 text-2xl font-bold tracking-tight text-slate-900">Rekapitulasi</h1>
+                    <p class="mt-1 text-sm text-slate-500">Ringkasan permohonan berdasarkan periode dan kategori.</p>
+                </div>
 
             {{-- =====================================================
                 FILTER REKAP
-                SATU BARIS
             ====================================================== --}}
-            <div class="mb-4 rounded-2xl border border-slate-200 bg-white p-3 shadow-sm">
+            <div class="mb-4 overflow-hidden rounded-xl border border-slate-200 bg-white shadow-sm">
+                <div class="border-b border-slate-100 px-4 py-3 sm:px-5">
+                    <h2 class="text-sm font-bold text-slate-800">Filter data</h2>
+                    <p class="mt-0.5 text-xs text-slate-500">Pilih rentang waktu dan kategori yang ingin ditampilkan.</p>
+                </div>
 
                 <form
                     method="GET"
                     action="{{ route('permohonan.recap') }}"
-                    class="flex flex-col gap-3 lg:flex-row lg:items-end"
+                    class="grid grid-cols-1 gap-3 p-4 sm:grid-cols-2 xl:grid-cols-12 xl:items-end sm:px-5 sm:py-4"
                 >
 
                     {{-- PERIODE --}}
-                    <div class="w-full lg:w-36">
+                    <div class="w-full xl:col-span-2">
 
                         <label class="mb-1 block text-xs font-bold text-slate-600">
                             Periode
@@ -49,7 +57,7 @@
 
                         <select
                             name="period"
-                            class="w-full rounded-xl border border-slate-300 bg-white px-3 py-2 text-sm focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500"
+                            class="h-10 w-full rounded-lg border border-slate-300 bg-white px-3 text-sm focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500"
                         >
 
                             <option
@@ -80,7 +88,7 @@
 
 
                     {{-- TAHUN --}}
-                    <div class="w-full lg:w-28">
+                    <div class="w-full xl:col-span-2">
 
                         <label class="mb-1 block text-xs font-bold text-slate-600">
                             Tahun
@@ -88,7 +96,7 @@
 
                         <select
                             name="year"
-                            class="w-full rounded-xl border border-slate-300 bg-white px-3 py-2 text-sm focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500"
+                            class="h-10 w-full rounded-lg border border-slate-300 bg-white px-3 text-sm focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500"
                         >
 
                             @for($y = now()->year; $y >= now()->year - 5; $y--)
@@ -109,7 +117,7 @@
 
 
                     {{-- BULAN --}}
-                    <div class="w-full lg:w-40">
+                    <div class="w-full xl:col-span-2">
 
                         <label class="mb-1 block text-xs font-bold text-slate-600">
                             Bulan
@@ -117,7 +125,7 @@
 
                         <select
                             name="month"
-                            class="w-full rounded-xl border border-slate-300 bg-white px-3 py-2 text-sm focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500"
+                            class="h-10 w-full rounded-lg border border-slate-300 bg-white px-3 text-sm focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500"
                         >
 
                             <option value="">
@@ -142,7 +150,7 @@
 
 
                     {{-- KATEGORI --}}
-                    <div class="w-full lg:flex-1">
+                    <div class="w-full xl:col-span-4">
 
                         <label class="mb-1 block text-xs font-bold text-slate-600">
                             Kategori Permohonan
@@ -150,7 +158,7 @@
 
                         <select
                             name="kelompok_pelayanan_id"
-                            class="w-full rounded-xl border border-slate-300 bg-white px-3 py-2 text-sm focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500"
+                            class="h-10 w-full rounded-lg border border-slate-300 bg-white px-3 text-sm focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500"
                         >
 
                             <option value="">
@@ -177,32 +185,31 @@
 
 
                     {{-- BUTTON --}}
-                    <div class="flex gap-2">
+                    <div class="flex gap-2 xl:col-span-2">
 
                         <button
                             type="submit"
-                            class="rounded-xl bg-blue-600 px-4 py-2 text-sm font-bold text-white transition hover:bg-blue-700"
+                            class="h-10 flex-1 rounded-lg bg-blue-600 px-4 text-sm font-bold text-white transition hover:bg-blue-700"
                         >
                             Filter
                         </button>
 
                         <a
                             href="{{ route('permohonan.recap') }}"
-                            class="rounded-xl border border-slate-300 bg-white px-4 py-2 text-sm font-bold text-slate-700 transition hover:bg-slate-50"
+                            class="h-10 flex-1 rounded-lg border border-slate-300 bg-white px-4 text-sm font-bold text-slate-700 transition hover:bg-slate-50"
                         >
                             Reset
                         </a>
 
+                </form>
             </div>
-
-        </form>
 
 
 
             {{-- =====================================================
                 RINGKASAN FILTER AKTIF
             ====================================================== --}}
-            <div class="mb-4 rounded-2xl border border-blue-100 bg-blue-50 px-4 py-3">
+            <div class="mb-4 rounded-xl border border-blue-100 bg-blue-50 px-4 py-3 sm:px-5">
 
                 <div class="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
 
@@ -250,7 +257,7 @@
 
 
                     {{-- TOTAL --}}
-                    <div class="rounded-xl bg-white px-4 py-2 text-center shadow-sm">
+                    <div class="min-w-[150px] rounded-lg border border-blue-100 bg-white px-4 py-2 text-center shadow-sm">
 
                         <p class="text-xs text-slate-500">
                             Total Permohonan
@@ -271,11 +278,11 @@
             {{-- =====================================================
                 HASIL REKAP
             ====================================================== --}}
-            <div class="overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm">
+            <div class="overflow-hidden rounded-xl border border-slate-200 bg-white shadow-sm">
 
 
                 {{-- HEADER TABEL --}}
-                <div class="border-b border-slate-200 px-5 py-4">
+                <div class="border-b border-slate-200 px-4 py-4 sm:px-5">
 
                     <div class="flex flex-col gap-1 sm:flex-row sm:items-center sm:justify-between">
 
@@ -315,15 +322,15 @@
 
                                 <tr class="border-b border-slate-200">
 
-                                    <th class="w-16 px-5 py-3 text-left font-bold text-slate-600">
+                                    <th class="w-16 px-4 py-3 text-left text-xs font-bold uppercase tracking-wide text-slate-500 sm:px-5">
                                         No
                                     </th>
 
-                                    <th class="px-5 py-3 text-left font-bold text-slate-600">
+                                    <th class="px-4 py-3 text-left text-xs font-bold uppercase tracking-wide text-slate-500 sm:px-5">
                                         Periode
                                     </th>
 
-                                    <th class="px-5 py-3 text-right font-bold text-slate-600">
+                                    <th class="px-4 py-3 text-right text-xs font-bold uppercase tracking-wide text-slate-500 sm:px-5">
                                         Jumlah Permohonan
                                     </th>
 
@@ -339,13 +346,13 @@
                                     <tr class="transition hover:bg-slate-50">
 
                                         {{-- NO --}}
-                                        <td class="px-5 py-3 text-slate-500">
+                                        <td class="px-4 py-3 text-slate-500 sm:px-5">
                                             {{ $index + 1 }}
                                         </td>
 
 
                                         {{-- PERIODE --}}
-                                        <td class="px-5 py-3 font-semibold text-slate-800">
+                                        <td class="px-4 py-3 font-semibold text-slate-800 sm:px-5">
 
                                             @php
                                                 $tanggal = \Carbon\Carbon::parse($item->period);
@@ -369,7 +376,7 @@
 
 
                                         {{-- TOTAL --}}
-                                        <td class="px-5 py-3 text-right">
+                                        <td class="px-4 py-3 text-right sm:px-5">
 
                                             <span class="inline-flex min-w-[80px] justify-center rounded-lg bg-blue-50 px-3 py-1.5 font-bold text-blue-700">
                                                 {{ $item->total }}
@@ -391,12 +398,12 @@
 
                                     <td
                                         colspan="2"
-                                        class="px-5 py-4 text-right font-bold text-slate-700"
+                                        class="px-4 py-4 text-right font-bold text-slate-700 sm:px-5"
                                     >
                                         Total
                                     </td>
 
-                                    <td class="px-5 py-4 text-right">
+                                    <td class="px-4 py-4 text-right sm:px-5">
 
                                         <span class="inline-flex min-w-[80px] justify-center rounded-lg bg-blue-600 px-3 py-1.5 font-bold text-white">
                                             {{ $data->sum('total') }}
@@ -450,27 +457,49 @@
             {{-- =====================================================
                 EXPORT
             ====================================================== --}}
-            <div class="mt-3 flex justify-end">
+            <div class="mt-4 flex flex-wrap justify-end gap-2 print:hidden">
 
                 <a
                     href="{{ route('permohonan.export', [
-                        'format' => 'csv',
                         'year' => $year,
                         'month' => $month,
-                        'kelompok_pelayanan_id' => $kelompokPelayananId
+                        'period' => $period,
+                        'kelompok_pelayanan_id' => $kelompokPelayananId,
                     ]) }}"
-                    class="rounded-xl bg-emerald-600 px-5 py-2.5 text-sm font-semibold text-white transition hover:bg-emerald-700"
+                    class="inline-flex h-10 items-center rounded-lg bg-emerald-600 px-4 text-sm font-semibold text-white transition hover:bg-emerald-700"
                 >
-                    ↓ Export CSV
+                    Unduh PDF
                 </a>
+
+                <button
+                    type="button"
+                    onclick="window.print()"
+                    class="inline-flex h-10 items-center rounded-lg border border-slate-300 bg-white px-4 text-sm font-semibold text-slate-700 transition hover:bg-slate-50"
+                >
+                    Cetak Rekap
+                </button>
 
             </div>
 
 
+            </div>
         </div>
 
     </main>
 
 </body>
+
+<style>
+    @media print {
+        @page { margin: 14mm; }
+        body { background: #fff !important; }
+        .sipper-sidebar,
+        .topbar { display: none !important; }
+        .sipper-content { width: 100% !important; margin-left: 0 !important; }
+        .sipper-content > div { padding: 0 !important; }
+        .shadow-sm { box-shadow: none !important; }
+        .rounded-xl { border-radius: 0 !important; }
+    }
+</style>
 
 </html>

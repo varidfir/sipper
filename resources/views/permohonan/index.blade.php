@@ -81,7 +81,7 @@
             min-height: 42px;
             padding: 0 18px;
             border: none;
-            background: linear-gradient(180deg, var(--primary) 0%, var(--primary-deep) 100%);
+            background: var(--primary);
             color: #fff;
             border-radius: 12px;
             font-size: 14px;
