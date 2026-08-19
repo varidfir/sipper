@@ -207,10 +207,11 @@
 
                                                 <select
                                                     name="jenis_pelayanan_select"
-                                                    class="input-control jenis-dropdown"
+                                                    class="jenis-dropdown hidden"
                                                     data-group="{{ $group->id }}"
                                                     disabled
-                                                    required
+                                                    tabindex="-1"
+                                                    aria-hidden="true"
                                                 >
                                                     <option value="">
                                                         Pilih @if($group->kode === 'AKTA')Jenis Akta @elseif($group->kode === 'KTP')Jenis KTP @else Jenis KK @endif
@@ -225,6 +226,32 @@
                                                         </option>
                                                     @endforeach
                                                 </select>
+                                                    <div class="jenis-search-wrapper">
+                                                        <input
+                                                            type="text"
+                                                            class="input-control jenis-search"
+                                                            data-group="{{ $group->id }}"
+                                                            value="{{ $selectedJenis?->kelompok_pelayanan_id == $group->id ? $selectedJenis->nama_pelayanan : '' }}"
+                                                            placeholder="Ketik atau pilih jenis pelayanan"
+                                                            autocomplete="off"
+                                                            disabled
+                                                            required
+                                                        >
+                                                        <button type="button" class="jenis-search-toggle" tabindex="-1" aria-label="Tampilkan pilihan jenis pelayanan"></button>
+                                                        <div class="jenis-suggestions" role="listbox" hidden>
+                                                            @foreach($group->jenisPelayanans as $jenis)
+                                                                <button
+                                                                    type="button"
+                                                                    class="jenis-suggestion"
+                                                                    data-value="{{ $jenis->id }}"
+                                                                    data-label="{{ $jenis->nama_pelayanan }}"
+                                                                    role="option"
+                                                                >
+                                                                    {{ $jenis->nama_pelayanan }}
+                                                                </button>
+                                                            @endforeach
+                                                        </div>
+                                                    </div>
                                             </div>
                                         @endif
 
@@ -233,19 +260,22 @@
                                             <label>Tanggal Permohonan <span class="req">*</span></label>
                                             <div class="date-input-wrapper">
                                                 <input
-                                                    type="text"
+                                                    type="date"
                                                     name="tanggal_permohonan"
-                                                    value="{{ old('tanggal_permohonan', isset($permohonan) ? $permohonan->tanggal_permohonan?->format('d/m/Y') : now()->format('d/m/Y')) }}"
+                                                    value="{{ old('tanggal_permohonan', isset($permohonan) ? $permohonan->tanggal_permohonan?->format('Y-m-d') : now()->format('Y-m-d')) }}"
                                                     required
                                                     class="input-control"
                                                     disabled
                                                 >
-                                                <svg class="calendar-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                                                <button type="button" class="calendar-button" aria-label="Buka kalender tanggal permohonan">
+                                                    <svg class="calendar-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" aria-hidden="true">
                                                     <rect x="3" y="4" width="18" height="18" rx="2" stroke-width="1.8"/>
                                                     <line x1="16" y1="2" x2="16" y2="6" stroke-width="1.8"/>
                                                     <line x1="8" y1="2" x2="8" y2="6" stroke-width="1.8"/>
                                                     <line x1="3" y1="10" x2="21" y2="10" stroke-width="1.8"/>
-                                                </svg>
+                                                    </svg>
+                                                </button>
+                                                <div class="calendar-popover" hidden></div>
                                             </div>
                                         </div>
 
@@ -257,7 +287,7 @@
                                                 name="nama_pemohon"
                                                 value="{{ old('nama_pemohon', $permohonan->nama_pemohon ?? '') }}"
                                                 required
-                                                class="input-control"
+                                                class="input-control uppercase-input"
                                                 placeholder="Masukkan nama lengkap"
                                                 disabled
                                             >
@@ -284,7 +314,7 @@
                                             <label>Kecamatan <span class="req">*</span></label>
                                             <select
                                                 name="kecamatan_id"
-                                                class="input-control kecamatan-select"
+                                                class="kecamatan-select hidden"
                                                 required
                                                 disabled
                                             >
@@ -298,6 +328,25 @@
                                                     </option>
                                                 @endforeach
                                             </select>
+                                            <div class="jenis-search-wrapper location-search-wrapper">
+                                                <input
+                                                    type="text"
+                                                    class="input-control location-search kecamatan-search uppercase-input"
+                                                    value="{{ $kecamatans->firstWhere('id', old('kecamatan_id', $permohonan->kecamatan_id ?? null))?->nama_kecamatan }}"
+                                                    placeholder="Ketik atau pilih kecamatan"
+                                                    autocomplete="off"
+                                                    disabled
+                                                    required
+                                                >
+                                                <button type="button" class="jenis-search-toggle location-search-toggle" tabindex="-1" aria-label="Tampilkan pilihan kecamatan"></button>
+                                                <div class="jenis-suggestions location-suggestions" role="listbox" hidden>
+                                                    @foreach($kecamatans as $kecamatan)
+                                                        <button type="button" class="jenis-suggestion location-suggestion" data-value="{{ $kecamatan->id }}" data-label="{{ $kecamatan->nama_kecamatan }}" role="option">
+                                                            {{ $kecamatan->nama_kecamatan }}
+                                                        </button>
+                                                    @endforeach
+                                                </div>
+                                            </div>
                                         </div>
 
                                         {{-- DESA / KELURAHAN --}}
@@ -305,7 +354,7 @@
                                             <label>Desa / Kelurahan <span class="req">*</span></label>
                                             <select
                                                 name="desa_id"
-                                                class="input-control desa-select"
+                                                class="desa-select hidden"
                                                 required
                                                 disabled
                                             >
@@ -320,6 +369,25 @@
                                                     </option>
                                                 @endforeach
                                             </select>
+                                            <div class="jenis-search-wrapper location-search-wrapper">
+                                                <input
+                                                    type="text"
+                                                    class="input-control location-search desa-search uppercase-input"
+                                                    value="{{ $desas->firstWhere('id', old('desa_id', $permohonan->desa_id ?? null))?->nama_desa }}"
+                                                    placeholder="Ketik atau pilih desa/kelurahan"
+                                                    autocomplete="off"
+                                                    disabled
+                                                    required
+                                                >
+                                                <button type="button" class="jenis-search-toggle location-search-toggle" tabindex="-1" aria-label="Tampilkan pilihan desa atau kelurahan"></button>
+                                                <div class="jenis-suggestions location-suggestions" role="listbox" hidden>
+                                                    @foreach($desas as $desa)
+                                                        <button type="button" class="jenis-suggestion location-suggestion" data-value="{{ $desa->id }}" data-label="{{ $desa->nama_desa }}" data-kecamatan="{{ $desa->kecamatan_id }}" role="option">
+                                                            {{ $desa->nama_desa }}
+                                                        </button>
+                                                    @endforeach
+                                                </div>
+                                            </div>
                                         </div>
 
                                         {{-- KETERANGAN (SIAPA PEMOHONNYA) --}}
@@ -329,7 +397,7 @@
                                                 type="text"
                                                 name="keterangan"
                                                 value="{{ old('keterangan', $permohonan->keterangan ?? '') }}"
-                                                class="input-control"
+                                                class="input-control uppercase-input"
                                                 placeholder="Contoh: YBS (Yang Bersangkutan), Anak, Istri, atau Nama"
                                                 disabled
                                             >
@@ -385,6 +453,241 @@
             const empty = document.getElementById('empty_state');
             const hint = document.getElementById('category_hint');
 
+            function uppercaseInput(input) {
+                input.value = input.value.toUpperCase();
+            }
+
+            function normalize(value) {
+                return String(value || '').trim().toLowerCase();
+            }
+
+            function matchesJenisQuery(label, query) {
+                const normalizedLabel = normalize(label);
+                const terms = normalize(query).split(/\s+/).filter(Boolean);
+
+                return terms.length > 0 && terms.every(term => normalizedLabel.includes(term));
+            }
+
+            function findJenisMatch(search) {
+                const panel = search.closest('.category-panel');
+                const dropdown = panel?.querySelector('.jenis-dropdown');
+                if (!dropdown) return null;
+
+                return Array.from(dropdown.options)
+                    .filter(option => option.value)
+                    .find(option => matchesJenisQuery(option.textContent, search.value));
+            }
+
+            function syncJenisSearch(search) {
+                const panel = search.closest('.category-panel');
+                const dropdown = panel?.querySelector('.jenis-dropdown');
+                const hidden = panel?.querySelector('.jenis-hidden');
+                if (!dropdown || !hidden) return;
+
+                const query = normalize(search.value);
+                const match = query ? findJenisMatch(search) : null;
+
+                if (match) {
+                    dropdown.value = match.value;
+                    hidden.value = match.value;
+                    search.setCustomValidity('');
+                } else {
+                    dropdown.value = '';
+                    hidden.value = '';
+                    search.setCustomValidity('Pilih salah satu jenis pelayanan yang tersedia.');
+                }
+            }
+
+            function renderJenisSuggestions(search, showAll = false) {
+                const wrapper = search.closest('.jenis-search-wrapper');
+                const menu = wrapper?.querySelector('.jenis-suggestions');
+                if (!menu) return;
+
+                const query = normalize(search.value);
+                const suggestions = Array.from(menu.querySelectorAll('.jenis-suggestion'));
+                let visibleCount = 0;
+
+                suggestions.forEach(suggestion => {
+                    const matches = showAll || matchesJenisQuery(suggestion.dataset.label, query);
+                    suggestion.hidden = !matches;
+                    if (matches) visibleCount += 1;
+                });
+
+                menu.hidden = visibleCount === 0;
+                search.dataset.suggestionIndex = '-1';
+            }
+
+            function highlightJenisSuggestion(search, direction) {
+                const menu = search.closest('.jenis-search-wrapper')?.querySelector('.jenis-suggestions');
+                if (!menu) return;
+
+                if (menu.hidden) renderJenisSuggestions(search, !normalize(search.value));
+
+                const visible = Array.from(menu.querySelectorAll('.jenis-suggestion:not([hidden])'));
+                if (!visible.length) return;
+
+                const currentIndex = Number(search.dataset.suggestionIndex || -1);
+                const nextIndex = currentIndex < 0
+                    ? (direction > 0 ? 0 : visible.length - 1)
+                    : (currentIndex + direction + visible.length) % visible.length;
+
+                visible.forEach(suggestion => suggestion.classList.remove('is-highlighted'));
+                visible[nextIndex].classList.add('is-highlighted');
+                visible[nextIndex].scrollIntoView({ block: 'nearest' });
+                search.dataset.suggestionIndex = String(nextIndex);
+            }
+
+            function closeJenisSuggestions() {
+                document.querySelectorAll('.jenis-suggestions').forEach(menu => {
+                    menu.hidden = true;
+                });
+            }
+
+            function locationMatches(label, query) {
+                const terms = normalize(query).split(/\s+/).filter(Boolean);
+                const normalizedLabel = normalize(label);
+
+                return terms.length > 0 && terms.every(term => normalizedLabel.includes(term));
+            }
+
+            function findLocationMatch(search) {
+                const wrapper = search.closest('.location-search-wrapper');
+                const select = wrapper?.previousElementSibling;
+                if (!select) return null;
+
+                const kecamatan = search.classList.contains('desa-search')
+                    ? search.closest('.category-panel')?.querySelector('.kecamatan-select')?.value
+                    : null;
+
+                return Array.from(select.options)
+                    .filter(option => option.value)
+                    .find(option => {
+                        if (kecamatan && option.dataset.kecamatan !== String(kecamatan)) return false;
+                        return locationMatches(option.textContent, search.value);
+                    });
+            }
+
+            function syncLocationSearch(search) {
+                const wrapper = search.closest('.location-search-wrapper');
+                const select = wrapper?.previousElementSibling;
+                if (!select) return;
+
+                uppercaseInput(search);
+
+                const match = normalize(search.value) ? findLocationMatch(search) : null;
+                select.value = match?.value || '';
+                search.setCustomValidity(match ? '' : 'Pilih salah satu pilihan yang tersedia.');
+
+                if (search.classList.contains('kecamatan-search')) {
+                    filterDesa(search.closest('.category-panel'));
+                }
+            }
+
+            function renderLocationSuggestions(search, showAll = false) {
+                const wrapper = search.closest('.location-search-wrapper');
+                const menu = wrapper?.querySelector('.location-suggestions');
+                if (!menu) return;
+
+                const query = normalize(search.value);
+                const kecamatan = search.classList.contains('desa-search')
+                    ? search.closest('.category-panel')?.querySelector('.kecamatan-select')?.value
+                    : null;
+                const suggestions = Array.from(menu.querySelectorAll('.location-suggestion'));
+                let visibleCount = 0;
+
+                suggestions.forEach(suggestion => {
+                    const belongsToKecamatan = !kecamatan || suggestion.dataset.kecamatan === String(kecamatan);
+                    const matches = belongsToKecamatan && (showAll || locationMatches(suggestion.dataset.label, query));
+                    suggestion.hidden = !matches;
+                    suggestion.classList.remove('is-highlighted');
+                    if (matches) visibleCount += 1;
+                });
+
+                menu.hidden = visibleCount === 0;
+                search.dataset.suggestionIndex = '-1';
+            }
+
+            function highlightLocationSuggestion(search, direction) {
+                const menu = search.closest('.location-search-wrapper')?.querySelector('.location-suggestions');
+                if (!menu) return;
+
+                if (menu.hidden) renderLocationSuggestions(search, !normalize(search.value));
+
+                const visible = Array.from(menu.querySelectorAll('.location-suggestion:not([hidden])'));
+                if (!visible.length) return;
+
+                const currentIndex = Number(search.dataset.suggestionIndex || -1);
+                const nextIndex = currentIndex < 0
+                    ? (direction > 0 ? 0 : visible.length - 1)
+                    : (currentIndex + direction + visible.length) % visible.length;
+
+                visible.forEach(suggestion => suggestion.classList.remove('is-highlighted'));
+                visible[nextIndex].classList.add('is-highlighted');
+                visible[nextIndex].scrollIntoView({ block: 'nearest' });
+                search.dataset.suggestionIndex = String(nextIndex);
+            }
+
+            function bindLocationSearch(search) {
+                const wrapper = search.closest('.location-search-wrapper');
+                const toggle = wrapper?.querySelector('.location-search-toggle');
+                const menu = wrapper?.querySelector('.location-suggestions');
+
+                search.addEventListener('input', () => {
+                    syncLocationSearch(search);
+                    renderLocationSuggestions(search);
+                });
+
+                search.addEventListener('keydown', event => {
+                    if (event.key === 'ArrowDown' || event.key === 'ArrowUp') {
+                        event.preventDefault();
+                        highlightLocationSuggestion(search, event.key === 'ArrowDown' ? 1 : -1);
+                        return;
+                    }
+
+                    if (event.key === 'Escape') {
+                        event.preventDefault();
+                        closeJenisSuggestions();
+                        return;
+                    }
+
+                    if (event.key !== 'Enter') return;
+                    event.preventDefault();
+
+                    const suggestionsOpen = menu && !menu.hidden;
+
+                    const highlighted = wrapper?.querySelector('.location-suggestion.is-highlighted');
+                    const match = highlighted || findLocationMatch(search);
+                    if (!match) {
+                        syncLocationSearch(search);
+                        if (suggestionsOpen) event.stopPropagation();
+                        return;
+                    }
+
+                    search.value = match.dataset.label || match.textContent.trim();
+                    syncLocationSearch(search);
+                    renderLocationSuggestions(search);
+                    closeJenisSuggestions();
+                    if (suggestionsOpen) event.stopPropagation();
+                });
+
+                toggle?.addEventListener('click', () => {
+                    if (menu?.hidden) {
+                        search.focus();
+                        renderLocationSuggestions(search, true);
+                    } else {
+                        closeJenisSuggestions();
+                    }
+                });
+
+                menu?.querySelectorAll('.location-suggestion').forEach(suggestion => {
+                    suggestion.addEventListener('click', () => {
+                        search.value = suggestion.dataset.label || '';
+                        syncLocationSearch(search);
+                        closeJenisSuggestions();
+                    });
+                });
+            }
+
             function filterDesa(panel) {
                 const kecamatan = panel.querySelector('.kecamatan-select');
                 const desa = panel.querySelector('.desa-select');
@@ -399,8 +702,20 @@
                     opt.style.display = match ? '' : 'none';
                 });
 
+                const desaSearch = panel.querySelector('.desa-search');
+                if (desaSearch) {
+                    renderLocationSuggestions(desaSearch, false);
+                    const selectedDesa = desa.selectedOptions[0];
+                    if (selectedDesa?.value && selectedDesa.dataset.kecamatan === String(selectedKec)) {
+                        desaSearch.value = selectedDesa.textContent.trim();
+                    } else if (!selectedKec) {
+                        desaSearch.value = '';
+                    }
+                }
+
                 if (desa.selectedOptions[0] && desa.selectedOptions[0].style.display === 'none') {
                     desa.value = '';
+                    if (desaSearch) desaSearch.value = '';
                 }
             }
 
@@ -435,6 +750,11 @@
                             hidden.disabled = false;
                         }
 
+                        const search = panel.querySelector('.jenis-search');
+                        if (search && dropdown?.value && !search.value) {
+                            search.value = dropdown.selectedOptions[0]?.textContent.trim() || '';
+                        }
+
                         // Attach event listeners for kecamatan / desa cascading filter
                         const kecamatan = panel.querySelector('.kecamatan-select');
                         if (kecamatan) {
@@ -460,10 +780,246 @@
                 dropdown.addEventListener('change', () => {
                     const panel = dropdown.closest('.category-panel');
                     const hidden = panel.querySelector('.jenis-hidden');
+                    const search = panel.querySelector('.jenis-search');
                     if (hidden) {
                         hidden.value = dropdown.value;
                     }
+                    if (search) {
+                        search.value = dropdown.selectedOptions[0]?.textContent.trim() || '';
+                    }
                 });
+            });
+
+            document.querySelectorAll('.jenis-search').forEach(search => {
+                search.addEventListener('input', () => {
+                    syncJenisSearch(search);
+                    renderJenisSuggestions(search);
+                });
+                search.addEventListener('change', () => syncJenisSearch(search));
+                search.addEventListener('keydown', event => {
+                    if (event.key === 'ArrowDown' || event.key === 'ArrowUp') {
+                        event.preventDefault();
+                        highlightJenisSuggestion(search, event.key === 'ArrowDown' ? 1 : -1);
+                        return;
+                    }
+
+                    if (event.key !== 'Enter') return;
+
+                    event.preventDefault();
+                    const suggestionsOpen = menu && !menu.hidden;
+                    const highlighted = search.closest('.jenis-search-wrapper')
+                        ?.querySelector('.jenis-suggestion.is-highlighted');
+                    const match = highlighted || findJenisMatch(search);
+                    if (!match) {
+                        syncJenisSearch(search);
+                        if (suggestionsOpen) event.stopPropagation();
+                        return;
+                    }
+
+                    search.value = match.dataset.label || match.textContent.trim();
+                    syncJenisSearch(search);
+                    closeJenisSuggestions();
+                    if (suggestionsOpen) event.stopPropagation();
+                });
+
+                const wrapper = search.closest('.jenis-search-wrapper');
+                const toggle = wrapper?.querySelector('.jenis-search-toggle');
+                const menu = wrapper?.querySelector('.jenis-suggestions');
+
+                toggle?.addEventListener('click', () => {
+                    if (menu?.hidden) {
+                        search.focus();
+                        renderJenisSuggestions(search, true);
+                    } else {
+                        closeJenisSuggestions();
+                    }
+                });
+
+                menu?.querySelectorAll('.jenis-suggestion').forEach(suggestion => {
+                    suggestion.addEventListener('click', () => {
+                        search.value = suggestion.dataset.label || '';
+                        syncJenisSearch(search);
+                        closeJenisSuggestions();
+                    });
+                });
+            });
+
+            document.querySelectorAll('.location-search').forEach(bindLocationSearch);
+
+            const monthNames = [
+                'Januari', 'Februari', 'Maret', 'April', 'Mei', 'Juni',
+                'Juli', 'Agustus', 'September', 'Oktober', 'November', 'Desember'
+            ];
+            const monthShortNames = ['Jan', 'Feb', 'Mar', 'Apr', 'Mei', 'Jun', 'Jul', 'Ags', 'Sep', 'Okt', 'Nov', 'Des'];
+            const dayNames = ['Min', 'Sen', 'Sel', 'Rab', 'Kam', 'Jum', 'Sab'];
+
+            function parseDate(value) {
+                const [year, month, day] = String(value || '').split('-').map(Number);
+                return year && month && day ? new Date(year, month - 1, day) : new Date();
+            }
+
+            function formatDate(date) {
+                return [date.getFullYear(), String(date.getMonth() + 1).padStart(2, '0'), String(date.getDate()).padStart(2, '0')].join('-');
+            }
+
+            function closeCalendars(except = null) {
+                document.querySelectorAll('.calendar-popover').forEach(calendar => {
+                    if (calendar !== except) calendar.hidden = true;
+                });
+            }
+
+            document.querySelectorAll('.date-input-wrapper').forEach(wrapper => {
+                const input = wrapper.querySelector('input[type="date"]');
+                const button = wrapper.querySelector('.calendar-button');
+                const calendar = wrapper.querySelector('.calendar-popover');
+                if (!input || !button || !calendar) return;
+
+                let visibleMonth = parseDate(input.value);
+                let periodMode = 'dates';
+
+                function renderCalendar() {
+                    const year = visibleMonth.getFullYear();
+                    const month = visibleMonth.getMonth();
+                    const selected = input.value;
+                    const firstDay = new Date(year, month, 1).getDay();
+                    const daysInMonth = new Date(year, month + 1, 0).getDate();
+                    const cells = [];
+
+                    for (let index = 0; index < firstDay; index += 1) cells.push('<span></span>');
+                    for (let day = 1; day <= daysInMonth; day += 1) {
+                        const date = formatDate(new Date(year, month, day));
+                        cells.push(`<button type="button" class="calendar-day${date === selected ? ' is-selected' : ''}" data-date="${date}">${day}</button>`);
+                    }
+
+                    const yearOptions = Array.from({ length: 21 }, (_, index) => year - 10 + index);
+
+                    calendar.innerHTML = `
+                        <div class="calendar-head">
+                            <button type="button" class="calendar-nav" data-month="-1" aria-label="Bulan sebelumnya">‹</button>
+                            <div class="calendar-period-buttons">
+                                <button type="button" class="calendar-period-toggle calendar-month-toggle">${monthShortNames[month]}</button>
+                                <button type="button" class="calendar-period-toggle calendar-year-toggle">${year}</button>
+                            </div>
+                            <button type="button" class="calendar-nav" data-month="1" aria-label="Bulan berikutnya">›</button>
+                        </div>
+                        <div class="calendar-period-picker"${periodMode === 'dates' ? ' hidden' : ''}>
+                            <div class="calendar-period-section" data-period-section="months"${periodMode !== 'months' ? ' hidden' : ''}>
+                                <span>Bulan</span>
+                                <div class="calendar-month-options">${monthShortNames.map((name, index) => `<button type="button" class="calendar-period-option${index === month ? ' is-active' : ''}" data-month-value="${index}" aria-label="${monthNames[index]}">${name}</button>`).join('')}</div>
+                            </div>
+                            <div class="calendar-period-section" data-period-section="years"${periodMode !== 'years' ? ' hidden' : ''}>
+                                <span>Tahun</span>
+                                <div class="calendar-year-options">${yearOptions.map(optionYear => `<button type="button" class="calendar-period-option${optionYear === year ? ' is-active' : ''}" data-year-value="${optionYear}">${optionYear}</button>`).join('')}</div>
+                            </div>
+                        </div>
+                        <div class="calendar-weekdays">${dayNames.map(day => `<span>${day}</span>`).join('')}</div>
+                        <div class="calendar-days">${cells.join('')}</div>
+                        <button type="button" class="calendar-today">Hari ini</button>
+                    `;
+                    calendar.querySelectorAll('.calendar-nav').forEach(nav => nav.addEventListener('click', event => {
+                        event.stopPropagation();
+                        visibleMonth.setMonth(visibleMonth.getMonth() + Number(nav.dataset.month));
+                        renderCalendar();
+                    }));
+                    calendar.querySelector('.calendar-month-toggle')?.addEventListener('click', event => {
+                        event.stopPropagation();
+                        periodMode = 'months';
+                        renderCalendar();
+                        calendar.hidden = false;
+                    });
+                    calendar.querySelector('.calendar-year-toggle')?.addEventListener('click', event => {
+                        event.stopPropagation();
+                        periodMode = 'years';
+                        renderCalendar();
+                        calendar.hidden = false;
+                    });
+                    calendar.querySelectorAll('[data-month-value]').forEach(option => option.addEventListener('click', event => {
+                        event.stopPropagation();
+                        visibleMonth.setMonth(Number(option.dataset.monthValue));
+                        periodMode = 'dates';
+                        renderCalendar();
+                        calendar.hidden = false;
+                    }));
+                    calendar.querySelectorAll('[data-year-value]').forEach(option => option.addEventListener('click', event => {
+                        event.stopPropagation();
+                        visibleMonth.setFullYear(Number(option.dataset.yearValue));
+                        periodMode = 'dates';
+                        renderCalendar();
+                        calendar.hidden = false;
+                    }));
+                    calendar.querySelectorAll('.calendar-day').forEach(day => day.addEventListener('click', () => {
+                        input.value = day.dataset.date;
+                        input.dispatchEvent(new Event('change', { bubbles: true }));
+                        calendar.hidden = true;
+                    }));
+                    calendar.querySelector('.calendar-today')?.addEventListener('click', () => {
+                        const today = new Date();
+                        input.value = formatDate(today);
+                        input.dispatchEvent(new Event('change', { bubbles: true }));
+                        calendar.hidden = true;
+                    });
+                }
+
+                button.addEventListener('click', () => {
+                    if (input.disabled) return;
+                    closeCalendars(calendar);
+                    visibleMonth = new Date();
+                    periodMode = 'dates';
+                    renderCalendar();
+                    calendar.hidden = false;
+                });
+            });
+
+            document.addEventListener('click', event => {
+                if (!event.target.closest('.date-input-wrapper')) closeCalendars();
+            });
+
+            document.querySelectorAll('.uppercase-input').forEach(input => {
+                uppercaseInput(input);
+                input.addEventListener('input', () => uppercaseInput(input));
+            });
+
+            const form = document.querySelector('.form-page-container form');
+
+            form?.addEventListener('keydown', event => {
+                if (event.key !== 'Enter') return;
+
+                const current = event.target;
+                if (!(current instanceof HTMLInputElement || current instanceof HTMLSelectElement)) return;
+
+                const openSuggestions = current.closest('.jenis-search-wrapper, .location-search-wrapper')
+                    ?.querySelector('.jenis-suggestions:not([hidden]), .location-suggestions:not([hidden])');
+                if (openSuggestions) return;
+
+                const fields = Array.from(form.querySelectorAll('input:not([type="hidden"]), select, textarea'))
+                    .filter(field => !field.disabled && field.offsetParent !== null);
+                const currentIndex = fields.indexOf(current);
+                const nextField = fields[currentIndex + 1];
+
+                event.preventDefault();
+
+                if (!String(current.value || '').trim()) {
+                    current.reportValidity();
+                    current.focus();
+                    return;
+                }
+
+                if (form.checkValidity()) {
+                    form.requestSubmit();
+                    return;
+                }
+
+                nextField?.focus();
+            });
+
+            form?.addEventListener('submit', () => {
+                document.querySelectorAll('.uppercase-input').forEach(uppercaseInput);
+            });
+
+            document.addEventListener('click', event => {
+                if (!event.target.closest('.jenis-search-wrapper')) {
+                    closeJenisSuggestions();
+                }
             });
 
             tabs.forEach(tab => {
