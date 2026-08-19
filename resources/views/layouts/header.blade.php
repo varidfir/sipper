@@ -5,8 +5,9 @@
 
 <header class="topbar">
     <div class="crumb">
-        Sistem Rekap <span style="margin: 0 8px; color: #ffffff;">/</span> 
-        <strong>{{ $pageTitle ?? 'Input Rekap' }}</strong>
+        <span class="crumb-prefix">Sistem Rekap</span>
+        <span class="crumb-separator">/</span>
+        <strong class="crumb-current">{{ $pageTitle ?? 'Input Rekap' }}</strong>
     </div>
 
     <div class="top-actions">

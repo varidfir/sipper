@@ -12,7 +12,7 @@
     --sip-bg: #f4f6f9;
 
     --sip-sidebar-bg: #0d3969;
-    --sip-topbar-bg: color-mix(in srgb, var(--sip-sidebar-bg) 95%, white);
+    --sip-topbar-bg: color-mix(in srgb, var(--sip-sidebar-bg) 92%, white);
     --sip-sidebar-hover: rgba(255, 255, 255, 0.07);
     --sip-sidebar-active: #2f80ed;
 
@@ -658,9 +658,22 @@ textarea {
 }
 
 .crumb strong {
-    color: #0f172a;
+    color: #94a3b8;
 
     font-weight: 700;
+}
+
+.crumb-prefix,
+.crumb-separator {
+    color: #ffffff !important;
+}
+
+.crumb-separator {
+    margin: 0 8px;
+}
+
+.crumb-current {
+    color: #94a3b8 !important;
 }
 
 
