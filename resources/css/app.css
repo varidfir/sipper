@@ -643,6 +643,155 @@ textarea {
     align-items: center;
 
     gap: 12px;
+
+    position: relative;
+}
+
+
+/* =========================================================
+   TOP PROFILE
+========================================================= */
+
+.top-profile {
+    position: relative;
+}
+
+.top-profile-trigger {
+    display: flex;
+    align-items: center;
+
+    gap: 9px;
+
+    min-width: 0;
+
+    padding: 3px 4px 3px 6px;
+
+    border: 1px solid var(--sip-border);
+    border-radius: 10px;
+
+    background: #ffffff;
+    color: var(--sip-text);
+
+    cursor: pointer;
+
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.03);
+}
+
+.top-profile-trigger:hover,
+.top-profile-trigger:focus-visible {
+    border-color: #b9c8dc;
+    outline: none;
+}
+
+.top-profile-avatar {
+    width: 32px;
+    height: 32px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    flex: 0 0 32px;
+
+    overflow: hidden;
+
+    border-radius: 50%;
+    background: #edf2f7;
+    color: #64748b;
+}
+
+.top-profile-avatar svg {
+    width: 22px;
+    height: 22px;
+}
+
+.top-profile-details {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+
+    min-width: 0;
+}
+
+.top-profile-details strong,
+.top-profile-details small {
+    max-width: 125px;
+
+    overflow: hidden;
+
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+
+.top-profile-details strong {
+    font-size: 12px;
+    line-height: 1.25;
+}
+
+.top-profile-details small {
+    margin-top: 1px;
+
+    color: var(--sip-muted);
+
+    font-size: 10px;
+    line-height: 1.2;
+}
+
+.top-profile-chevron {
+    width: 15px;
+    height: 15px;
+
+    flex: 0 0 15px;
+
+    color: #64748b;
+}
+
+.top-profile-menu {
+    position: absolute;
+    top: calc(100% + 8px);
+    right: 0;
+    z-index: 60;
+
+    width: 170px;
+
+    padding: 6px;
+
+    border: 1px solid var(--sip-border);
+    border-radius: 9px;
+
+    background: #ffffff;
+    box-shadow: 0 10px 24px rgba(15, 23, 42, 0.12);
+}
+
+.top-profile-menu-link {
+    display: block;
+
+    width: 100%;
+
+    padding: 9px 10px;
+
+    border: 0;
+    border-radius: 6px;
+
+    background: transparent;
+    color: var(--sip-text);
+
+    font-size: 12px;
+    font-weight: 600;
+    text-align: left;
+    text-decoration: none;
+
+    cursor: pointer;
+}
+
+.top-profile-menu-link:hover,
+.top-profile-menu-link:focus-visible {
+    background: #f1f5f9;
+    outline: none;
+}
+
+.top-profile-logout {
+    color: var(--sip-danger);
 }
 
 

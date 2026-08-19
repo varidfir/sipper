@@ -30,112 +30,44 @@
     </a>
 
 
-    {{-- =====================================================
-        AREA MENU
-        HANYA BAGIAN INI YANG SCROLL
-    ====================================================== --}}
     <div class="sipper-sidebar-menu">
 
-
-        {{-- =================================================
-            MENU UTAMA
-        ================================================== --}}
         <div class="sipper-nav-section">
 
             <div class="sipper-nav-title">
                 Menu Utama
             </div>
 
-
             <nav class="sipper-nav">
 
-                {{-- Dashboard --}}
                 <a
                     href="{{ route('dashboard') }}"
                     class="{{ request()->routeIs('dashboard') ? 'active' : '' }}"
                 >
-
                     <span class="sipper-nav-icon">
-
-                        <svg
-                            viewBox="0 0 24 24"
-                            fill="none"
-                            stroke="currentColor"
-                        >
-                            <path
-                                d="M3 9.5L12 3L21 9.5V20C21 20.55 20.55 21 20 21H4C3.45 21 3 20.55 3 20V9.5Z"
-                                stroke-linecap="round"
-                                stroke-linejoin="round"
-                            />
-
-                            <path
-                                d="M9 21V12H15V21"
-                                stroke-linecap="round"
-                                stroke-linejoin="round"
-                            />
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                            <path d="M3 9.5L12 3L21 9.5V20C21 20.55 20.55 21 20 21H4C3.45 21 3 20.55 3 20V9.5Z" stroke-linecap="round" stroke-linejoin="round" />
+                            <path d="M9 21V12H15V21" stroke-linecap="round" stroke-linejoin="round" />
                         </svg>
-
                     </span>
-
-                    <span class="sipper-nav-label">
-                        Dashboard
-                    </span>
-
+                    <span class="sipper-nav-label">Dashboard</span>
                 </a>
 
-
-                {{-- Data Permohonan --}}
                 <a
                     href="{{ route('permohonan.index') }}"
                     class="{{ request()->routeIs('permohonan.index', 'permohonan.show', 'permohonan.edit') ? 'active' : '' }}"
                 >
-
                     <span class="sipper-nav-icon">
-
-                        <svg
-                            viewBox="0 0 24 24"
-                            fill="none"
-                            stroke="currentColor"
-                        >
-                            <path
-                                d="M14 2H6C4.89543 2 4 2.89543 4 4V20C4 21.1046 4.89543 22 6 22H18C19.1046 22 20 21.1046 20 20V8L14 2Z"
-                                stroke-linecap="round"
-                                stroke-linejoin="round"
-                            />
-
-                            <path
-                                d="M14 2V8H20"
-                                stroke-linecap="round"
-                                stroke-linejoin="round"
-                            />
-
-                            <path
-                                d="M16 13H8"
-                                stroke-linecap="round"
-                                stroke-linejoin="round"
-                            />
-
-                            <path
-                                d="M16 17H8"
-                                stroke-linecap="round"
-                                stroke-linejoin="round"
-                            />
-
-                            <path
-                                d="M10 9H8"
-                                stroke-linecap="round"
-                                stroke-linejoin="round"
-                            />
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                            <path d="M14 2H6C4.89543 2 4 2.89543 4 4V20C4 21.1046 4.89543 22 6 22H18C19.1046 22 20 21.1046 20 20V8L14 2Z" stroke-linecap="round" stroke-linejoin="round" />
+                            <path d="M14 2V8H20" stroke-linecap="round" stroke-linejoin="round" />
+                            <path d="M16 13H8" stroke-linecap="round" stroke-linejoin="round" />
+                            <path d="M16 17H8" stroke-linecap="round" stroke-linejoin="round" />
+                            <path d="M10 9H8" stroke-linecap="round" stroke-linejoin="round" />
                         </svg>
-
                     </span>
-
-                    <span class="sipper-nav-label">
-                        Data Permohonan
-                    </span>
-
+                    <span class="sipper-nav-label">Data Permohonan</span>
                 </a>
-
 
                 {{-- Input Rekap --}}
                 <a
@@ -243,7 +175,7 @@
                             stroke="currentColor"
                         >
                             <path
-                                d="M21 15V19C21 19.5304 20.7893 20.0391 20.4142 20.4142C20.0391 20.7893 19.5304 21 19 21H5C4.46957 21 3.96086 20.7893 3.58579 20.4142 3 19.5304 3 19V15"
+                                d="M21 15V19C21 20.1046 20.1046 21 19 21H5C3.89543 21 3 20.1046 3 19V15"
                                 stroke-linecap="round"
                                 stroke-linejoin="round"
                             />
@@ -464,6 +396,7 @@
     </div>
 
 
+    @if (false)
     {{-- =====================================================
         USER PROFILE + LOGOUT
         BAGIAN INI SELALU DI BAWAH
@@ -570,5 +503,6 @@
         </form>
 
     </div>
+    @endif
 
 </aside>
