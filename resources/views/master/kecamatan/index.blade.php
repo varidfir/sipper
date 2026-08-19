@@ -2,19 +2,19 @@
 @include('layouts.sidebar')
 
 <style>
-    .kecamatan-page { min-height: 100vh; padding: 18px clamp(16px, 3vw, 32px) 32px; background: #f4f6f9; }
+    .kecamatan-page { min-height: 100vh; padding: 18px clamp(16px, 3vw, 32px) 32px; background: var(--sip-bg); }
     .kecamatan-panel { max-width: 1360px; margin: 0 auto; overflow: hidden; border: 1px solid #dbe3ed; border-radius: 3px; background: #fff; box-shadow: 0 1px 3px rgba(15, 23, 42, .04); }
     .kecamatan-header { display: flex; align-items: center; justify-content: space-between; gap: 16px; padding: 18px 20px; border-bottom: 1px solid #dbe3ed; }
-    .kecamatan-kicker { margin: 0 0 4px; color: #1d61e8; font-size: 10px; font-weight: 800; letter-spacing: .12em; text-transform: uppercase; }
+    .kecamatan-kicker { margin: 0 0 4px; color: var(--sip-primary); font-size: 10px; font-weight: 800; letter-spacing: .12em; text-transform: uppercase; }
     .kecamatan-title { margin: 0; color: #0f172a; font-size: 22px; line-height: 1.2; }
     .kecamatan-subtitle { margin: 5px 0 0; color: #64748b; font-size: 12px; }
     .kecamatan-actions { display: flex; gap: 8px; }
     .kecamatan-button { display: inline-flex; align-items: center; justify-content: center; min-height: 35px; padding: 0 14px; border-radius: 3px; font-size: 12px; font-weight: 700; text-decoration: none; }
-    .kecamatan-button-primary { border: 1px solid #1d61e8; background: #1d61e8; color: #fff; }
-    .kecamatan-button-primary:hover { background: #1752ca; }
+    .kecamatan-button-primary { border: 1px solid var(--sip-primary); background: var(--sip-primary); color: #fff; }
+    .kecamatan-button-primary:hover { background: var(--sip-primary-hover); }
     .kecamatan-button-secondary { border: 1px solid #cbd5e1; background: #fff; color: #334155; }
     .kecamatan-button-secondary:hover { background: #f8fafc; }
-    .kecamatan-alert { margin: 14px 20px 0; padding: 10px 12px; border: 1px solid #bbf7d0; border-radius: 3px; background: #f0fdf4; color: #166534; font-size: 12px; }
+    .kecamatan-alert { margin: 14px 20px 0; padding: 10px 12px; border: 1px solid var(--sip-primary-border); border-radius: 3px; background: var(--sip-primary-soft); color: var(--sip-primary); font-size: 12px; }
     .kecamatan-alert strong { display: block; margin-bottom: 2px; }
     .kecamatan-content { padding: 18px 20px 20px; }
     .kecamatan-list-head { display: flex; align-items: center; justify-content: space-between; gap: 12px; margin-bottom: 8px; }
@@ -22,15 +22,15 @@
     .kecamatan-count { color: #64748b; font-size: 11px; font-weight: 700; }
     .kecamatan-table-wrap { overflow-x: auto; border: 1px solid #dbe3ed; border-radius: 3px; }
     .kecamatan-table { width: 100%; border-collapse: collapse; font-size: 12px; }
-    .kecamatan-table th { padding: 10px 12px; border-bottom: 1px solid #dbe3ed; background: #eff6ff; color: #1e40af; font-size: 10px; text-align: left; text-transform: uppercase; }
+    .kecamatan-table th { padding: 10px 12px; border-bottom: 1px solid #dbe3ed; background: var(--sip-primary-soft); color: var(--sip-primary-hover); font-size: 10px; text-align: left; text-transform: uppercase; }
     .kecamatan-table td { padding: 11px 12px; border-bottom: 1px solid #edf2f7; color: #475569; }
     .kecamatan-table tr:last-child td { border-bottom: 0; }
-    .kecamatan-table tbody tr:hover { background: #f8fbff; }
+    .kecamatan-table tbody tr:hover { background: #f4f8ff; }
     .kecamatan-number { width: 60px; color: #94a3b8 !important; }
     .kecamatan-name { color: #1f2937 !important; font-weight: 700; }
     .kecamatan-row-actions { display: flex; justify-content: flex-end; gap: 6px; }
     .kecamatan-action { display: inline-flex; align-items: center; justify-content: center; min-height: 29px; padding: 0 10px; border-radius: 3px; font-size: 11px; font-weight: 700; text-decoration: none; }
-    .kecamatan-edit { border: 1px solid #bfdbfe; background: #eff6ff; color: #1d4ed8; }
+    .kecamatan-edit { border: 1px solid var(--sip-primary-border); background: var(--sip-primary-soft); color: var(--sip-primary); }
     .kecamatan-edit:hover { background: #dbeafe; }
     .kecamatan-delete { border: 1px solid #fecaca; background: #fff1f2; color: #b91c1c; cursor: pointer; }
     .kecamatan-delete:hover { background: #fee2e2; }
@@ -60,12 +60,8 @@
                         <a href="{{ route('kecamatan.create') }}" class="kecamatan-button kecamatan-button-primary">
                             + Tambah
                         </a>
-                        <a href="{{ route('dashboard') }}" class="kecamatan-button kecamatan-button-secondary">
-                            ← Kembali
-                        </a>
                     </div>
                 </div>
-            </div>
 
             {{-- NOTIFIKASI --}}
             @if(session('status'))

@@ -5,7 +5,7 @@
 
 <header class="topbar">
     <div class="crumb">
-        Sistem Rekap <span style="margin: 0 8px; color: #cbd5e1;">/</span> 
+        Sistem Rekap <span style="margin: 0 8px; color: #ffffff;">/</span> 
         <strong>{{ $pageTitle ?? 'Input Rekap' }}</strong>
     </div>
 

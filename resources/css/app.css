@@ -11,9 +11,10 @@
 
     --sip-bg: #f4f6f9;
 
-    --sip-sidebar-bg: #0d2348;
+    --sip-sidebar-bg: #0d3969;
+    --sip-topbar-bg: color-mix(in srgb, var(--sip-sidebar-bg) 95%, white);
     --sip-sidebar-hover: rgba(255, 255, 255, 0.07);
-    --sip-sidebar-active: #2874dc;
+    --sip-sidebar-active: #2f80ed;
 
     --sip-sidebar-text: rgba(239, 246, 255, 0.92);
     --sip-sidebar-title: rgba(203, 219, 239, 0.72);
@@ -28,9 +29,15 @@
     --sip-primary: #1d61e8;
     --sip-primary-hover: #1752ca;
 
+    --sip-primary-soft: #eaf3ff;
+    --sip-primary-border: #bfdbfe;
+    --sip-success: #16866a;
+    --sip-warning: #c47a12;
+
     --sip-danger: #ef4444;
 
     --sip-sidebar-width: 238px;
+    --sip-topbar-height: 64px;
 }
 
 
@@ -103,7 +110,7 @@ textarea {
 
     color: #ffffff;
 
-    background: #0d3969;
+    background: var(--sip-sidebar-bg);
 
     border-right: 1px solid rgba(255, 255, 255, 0.05);
 
@@ -116,6 +123,17 @@ textarea {
     overflow: hidden;
 }
 
+.sipper-sidebar::after {
+    content: "";
+
+    position: absolute;
+    top: var(--sip-topbar-height);
+    left: 12px;
+    right: 12px;
+
+    border-bottom: 1px solid rgba(255, 255, 255, 0.09);
+}
+
 
 /* =========================================================
    BRAND
@@ -125,6 +143,8 @@ textarea {
     display: flex;
     align-items: center;
 
+    transform: translateY(-8px);
+
     gap: 11px;
 
     flex: 0 0 auto;
@@ -132,8 +152,6 @@ textarea {
     padding: 1px 9px 20px;
 
     margin-bottom: 18px;
-
-    border-bottom: 1px solid rgba(255, 255, 255, 0.09);
 
     text-decoration: none;
     color: #ffffff;
@@ -605,9 +623,9 @@ textarea {
 ========================================================= */
 
 .topbar {
-    height: 64px;
+    height: var(--sip-topbar-height);
 
-    flex: 0 0 64px;
+    flex: 0 0 var(--sip-topbar-height);
 
     display: flex;
     align-items: center;
@@ -615,7 +633,9 @@ textarea {
 
     padding: 0 32px;
 
-    background: var(--sip-bg);
+    background: var(--sip-topbar-bg);
+
+    border-bottom: 1px solid rgba(255, 255, 255, 0.09);
 
     position: sticky;
 
@@ -632,7 +652,7 @@ textarea {
 .crumb {
     font-size: 13px;
 
-    color: #64748b;
+    color: #ffffff;
 
     font-weight: 500;
 }
@@ -866,6 +886,13 @@ textarea {
     min-width: 0;
 
     margin: 0;
+
+    padding: 22px 24px 20px;
+
+    border: 1px solid var(--sip-border);
+    border-radius: 16px;
+    background: var(--sip-panel);
+    box-shadow: 0 8px 22px rgba(15, 23, 42, 0.04);
 }
 
 
@@ -1724,6 +1751,8 @@ textarea.input-control {
     .topbar {
         height: 60px;
 
+        flex-basis: 60px;
+
         padding: 0 16px;
     }
 
@@ -1753,6 +1782,10 @@ textarea.input-control {
 
     .form-panel-card {
         padding: 18px;
+    }
+
+    .form-page-container {
+        padding: 18px 16px 20px;
     }
 
     .form-header {
@@ -1786,12 +1819,28 @@ textarea.input-control {
     padding: clamp(20px, 3vw, 28px) clamp(16px, 3vw, 32px) 38px;
 }
 
+.dashboard-main-panel {
+    overflow: hidden;
+    border: 1px solid var(--sip-border);
+    border-radius: 16px;
+    background: var(--sip-panel);
+    box-shadow: 0 8px 22px rgba(15, 23, 42, 0.04);
+}
+
 .dashboard-heading {
     display: flex;
     align-items: flex-end;
     justify-content: space-between;
     gap: 24px;
-    margin-bottom: 24px;
+    padding: 22px 24px;
+    border-bottom: 1px solid var(--sip-border);
+}
+
+.dashboard-main-panel > .dashboard-stats,
+.dashboard-main-panel > .dashboard-panel,
+.dashboard-main-panel > .dashboard-lower {
+    margin-right: 24px;
+    margin-left: 24px;
 }
 
 .dashboard-kicker {
@@ -2126,6 +2175,8 @@ textarea.input-control {
 
 .dashboard-footer {
     margin-top: 20px;
+    padding: 16px 24px 0;
+    border-top: 1px solid var(--sip-border);
     color: #94a3b8;
     font-size: 10px;
     text-align: center;
@@ -2138,6 +2189,10 @@ textarea.input-control {
 
 @media (max-width: 768px) {
     .dashboard-page { padding: 22px 16px 30px; }
+    .dashboard-heading { padding: 18px 16px; }
+    .dashboard-main-panel > .dashboard-stats,
+    .dashboard-main-panel > .dashboard-panel,
+    .dashboard-main-panel > .dashboard-lower { margin-right: 16px; margin-left: 16px; }
     .dashboard-heading { align-items: flex-start; flex-direction: column; gap: 16px; }
     .dashboard-heading h1 { font-size: 24px; }
     .dashboard-primary-action { width: 100%; }
@@ -2147,7 +2202,7 @@ textarea.input-control {
 
 /* FORM INPUT - SIMPLE ADMINISTRATIVE LAYOUT */
 .page-shell {
-    padding: 14px clamp(16px, 3vw, 32px) 32px;
+    padding: 14px 14px 32px;
     background: #f4f6f9;
 }
 
@@ -2155,6 +2210,7 @@ textarea.input-control {
     width: 100%;
     max-width: none;
     margin-inline: auto;
+    border-radius: 0;
 }
 
 .form-header {
@@ -2224,13 +2280,13 @@ textarea.input-control {
 }
 
 .service-card.is-active {
-    background: #16803b;
-    border-color: #16803b;
+    background: var(--sip-primary);
+    border-color: var(--sip-primary);
     box-shadow: none;
 }
 
 .service-card:focus-visible {
-    outline: 3px solid rgba(22, 128, 59, .2);
+    outline: 3px solid rgba(29, 97, 232, .2);
     outline-offset: 2px;
 }
 
@@ -2243,7 +2299,7 @@ textarea.input-control {
 .panel-card-head {
     margin: 0 -24px 20px;
     padding: 8px 12px;
-    background: #16803b;
+    background: var(--sip-sidebar-bg);
 }
 
 .panel-card-head h2 {
@@ -2278,8 +2334,8 @@ textarea.input-control {
 }
 
 .input-control:focus {
-    border-color: #16803b;
-    box-shadow: 0 0 0 2px rgba(22, 128, 59, .12);
+    border-color: var(--sip-primary);
+    box-shadow: 0 0 0 2px rgba(29, 97, 232, .12);
 }
 
 .form-actions {
@@ -2291,6 +2347,7 @@ textarea.input-control {
 }
 
 @media (max-width: 768px) {
+    .page-shell { padding: 16px; }
     .service-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
     .form-panel-card { padding: 0 16px 18px; }
     .panel-card-head { margin-right: -16px; margin-left: -16px; }

@@ -2,10 +2,10 @@
 @include('layouts.sidebar')
 
 <style>
-    .wilayah-form-page { min-height: 100vh; padding: 18px clamp(16px, 3vw, 32px) 32px; background: #f4f6f9; }
+    .wilayah-form-page { min-height: 100vh; padding: 18px clamp(16px, 3vw, 32px) 32px; background: var(--sip-bg); }
     .wilayah-form-panel { max-width: 920px; margin: 0 auto; overflow: hidden; border: 1px solid #dbe3ed; border-radius: 3px; background: #fff; box-shadow: 0 1px 3px rgba(15, 23, 42, .04); }
     .wilayah-form-header { display: flex; align-items: center; justify-content: space-between; gap: 16px; padding: 18px 20px; border-bottom: 1px solid #dbe3ed; }
-    .wilayah-kicker { margin: 0 0 4px; color: #1d61e8; font-size: 10px; font-weight: 800; letter-spacing: .12em; text-transform: uppercase; }
+    .wilayah-kicker { margin: 0 0 4px; color: var(--sip-primary); font-size: 10px; font-weight: 800; letter-spacing: .12em; text-transform: uppercase; }
     .wilayah-form-title { margin: 0; color: #0f172a; font-size: 22px; line-height: 1.2; }
     .wilayah-form-subtitle { margin: 5px 0 0; color: #64748b; font-size: 12px; }
     .wilayah-back, .wilayah-cancel { display: inline-flex; align-items: center; justify-content: center; min-height: 35px; padding: 0 14px; border: 1px solid #cbd5e1; border-radius: 3px; background: #fff; color: #334155; font-size: 12px; font-weight: 700; text-decoration: none; }
@@ -15,15 +15,15 @@
     .wilayah-error ul { margin: 0; padding-left: 18px; }
     .wilayah-form-content { padding: 18px 20px 20px; }
     .wilayah-form-section { overflow: hidden; border: 1px solid #dbe3ed; border-radius: 3px; }
-    .wilayah-section-title { padding: 10px 12px; background: #1d61e8; color: #fff; font-size: 13px; font-weight: 700; }
+    .wilayah-section-title { padding: 10px 12px; background: var(--sip-sidebar-bg); color: #fff; font-size: 13px; font-weight: 700; }
     .wilayah-fields { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 14px 20px; padding: 16px; }
     .wilayah-field label { display: block; margin-bottom: 5px; color: #334155; font-size: 11px; font-weight: 700; }
     .wilayah-field input, .wilayah-field select { width: 100%; height: 36px; border: 1px solid #cbd5e1; border-radius: 2px; background: #fff; padding: 0 10px; color: #334155; font-size: 12px; }
-    .wilayah-field input:focus, .wilayah-field select:focus { border-color: #60a5fa; outline: 0; box-shadow: 0 0 0 2px rgba(59, 130, 246, .12); }
+    .wilayah-field input:focus, .wilayah-field select:focus { border-color: var(--sip-primary); outline: 0; box-shadow: 0 0 0 2px rgba(29, 97, 232, .12); }
     .wilayah-field-wide { grid-column: 1 / -1; }
     .wilayah-form-actions { display: flex; justify-content: flex-end; gap: 8px; padding: 0 16px 16px; }
-    .wilayah-save { min-height: 35px; padding: 0 16px; border: 1px solid #1d61e8; border-radius: 3px; background: #1d61e8; color: #fff; font-size: 12px; font-weight: 700; cursor: pointer; }
-    .wilayah-save:hover { background: #1752ca; }
+    .wilayah-save { min-height: 35px; padding: 0 16px; border: 1px solid var(--sip-primary); border-radius: 3px; background: var(--sip-primary); color: #fff; font-size: 12px; font-weight: 700; cursor: pointer; }
+    .wilayah-save:hover { background: var(--sip-primary-hover); }
     @media (max-width: 640px) { .wilayah-form-page { padding: 12px; } .wilayah-form-panel { width: 100%; } .wilayah-form-header { align-items: flex-start; flex-direction: column; padding: 16px; } .wilayah-form-title { font-size: 19px; } .wilayah-form-content { padding: 16px; } .wilayah-fields { grid-template-columns: 1fr; padding: 14px; } .wilayah-field-wide { grid-column: auto; } .wilayah-form-actions { align-items: stretch; flex-direction: column-reverse; padding: 0 14px 14px; } .wilayah-save, .wilayah-cancel { width: 100%; } }
 </style>
 
@@ -45,9 +45,6 @@
                             {{ isset($desa) ? 'Perbarui data desa yang sudah ada' : 'Tambahkan desa/kelurahan baru ke sistem' }}
                         </p>
                     </div>
-                    <a href="{{ route('desa.index') }}" class="wilayah-back">
-                        ← Kembali
-                    </a>
             </div>
 
             {{-- ERROR --}}

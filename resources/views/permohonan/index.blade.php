@@ -7,18 +7,19 @@
     @vite(['resources/css/app.css', 'resources/js/app.js'])
     <style>
         :root {
-            --page-bg: #f3f6fb;
-            --panel-bg: #ffffff;
+            --page-bg: var(--sip-bg);
+            --panel-bg: var(--sip-panel);
             --panel-soft: #f8fafc;
-            --line: #e2e8f0;
+            --line: var(--sip-border);
             --line-strong: #d8e1ec;
-            --text: #1f2937;
-            --muted: #64748b;
+            --text: var(--sip-text);
+            --muted: var(--sip-muted);
             --muted-soft: #8b93a4;
-            --primary: #1d4ed8;
-            --primary-dark: #1e3a8a;
-            --primary-soft: #edf4ff;
-            --primary-deep: #0f2f5c;
+            --primary: var(--sip-primary);
+            --primary-dark: var(--sip-primary-hover);
+            --primary-soft: var(--sip-primary-soft);
+            --primary-border: var(--sip-primary-border);
+            --primary-deep: var(--sip-sidebar-bg);
             --shadow: 0 8px 22px rgba(15, 23, 42, 0.04);
         }
 
@@ -145,8 +146,8 @@
 
         .field input:focus,
         .field select:focus {
-            border-color: #93c5fd;
-            box-shadow: 0 0 0 3px rgba(59,130,246,.12);
+            border-color: var(--sip-primary);
+            box-shadow: 0 0 0 3px rgba(29, 97, 232, .12);
         }
 
         .filter-actions {
@@ -331,7 +332,7 @@
             min-height: 36px;
             padding: 0 14px;
             border-radius: 4px;
-            background: var(--primary);
+            background: var(--sip-primary);
             box-shadow: none;
             font-size: 12px;
         }
@@ -349,7 +350,7 @@
         .filter-head {
             padding: 12px 14px;
             border-bottom: 1px solid var(--line);
-            background: var(--primary);
+            background: var(--sip-sidebar-bg);
         }
 
         .filter-head h2 {
@@ -382,8 +383,8 @@
 
         .field input:focus,
         .field select:focus {
-            border-color: #60a5fa;
-            box-shadow: 0 0 0 2px rgba(59, 130, 246, .12);
+            border-color: var(--sip-primary);
+            box-shadow: 0 0 0 2px rgba(29, 97, 232, .12);
         }
 
         .filter-actions {
@@ -420,8 +421,8 @@
 
         thead th {
             padding: 10px 12px;
-            background: #eff6ff;
-            color: #1e40af;
+            background: var(--sip-primary-soft);
+            color: var(--sip-primary-hover);
             font-size: 10px;
         }
 
@@ -450,10 +451,10 @@
             align-items: center;
             justify-content: center;
             padding: 4px 8px;
-            border: 1px solid #bfdbfe;
+            border: 1px solid var(--primary-border);
             border-radius: 3px;
-            background: #eff6ff;
-            color: #1d4ed8;
+            background: var(--sip-primary-soft);
+            color: var(--sip-primary);
             font-size: 10px;
             font-weight: 700;
         }
@@ -464,7 +465,7 @@
             margin-bottom: 10px;
             border-radius: 4px;
             background: var(--primary-soft);
-            border-color: #bfdbfe;
+            border-color: var(--primary-border);
             color: var(--primary);
             font-size: 18px;
         }
@@ -503,7 +504,7 @@
             </div>
 
             @if(session('status'))
-                <div class="mt-5 rounded-2xl border border-green-200 bg-green-50 px-4 py-3 text-sm font-medium text-green-700">{{ session('status') }}</div>
+                <div class="mt-5 rounded-2xl border px-4 py-3 text-sm font-medium" style="border-color:var(--sip-primary-border); background:var(--sip-primary-soft); color:var(--sip-primary);">{{ session('status') }}</div>
             @endif
 
             <div class="filter-card">

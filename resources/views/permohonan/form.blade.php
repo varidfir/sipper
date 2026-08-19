@@ -55,10 +55,6 @@
                             <h1>{{ isset($permohonan) ? 'Edit Data Rekap' : 'Input Rekap Baru' }}</h1>
                             <p>Isi data sesuai jenis pelayanan yang dipilih.</p>
                         </div>
-
-                        <a href="{{ route('permohonan.index') }}" class="btn-back">
-                            ← Kembali
-                        </a>
                     </div>
 
 

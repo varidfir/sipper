@@ -14,31 +14,32 @@
         @include('layouts.header', ['pageTitle' => 'Dashboard'])
 
         <div class="dashboard-page">
-            <section class="dashboard-heading">
-                <div>
-                    <span class="dashboard-kicker">Ringkasan administrasi</span>
-                    <h1>Dashboard utama</h1>
-                    <p>Pantau aktivitas pelayanan dan data rekap secara menyeluruh.</p>
-                </div>
-                <a href="{{ route('permohonan.create') }}" class="dashboard-primary-action"><span aria-hidden="true">+</span> Input rekap baru</a>
-            </section>
+            <div class="dashboard-main-panel">
+                <section class="dashboard-heading">
+                    <div>
+                        <span class="dashboard-kicker">Ringkasan administrasi</span>
+                        <h1>Dashboard utama</h1>
+                        <p>Pantau aktivitas pelayanan dan data rekap secara menyeluruh.</p>
+                    </div>
+                    <a href="{{ route('permohonan.create') }}" class="dashboard-primary-action"><span aria-hidden="true">+</span> Input rekap baru</a>
+                </section>
 
-            <section class="dashboard-stats" aria-label="Ringkasan rekap">
-                <div class="dashboard-stat dashboard-stat-primary"><div><span>Total seluruh rekap</span><strong>{{ number_format($totalPermohonan) }}</strong><small>Akumulasi seluruh pelayanan</small></div><div class="dashboard-stat-icon" aria-hidden="true">▤</div></div>
-                <div class="dashboard-stat"><div><span>Rekap hari ini</span><strong>{{ number_format($permohonanHariIni) }}</strong><small>Data masuk hari ini</small></div><div class="dashboard-stat-icon" aria-hidden="true">◷</div></div>
-                <div class="dashboard-stat"><div><span>Rekap bulan ini</span><strong>{{ number_format($permohonanBulanIni) }}</strong><small>Data masuk bulan berjalan</small></div><div class="dashboard-stat-icon" aria-hidden="true">▦</div></div>
-            </section>
+                <section class="dashboard-stats" aria-label="Ringkasan rekap">
+                    <div class="dashboard-stat dashboard-stat-primary"><div><span>Total seluruh rekap</span><strong>{{ number_format($totalPermohonan) }}</strong><small>Akumulasi seluruh pelayanan</small></div><div class="dashboard-stat-icon" aria-hidden="true">▤</div></div>
+                    <div class="dashboard-stat"><div><span>Rekap hari ini</span><strong>{{ number_format($permohonanHariIni) }}</strong><small>Data masuk hari ini</small></div><div class="dashboard-stat-icon" aria-hidden="true">◷</div></div>
+                    <div class="dashboard-stat"><div><span>Rekap bulan ini</span><strong>{{ number_format($permohonanBulanIni) }}</strong><small>Data masuk bulan berjalan</small></div><div class="dashboard-stat-icon" aria-hidden="true">▦</div></div>
+                </section>
 
-            <section class="dashboard-panel">
+                <section class="dashboard-panel">
                 <div class="dashboard-panel-heading"><div><h2>Rekap berdasarkan jenis</h2><p>Jumlah data yang tercatat untuk setiap kelompok pelayanan.</p></div><a href="{{ route('permohonan.recap') }}">Lihat rekap <span aria-hidden="true">→</span></a></div>
                 <div class="dashboard-categories">
                     @foreach($categoryTotals as $item)
                         <div class="dashboard-category"><span class="dashboard-category-dot" aria-hidden="true"></span><span class="dashboard-category-label">{{ $item['label'] }}</span><strong>{{ number_format($item['total']) }}</strong></div>
                     @endforeach
                 </div>
-            </section>
+                </section>
 
-            <div class="dashboard-lower">
+                <div class="dashboard-lower">
                 <section class="dashboard-panel">
                     <div class="dashboard-panel-heading"><div><h2>Data rekap terbaru</h2><p>Data terakhir yang masuk ke sistem.</p></div><a href="{{ route('permohonan.index') }}">Lihat semua <span aria-hidden="true">→</span></a></div>
                     <div class="dashboard-table-wrap"><table class="dashboard-table"><thead><tr><th>Tanggal</th><th>Nama pemohon</th><th>Jenis</th><th>Wilayah</th></tr></thead><tbody>
@@ -59,8 +60,9 @@
                         <a href="{{ route('profile.show') }}"><span><b>♙</b>Profil saya</span><strong aria-hidden="true">→</strong></a>
                     </div>
                 </section>
+                </div>
+                <div class="dashboard-footer">SIPPER · Sistem Informasi Pelayanan dan Perekaman</div>
             </div>
-            <div class="dashboard-footer">SIPPER · Sistem Informasi Pelayanan dan Perekaman</div>
         </div>
     </main>
 </div>
