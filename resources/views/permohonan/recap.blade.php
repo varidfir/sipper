@@ -197,6 +197,103 @@
 
                 </form>
 
+<<<<<<< HEAD
+=======
+            <section class="stats">
+                <div class="stat primary">
+                    <div>
+                        <div class="stat-label">TOTAL PERMOHONAN</div>
+                        <div class="stat-value">{{ number_format($data->sum('total')) }}</div>
+                    </div>
+                    <div class="stat-icon">▤</div>
+                </div>
+                <div class="stat">
+                    <div>
+                        <div class="stat-label">JUMLAH PERIODE</div>
+                        <div class="stat-value">{{ $data->count() }}</div>
+                    </div>
+                    <div class="stat-icon">▦</div>
+                </div>
+                <div class="stat">
+                    <div>
+                        <div class="stat-label">RATA-RATA</div>
+                        <div class="stat-value">{{ $data->count() > 0 ? number_format($data->avg('total'), 0, ',', '.') : 0 }}</div>
+                    </div>
+                    <div class="stat-icon">◷</div>
+                </div>
+            </section>
+
+            <section class="section">
+                <div class="section-head">
+                    <div>
+                        <h2>Hasil Rekapitulasi</h2>
+                        <p>
+                            @php
+                                $selectedKelompok = $kelompokPelayananId ? $kelompokPelayanans->firstWhere('id', $kelompokPelayananId) : null;
+                                $kelompokName = $selectedKelompok ? ($selectedKelompok->kode === 'SURAT_PINDAH' ? 'SURAT PINDAH' : $selectedKelompok->kode) : 'Semua Kategori';
+                                $monthName = $month ? $months[(int)$month] : 'Semua Bulan';
+                            @endphp
+                            Filter aktif: {{ $year }} • {{ $monthName }} • {{ $kelompokName }}
+                        </p>
+                    </div>
+                    <span class="badge">{{ $data->count() }} Periode</span>
+                </div>
+                <div class="table-wrap">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th style="width:50px">No</th>
+                                <th>Periode</th>
+                                <th style="text-align:right">Jumlah Permohonan</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @forelse($data as $item)
+                                <tr>
+                                    <td>{{ $loop->iteration }}</td>
+                                    <td class="name">
+                                        @php
+                                            $tanggal = \Carbon\Carbon::parse($item->period);
+                                        @endphp
+                                        @if($period === 'yearly')
+                                            {{ $tanggal->format('Y') }}
+                                        @elseif($period === 'monthly')
+                                            {{ $tanggal->translatedFormat('F Y') }}
+                                        @else
+                                            {{ $tanggal->translatedFormat('d F Y') }}
+                                        @endif
+                                    </td>
+                                    <td style="text-align:right">
+                                        <span class="badge" style="font-size:11px;padding:5px 10px">{{ number_format($item->total, 0, ',', '.') }}</span>
+                                    </td>
+                                </tr>
+                            @empty
+                                <tr>
+                                    <td colspan="3" style="text-align:center;padding:40px;color:#9aa3b2">
+                                        <div style="font-size:24px;margin-bottom:10px">▤</div>
+                                        <div style="font-weight:700;color:#566174;margin-bottom:4px">Belum ada data rekapitulasi</div>
+                                        <div>Tidak ditemukan permohonan berdasarkan filter yang dipilih.</div>
+                                    </td>
+                                </tr>
+                            @endforelse
+                        </tbody>
+                        @if($data->count() > 0)
+                            <tfoot>
+                                <tr>
+                                    <td colspan="2" style="text-align:right;font-weight:800;color:#273244;padding:15px 18px">Total Keseluruhan</td>
+                                    <td style="text-align:right;padding:15px 18px">
+                                        <span style="display:inline-block;background:var(--primary);color:#fff;padding:6px 12px;border-radius:8px;font-weight:800">{{ number_format($data->sum('total'), 0, ',', '.') }}</span>
+                                    </td>
+                                </tr>
+                            </tfoot>
+                        @endif
+                    </table>
+                </div>
+            </section>
+
+            <div class="footer">
+                Berita Acara Dispenduk Kabupaten Magetan · Data diperbarui otomatis
+>>>>>>> 3c0b293bb955af9deb37aace7dfc4dfe9c58ab05
             </div>
 
 
