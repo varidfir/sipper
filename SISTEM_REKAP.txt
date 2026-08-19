@@ -4,7 +4,7 @@ SISTEM REKAP
 - Nama
 - Desa
 - Kecamatan
-- Keterangan (siapa pemohonnya)
+- Keterangan 
 - Tanggal
 
 Akta:
@@ -36,21 +36,23 @@ Jenis akta:
   - Hilang
   - Rusak
   - Elemen
-  - PRR (pemula)
+  - PRR 
 
 4. Surat pindah
 - Nama
 - Desa
 - Kecamatan
-- Keterangan (siapa pemohonnya)
+- Keterangan 
 - Tanggal
 
 5. Perekaman
 - Nama
 - Desa/kelurahan
 - Kecamatan
-- Keterangan (pemula)
+- Keterangan 
 - Tanggal
+
+## Maksud dari form -Keterangan adalah siapa yang mengajukan permohonan Seperti YBS (yang bersangkutan), anak, istri atau bisa di isi nama
 
 6. LAPORAN KESELURUHAN
 - Kartu keluarga
@@ -67,7 +69,7 @@ Jenis akta:
 - Perekaman
 - KIA
 - KTP
-- PRR (Print Ready Record)
+- PRR
 - Rusak
 - Hilang
 - Elemen

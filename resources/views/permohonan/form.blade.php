@@ -263,77 +263,18 @@
                                             >
                                         </div>
 
-                                        {{-- KETERANGAN / HUBUNGAN / FORM SPESIFIK DETAIL --}}
-                                        @if($group->kode === 'KK')
+                                        {{-- FORM SPESIFIK DETAIL --}}
+                                        @if($group->kode === 'AKTA')
                                             <div class="field-group">
-                                                <label>Keterangan / Hubungan <span class="req">*</span></label>
+                                                <label>No Kendali <span class="req">*</span></label>
                                                 <input
                                                     type="text"
-                                                    name="detail_data[keterangan_hubungan]"
-                                                    value="{{ old('detail_data.keterangan_hubungan', $detail['keterangan_hubungan'] ?? '') }}"
+                                                    name="detail_data[no_kendali]"
+                                                    value="{{ old('detail_data.no_kendali', $detail['no_kendali'] ?? $detail['no_akta'] ?? '') }}"
                                                     class="input-control"
-                                                    placeholder="Contoh: Suami, Istri, Anak, Orang Tua, dll"
+                                                    placeholder="Masukkan No. Kendali"
                                                     disabled
-                                                >
-                                            </div>
-                                        @elseif($group->kode === 'AKTA')
-                                            <div class="field-group">
-                                                <label>Nomor Akta / Keterangan</label>
-                                                <input
-                                                    type="text"
-                                                    name="detail_data[no_akta]"
-                                                    value="{{ old('detail_data.no_akta', $detail['no_akta'] ?? '') }}"
-                                                    class="input-control"
-                                                    placeholder="Masukkan nomor akta atau keterangan"
-                                                    disabled
-                                                >
-                                            </div>
-                                        @elseif($group->kode === 'KTP')
-                                            <div class="field-group">
-                                                <label>NIK / Keterangan KTP</label>
-                                                <input
-                                                    type="text"
-                                                    name="detail_data[nik]"
-                                                    value="{{ old('detail_data.nik', $detail['nik'] ?? '') }}"
-                                                    class="input-control"
-                                                    placeholder="Masukkan NIK atau keterangan KTP"
-                                                    disabled
-                                                >
-                                            </div>
-                                        @elseif($group->kode === 'KIA')
-                                            <div class="field-group">
-                                                <label>Nama Anak / Keterangan KIA</label>
-                                                <input
-                                                    type="text"
-                                                    name="detail_data[nama_anak]"
-                                                    value="{{ old('detail_data.nama_anak', $detail['nama_anak'] ?? '') }}"
-                                                    class="input-control"
-                                                    placeholder="Masukkan nama anak atau keterangan"
-                                                    disabled
-                                                >
-                                            </div>
-                                        @elseif($group->kode === 'SURAT_PINDAH')
-                                            <div class="field-group">
-                                                <label>Alamat Tujuan / Keterangan Pindah</label>
-                                                <input
-                                                    type="text"
-                                                    name="detail_data[alamat_tujuan]"
-                                                    value="{{ old('detail_data.alamat_tujuan', $detail['alamat_tujuan'] ?? '') }}"
-                                                    class="input-control"
-                                                    placeholder="Masukkan alamat tujuan atau keterangan"
-                                                    disabled
-                                                >
-                                            </div>
-                                        @elseif($group->kode === 'PEREKAMAN')
-                                            <div class="field-group">
-                                                <label>Status / Keterangan Perekaman</label>
-                                                <input
-                                                    type="text"
-                                                    name="detail_data[status_perekaman]"
-                                                    value="{{ old('detail_data.status_perekaman', $detail['status_perekaman'] ?? '') }}"
-                                                    class="input-control"
-                                                    placeholder="Contoh: Bio-Capture, Retake, dll"
-                                                    disabled
+                                                    required
                                                 >
                                             </div>
                                         @endif
@@ -381,15 +322,15 @@
                                             </select>
                                         </div>
 
-                                        {{-- KETERANGAN TAMBAHAN --}}
+                                        {{-- KETERANGAN (SIAPA PEMOHONNYA) --}}
                                         <div class="field-group is-full">
-                                            <label>Keterangan Tambahan</label>
+                                            <label>Keterangan <span class="text-slate-400 font-normal text-xs">(Pemohon: YBS, Anak, Istri, atau Nama)</span></label>
                                             <input
                                                 type="text"
                                                 name="keterangan"
                                                 value="{{ old('keterangan', $permohonan->keterangan ?? '') }}"
                                                 class="input-control"
-                                                placeholder="Tambahkan keterangan jika diperlukan"
+                                                placeholder="Contoh: YBS (Yang Bersangkutan), Anak, Istri, atau Nama"
                                                 disabled
                                             >
                                         </div>

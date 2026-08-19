@@ -31,8 +31,8 @@ class JenisPelayananSeeder extends Seeder
 
             'AKTA' => [
                 [
-                    'kode' => 'AKTA_KELAHIRAN_UMUM',
-                    'nama' => 'Akta Kelahiran Umum',
+                    'kode' => 'AKTA_KELAHIRAN_ANAK',
+                    'nama' => 'Akta Kelahiran Anak',
                     'kategori' => 'Akta Pencatatan Sipil',
                 ],
                 [
@@ -42,7 +42,7 @@ class JenisPelayananSeeder extends Seeder
                 ],
                 [
                     'kode' => 'AKTA_PETIKAN_KEDUA',
-                    'nama' => 'Akta Petikan Kedua',
+                    'nama' => 'Akta Kelahiran Petikan Kedua',
                     'kategori' => 'Akta Pencatatan Sipil',
                 ],
                 [
@@ -95,12 +95,12 @@ class JenisPelayananSeeder extends Seeder
                 ],
                 [
                     'kode' => 'KTP_ELEMEN',
-                    'nama' => 'Perubahan Elemen',
+                    'nama' => 'Elemen',
                     'kategori' => 'KTP Elektronik',
                 ],
                 [
                     'kode' => 'KTP_PRR',
-                    'nama' => 'PRR / Pemula',
+                    'nama' => 'PRR',
                     'kategori' => 'KTP Elektronik',
                 ],
             ],
