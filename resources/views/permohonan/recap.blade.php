@@ -26,7 +26,7 @@
 
         <div class="min-h-screen px-4 py-5 sm:px-6 lg:px-8">
 
-            <div class="mx-auto w-full max-w-7xl">
+            <div class="w-full">
                 <div class="mb-5">
                     <p class="text-xs font-bold uppercase tracking-[0.14em] text-blue-600">Laporan pelayanan</p>
                     <h1 class="mt-1 text-2xl font-bold tracking-tight text-slate-900">Rekapitulasi</h1>
