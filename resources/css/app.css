@@ -2309,6 +2309,29 @@ textarea.input-control {
     box-shadow: 0 1px 3px rgba(15, 23, 42, .03);
 }
 
+.form-content {
+    padding: 0;
+}
+
+.empty-form-message {
+    margin: 0 0 20px;
+    padding: 18px;
+    border: 1px dashed #cbd5e1;
+    border-radius: 8px;
+    background: #f8fafc;
+    color: #64748b;
+    font-size: 12px;
+    text-align: center;
+}
+
+.base-fields {
+    margin-bottom: 20px;
+    padding: 16px;
+    border: 1px solid var(--sip-border);
+    border-radius: 8px;
+    background: #ffffff;
+}
+
 .panel-card-head {
     margin: 0 -24px 20px;
     padding: 8px 12px;

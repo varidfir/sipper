@@ -31,36 +31,37 @@
                 </section>
 
                 <section class="dashboard-panel">
-                <div class="dashboard-panel-heading"><div><h2>Rekap berdasarkan jenis</h2><p>Jumlah data yang tercatat untuk setiap kelompok pelayanan.</p></div><a href="{{ route('permohonan.recap') }}">Lihat rekap <span aria-hidden="true">→</span></a></div>
-                <div class="dashboard-categories">
-                    @foreach($categoryTotals as $item)
-                        <div class="dashboard-category"><span class="dashboard-category-dot" aria-hidden="true"></span><span class="dashboard-category-label">{{ $item['label'] }}</span><strong>{{ number_format($item['total']) }}</strong></div>
-                    @endforeach
-                </div>
+                    <div class="dashboard-panel-heading"><div><h2>Rekap berdasarkan jenis</h2><p>Jumlah data yang tercatat untuk setiap kelompok pelayanan.</p></div><a href="{{ route('permohonan.recap') }}">Lihat rekap <span aria-hidden="true">→</span></a></div>
+                    <div class="dashboard-categories">
+                        @foreach($categoryTotals as $item)
+                            <div class="dashboard-category"><span class="dashboard-category-dot" aria-hidden="true"></span><span class="dashboard-category-label">{{ $item['label'] }}</span><strong>{{ number_format($item['total']) }}</strong></div>
+                        @endforeach
+                    </div>
                 </section>
 
                 <div class="dashboard-lower">
-                <section class="dashboard-panel">
-                    <div class="dashboard-panel-heading"><div><h2>Data rekap terbaru</h2><p>Data terakhir yang masuk ke sistem.</p></div><a href="{{ route('permohonan.index') }}">Lihat semua <span aria-hidden="true">→</span></a></div>
-                    <div class="dashboard-table-wrap"><table class="dashboard-table"><thead><tr><th>Tanggal</th><th>Nama pemohon</th><th>Jenis</th><th>Wilayah</th></tr></thead><tbody>
-                    @forelse($recent as $row)
-                        <tr><td>{{ $row->tanggal_permohonan?->format('d/m/Y') }}</td><td class="dashboard-table-name">{{ $row->nama_pemohon }}</td><td><span class="dashboard-badge">{{ $row->jenisPelayanan?->kelompokPelayanan?->kode ?? '-' }}</span></td><td>{{ $row->desa?->nama_desa ?? '-' }}, {{ $row->kecamatan?->nama_kecamatan ?? '-' }}</td></tr>
-                    @empty
-                        <tr><td colspan="4" class="dashboard-empty">Belum ada data rekap.</td></tr>
-                    @endforelse
-                    </tbody></table></div>
-                </section>
+                    <section class="dashboard-panel">
+                        <div class="dashboard-panel-heading"><div><h2>Data rekap terbaru</h2><p>Data terakhir yang masuk ke sistem.</p></div><a href="{{ route('permohonan.index') }}">Lihat semua <span aria-hidden="true">→</span></a></div>
+                        <div class="dashboard-table-wrap"><table class="dashboard-table"><thead><tr><th>Tanggal</th><th>Nama pemohon</th><th>Jenis</th><th>Wilayah</th></tr></thead><tbody>
+                        @forelse($recent as $row)
+                            <tr><td>{{ $row->tanggal_permohonan?->format('d/m/Y') }}</td><td class="dashboard-table-name">{{ $row->nama_pemohon }}</td><td><span class="dashboard-badge">{{ $row->jenisPelayanan?->kelompokPelayanan?->kode ?? '-' }}</span></td><td>{{ $row->desa?->nama_desa ?? '-' }}, {{ $row->kecamatan?->nama_kecamatan ?? '-' }}</td></tr>
+                        @empty
+                            <tr><td colspan="4" class="dashboard-empty">Belum ada data rekap.</td></tr>
+                        @endforelse
+                        </tbody></table></div>
+                    </section>
 
-                <section class="dashboard-panel dashboard-actions-panel">
-                    <div class="dashboard-panel-heading"><div><h2>Akses cepat</h2><p>Menu yang sering digunakan.</p></div></div>
-                    <div class="dashboard-actions">
-                        <a href="{{ route('permohonan.create') }}"><span><b>+</b>Input rekap baru</span><strong aria-hidden="true">→</strong></a>
-                        <a href="{{ route('permohonan.index') }}"><span><b>▤</b>Daftar semua rekap</span><strong aria-hidden="true">→</strong></a>
-                        <a href="{{ route('permohonan.recap') }}"><span><b>▥</b>Rekapitulasi</span><strong aria-hidden="true">→</strong></a>
-                        <a href="{{ route('profile.show') }}"><span><b>♙</b>Profil saya</span><strong aria-hidden="true">→</strong></a>
-                    </div>
-                </section>
+                    <section class="dashboard-panel dashboard-actions-panel">
+                        <div class="dashboard-panel-heading"><div><h2>Akses cepat</h2><p>Menu yang sering digunakan.</p></div></div>
+                        <div class="dashboard-actions">
+                            <a href="{{ route('permohonan.create') }}"><span><b>+</b>Input rekap baru</span><strong aria-hidden="true">→</strong></a>
+                            <a href="{{ route('permohonan.index') }}"><span><b>▤</b>Daftar semua rekap</span><strong aria-hidden="true">→</strong></a>
+                            <a href="{{ route('permohonan.recap') }}"><span><b>▥</b>Rekapitulasi</span><strong aria-hidden="true">→</strong></a>
+                            <a href="{{ route('profile.show') }}"><span><b>♙</b>Profil saya</span><strong aria-hidden="true">→</strong></a>
+                        </div>
+                    </section>
                 </div>
+
                 <div class="dashboard-footer">SIPPER · Sistem Informasi Pelayanan dan Perekaman</div>
             </div>
         </div>

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Permohonan;
+use App\Models\KelompokPelayanan;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -40,6 +41,31 @@ class DashboardController extends Controller
             ],
         ]);
 
+        $kelompokPelayanans = KelompokPelayanan::aktif()
+            ->with(['jenisPelayanans' => fn ($query) => $query->aktif()])
+            ->get();
+
+        $groupTotals = Permohonan::join(
+                'jenis_pelayanan',
+                'permohonan.jenis_pelayanan_id',
+                '=',
+                'jenis_pelayanan.id'
+            )
+            ->select(
+                'jenis_pelayanan.kelompok_pelayanan_id',
+                DB::raw('COUNT(*) as total')
+            )
+            ->groupBy('jenis_pelayanan.kelompok_pelayanan_id')
+            ->get()
+            ->keyBy('kelompok_pelayanan_id');
+
+        $jenisTotals = Permohonan::select(
+                'jenis_pelayanan_id',
+                DB::raw('COUNT(*) as total')
+            )
+            ->groupBy('jenis_pelayanan_id')
+            ->pluck('total', 'jenis_pelayanan_id');
+
         $recent = Permohonan::with(['jenisPelayanan.kelompokPelayanan', 'kecamatan', 'desa'])
             ->latest('tanggal_permohonan')
             ->latest('id')
@@ -47,7 +73,8 @@ class DashboardController extends Controller
             ->get();
 
         return view('dashboard.index', compact(
-            'user', 'totalPermohonan', 'permohonanHariIni', 'permohonanBulanIni', 'categoryTotals', 'recent'
+            'user', 'totalPermohonan', 'permohonanHariIni', 'permohonanBulanIni',
+            'categoryTotals', 'recent', 'kelompokPelayanans', 'groupTotals', 'jenisTotals'
         ));
     }
 }
