@@ -2395,3 +2395,235 @@ textarea.input-control {
     .dashboard-panel-heading { align-items: flex-start; flex-direction: column; }
     .dashboard-table th, .dashboard-table td { padding-right: 14px; padding-left: 14px; }
 }
+
+/* FORM INPUT REKAP - ADMINISTRATIVE LAYOUT */
+.page-shell:has(.form-page-container) {
+    padding: 10px 14px 28px;
+    background: #f1f3f5;
+}
+
+.form-page-container {
+    padding: 16px 18px 20px;
+    border: 1px solid #d7dde3;
+    border-radius: 2px;
+    background: #fff;
+    box-shadow: 0 1px 3px rgba(15, 23, 42, .05);
+}
+
+.form-header {
+    align-items: center;
+    margin-bottom: 14px;
+}
+
+.form-title-group h1 {
+    font-size: 19px;
+    letter-spacing: 0;
+}
+
+.form-title-group p {
+    margin-top: 3px;
+    font-size: 11px;
+}
+
+.btn-back {
+    height: 32px;
+    padding: 0 12px;
+    border-radius: 2px;
+    font-size: 11px;
+    box-shadow: none;
+}
+
+.service-section-title,
+.panel-card-head {
+    background: var(--sip-sidebar-bg);
+    color: #fff;
+}
+
+.service-section-title {
+    margin: 0;
+    padding: 8px 10px;
+    font-size: 12px;
+    font-weight: 700;
+}
+
+.service-grid {
+    grid-template-columns: repeat(6, minmax(0, 1fr));
+    gap: 8px;
+    margin: 0 0 14px;
+    padding: 8px;
+    border: 1px solid #d7dde3;
+    border-top: 0;
+    background: #f7f9fa;
+}
+
+.service-card {
+    height: 40px;
+    padding: 8px 10px;
+    border-radius: 2px;
+    border-color: #cbd5dc;
+    box-shadow: none;
+}
+
+.service-card:hover {
+    border-color: var(--sip-sidebar-bg);
+    background: #eef4fb;
+}
+
+.service-card-label {
+    font-size: 11px;
+}
+
+.service-card.is-active,
+.category-tab.bg-blue-600 {
+    background: var(--sip-sidebar-bg);
+    border-color: var(--sip-sidebar-bg);
+    color: #fff;
+}
+
+.form-panel-card {
+    margin-bottom: 14px;
+    padding: 0 16px 16px;
+    border-radius: 2px;
+    border-color: #d7dde3;
+    box-shadow: none;
+}
+
+.panel-card-head {
+    margin: 0 -16px 14px;
+    padding: 8px 10px;
+}
+
+.panel-card-head h2 {
+    color: #fff;
+    font-size: 13px;
+}
+
+.panel-card-head p {
+    margin-top: 1px;
+    color: rgba(255, 255, 255, .82);
+    font-size: 10px;
+}
+
+.base-fields {
+    margin-bottom: 14px;
+    padding: 12px;
+    border: 1px solid #d7dde3;
+    border-radius: 2px;
+    background: #fbfcfc;
+}
+
+.field-grid,
+.form-panel > .grid {
+    gap: 10px 22px;
+}
+
+.form-panel-card label {
+    margin-bottom: 4px;
+    color: #4b5563;
+    font-size: 11px;
+    font-weight: 700;
+}
+
+.form-panel-card input:not([type="hidden"]),
+.form-panel-card select,
+.form-panel-card textarea {
+    min-height: 34px;
+    border: 1px solid #cbd5dc;
+    border-radius: 2px;
+    background: #fff;
+    padding: 6px 9px;
+    color: #374151;
+    font-size: 11px;
+    box-shadow: none;
+}
+
+.form-panel-card input:focus,
+.form-panel-card select:focus,
+.form-panel-card textarea:focus {
+    border-color: var(--sip-sidebar-bg);
+    outline: 0;
+    box-shadow: 0 0 0 2px rgba(13, 57, 105, .12);
+}
+
+.form-panel-card .empty-form-message {
+    border-radius: 2px;
+}
+
+.form-content > .mt-6 {
+    margin-top: 14px;
+}
+
+.form-content > .mt-6 a,
+.form-content > .mt-6 button {
+    min-height: 34px;
+    border-radius: 2px;
+    padding: 7px 16px;
+    font-size: 11px;
+}
+
+.form-content > .mt-6 button {
+    background: var(--sip-sidebar-bg);
+}
+
+.form-content > .mt-6 button:hover {
+    background: #09294d;
+}
+
+@media (max-width: 1200px) {
+    .service-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+}
+
+@media (max-width: 768px) {
+    .form-page-container { padding: 14px 12px 18px; }
+    .form-header { align-items: flex-start; flex-direction: column; }
+    .service-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    .form-panel-card { padding: 0 12px 14px; }
+    .panel-card-head { margin-right: -12px; margin-left: -12px; }
+    .base-fields { padding: 10px; }
+    .field-grid, .form-panel > .grid { grid-template-columns: 1fr; }
+}
+
+@media (min-width: 769px) {
+    .form-panel-card {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 10px 22px;
+    }
+
+    .form-panel-card > .panel-card-head,
+    .form-panel-card > .empty-form-message {
+        grid-column: 1 / -1;
+    }
+
+    .form-panel-card > .base-fields,
+    .form-panel-card > .base-fields > .field-grid,
+    .form-panel-card > .form-panel,
+    .form-panel-card > .form-panel > .grid {
+        display: contents;
+    }
+
+    .form-panel-card > .form-panel.hidden {
+        display: none;
+    }
+
+    .form-panel-card .form-field-jenis { order: 1; }
+    .form-panel-card .form-field-name {
+        order: 2;
+        grid-column: auto !important;
+    }
+    .form-panel-card .form-field-desa { order: 3; }
+    .form-panel-card .form-field-kecamatan { order: 4; }
+    .form-panel-card .form-field-keterangan { order: 5; }
+    .form-panel-card .form-field-date { order: 6; }
+}
+
+@media (max-width: 768px) {
+    .form-panel-card { display: block; }
+
+    .form-panel-card > .base-fields,
+    .form-panel-card > .base-fields > .field-grid,
+    .form-panel-card > .form-panel,
+    .form-panel-card > .form-panel > .grid {
+        display: block;
+    }
+}

@@ -84,7 +84,7 @@
 
                 <div class="base-fields">
                     <div class="field-grid">
-                        <div class="md:col-span-2">
+                        <div class="form-field-name md:col-span-2">
                             <label class="mb-1.5 block text-sm font-bold text-slate-700">
                                 Nama <span class="text-red-500">*</span>
                             </label>
@@ -96,7 +96,7 @@
                                    placeholder="Nama pemohon">
                         </div>
 
-                        <div>
+                        <div class="form-field-desa">
                             <label class="mb-1.5 block text-sm font-bold text-slate-700">
                                 Desa/Kelurahan <span class="text-red-500">*</span>
                             </label>
@@ -115,7 +115,7 @@
                             </select>
                         </div>
 
-                        <div>
+                        <div class="form-field-kecamatan">
                             <label class="mb-1.5 block text-sm font-bold text-slate-700">
                                 Kecamatan <span class="text-red-500">*</span>
                             </label>
@@ -132,7 +132,7 @@
                             </select>
                         </div>
 
-                        <div>
+                        <div class="form-field-date">
                             <label class="mb-1.5 block text-sm font-bold text-slate-700">
                                 Tanggal <span class="text-red-500">*</span>
                             </label>
@@ -159,7 +159,7 @@
 
                             {{-- KK --}}
                             @if($code === 'KK')
-                                <div>
+                                <div class="form-field-jenis">
                                     <label class="mb-1.5 block text-sm font-bold text-slate-700">
                                         Jenis KK <span class="text-red-500">*</span>
                                     </label>
@@ -173,7 +173,7 @@
                                     </select>
                                 </div>
 
-                                <div>
+                                <div class="form-field-keterangan">
                                     <label class="mb-1.5 block text-sm font-bold text-slate-700">
                                         Keterangan (siapa pemohonnya) <span class="text-red-500">*</span>
                                     </label>
@@ -187,7 +187,7 @@
 
                             {{-- AKTA --}}
                             @if($code === 'AKTA')
-                                <div>
+                                <div class="form-field-jenis">
                                     <label class="mb-1.5 block text-sm font-bold text-slate-700">
                                         Jenis Akta <span class="text-red-500">*</span>
                                     </label>
@@ -201,7 +201,7 @@
                                     </select>
                                 </div>
 
-                                <div>
+                                <div class="form-field-keterangan">
                                     <label class="mb-1.5 block text-sm font-bold text-slate-700">
                                         No. Kendali <span class="text-red-500">*</span>
                                     </label>
@@ -215,7 +215,7 @@
 
                             {{-- KTP --}}
                             @if($code === 'KTP')
-                                <div>
+                                <div class="form-field-jenis">
                                     <label class="mb-1.5 block text-sm font-bold text-slate-700">
                                         Jenis KTP <span class="text-red-500">*</span>
                                     </label>
@@ -229,7 +229,7 @@
                                     </select>
                                 </div>
 
-                                <div>
+                                <div class="form-field-keterangan">
                                     <label class="mb-1.5 block text-sm font-bold text-slate-700">
                                         Keterangan <span class="text-red-500">*</span>
                                     </label>
@@ -261,7 +261,7 @@
                                        class="jenis-select"
                                        value="{{ $group->jenisPelayanans->first()?->id }}"
                                        disabled>
-                                <div class="md:col-span-2">
+                                <div class="form-field-keterangan md:col-span-2">
                                     <label class="mb-1.5 block text-sm font-bold text-slate-700">
                                         Keterangan (siapa pemohonnya) <span class="text-red-500">*</span>
                                     </label>
@@ -280,7 +280,7 @@
                                        class="jenis-select"
                                        value="{{ $group->jenisPelayanans->first()?->id }}"
                                        disabled>
-                                <div class="md:col-span-2">
+                                <div class="form-field-keterangan md:col-span-2">
                                     <label class="mb-1.5 block text-sm font-bold text-slate-700">
                                         Keterangan (pemula) <span class="text-red-500">*</span>
                                     </label>
