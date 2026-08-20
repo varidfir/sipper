@@ -29,11 +29,12 @@
     .jenis-number { width: 60px; color: #94a3b8 !important; }
     .jenis-name { color: #1f2937 !important; font-weight: 700; }
     .jenis-badge { display: inline-flex; padding: 4px 8px; border: 1px solid var(--sip-primary-border); border-radius: 3px; background: var(--sip-primary-soft); color: var(--sip-primary); font-size: 10px; font-weight: 700; }
-    .jenis-row-actions { display: flex; justify-content: flex-end; gap: 6px; }
-    .jenis-action { display: inline-flex; align-items: center; justify-content: center; min-height: 29px; padding: 0 10px; border-radius: 3px; font-size: 11px; font-weight: 700; text-decoration: none; }
-    .jenis-edit { border: 1px solid var(--sip-primary-border); background: var(--sip-primary-soft); color: var(--sip-primary); }
-    .jenis-edit:hover { background: #dbeafe; }
-    .jenis-delete { border: 1px solid #fecaca; background: #fff1f2; color: #b91c1c; cursor: pointer; }
+    .jenis-row-actions { display: flex; align-items: center; justify-content: flex-end; gap: 8px; }
+    .jenis-row-actions form { margin: 0; }
+    .jenis-action { display: inline-flex; align-items: center; justify-content: center; min-width: 62px; min-height: 32px; padding: 0 12px; border: 1px solid transparent; border-radius: 4px; font-size: 11px; font-weight: 700; line-height: 1; text-decoration: none; transition: background-color .15s ease, border-color .15s ease, color .15s ease; }
+    .jenis-edit { border-color: var(--sip-primary-border); background: #fff; color: var(--sip-primary); }
+    .jenis-edit:hover { background: var(--sip-primary-soft); border-color: var(--sip-primary); }
+    .jenis-delete { border-color: #fecaca; background: #fff; color: #b91c1c; cursor: pointer; }
     .jenis-delete:hover { background: #fee2e2; }
     .jenis-empty { padding: 38px 16px !important; color: #64748b !important; text-align: center; }
     @media (max-width: 640px) { .jenis-page { padding: 12px; } .jenis-panel { width: 100%; } .jenis-header { align-items: flex-start; flex-direction: column; padding: 16px; } .jenis-title { font-size: 19px; } .jenis-actions { width: 100%; } .jenis-button { flex: 1; padding: 0 8px; } .jenis-content { padding: 16px; } .jenis-list-head { align-items: flex-start; flex-direction: column; } .jenis-table { min-width: 560px; } }
@@ -41,27 +42,16 @@
 
 <main class="sipper-content">
     @include('layouts.header', ['pageTitle' => 'Jenis Pelayanan'])
-    <div class="jenis-page">
-        <div class="jenis-panel">
+    <div class="page-shell">
+        <div class="form-page-container">
 
             {{-- HEADER --}}
-            <div class="jenis-header">
-                    <div>
-                        <p class="jenis-kicker">
-                            ADMINISTRASI
-                        </p>
-                        <h1 class="jenis-title">
-                            Jenis Pelayanan
-                        </h1>
-                        <p class="jenis-subtitle">
-                            Kelola jenis-jenis pelayanan yang tersedia di sistem.
-                        </p>
-                    </div>
-                    <div class="jenis-actions">
-                        <a href="{{ route('jenis-pelayanan.create') }}" class="jenis-button jenis-primary">
-                            + Tambah
-                        </a>
-                    </div>
+            <div class="form-header">
+                <div class="form-title-group">
+                    <h1>Jenis Pelayanan</h1>
+                    <p>Kelola jenis-jenis pelayanan yang tersedia di sistem.</p>
+                </div>
+                <a href="{{ route('jenis-pelayanan.create') }}" class="primary-btn">+ Tambah Jenis Pelayanan</a>
             </div>
 
             {{-- NOTIFIKASI --}}
@@ -81,15 +71,15 @@
                     </div>
 
                     <div class="jenis-table-wrap">
-                        <table class="jenis-table">
-                            <thead><tr><th class="jenis-number">No</th><th>Nama Pelayanan</th><th>Kategori</th><th style="text-align:right">Aksi</th></tr></thead>
+                        <table class="jenis-table sipper-data-table">
+                            <thead><tr><th class="jenis-number">No</th><th>Nama Pelayanan</th><th>Kategori</th><th class="sipper-table-actions">Aksi</th></tr></thead>
                             <tbody>
                         @forelse($jenisPelayanans as $jenisPelayanan)
                             <tr>
                                 <td class="jenis-number">{{ $loop->iteration }}</td>
                                 <td class="jenis-name">{{ $jenisPelayanan->nama_pelayanan }}</td>
                                 <td><span class="jenis-badge">{{ $jenisPelayanan->kategori }}</span></td>
-                                <td><div class="jenis-row-actions">
+                                <td class="sipper-table-actions"><div class="jenis-row-actions">
                                     <a href="{{ route('jenis-pelayanan.edit', $jenisPelayanan) }}" class="jenis-action jenis-edit">
                                         Edit
                                     </a>

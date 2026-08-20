@@ -25,37 +25,25 @@
     <main class="sipper-content">
         @include('layouts.header', ['pageTitle' => 'Kelola Pengguna'])
 
-        <div class="min-h-screen px-3 py-3 sm:px-4 sm:py-4 lg:px-5 lg:py-5">
+        <div class="page-shell">
 
-            <div class="w-full">
+            <div class="form-page-container">
 
 
                 {{-- =================================================
                     HEADER
                 ================================================== --}}
-                <div class="mb-4 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
-
-                    <div>
-
-                        <p class="text-xs font-bold uppercase tracking-[0.2em] text-blue-600">
-                            Administrasi
-                        </p>
-
-                        <h1 class="mt-1 text-2xl font-bold text-slate-900">
-                            Kelola Pengguna
-                        </h1>
-
-                        <p class="mt-1 text-sm text-slate-500">
-                            Kelola akun pengguna yang dapat mengakses sistem SIPPER.
-                        </p>
-
+                <div class="form-header">
+                    <div class="form-title-group">
+                        <h1>Kelola Pengguna</h1>
+                        <p>Kelola akun pengguna yang dapat mengakses sistem SIPPER.</p>
                     </div>
 
 
                     {{-- TOMBOL TAMBAH --}}
                     <a
                         href="{{ route('user.create') }}"
-                        class="inline-flex items-center justify-center gap-2 rounded-xl bg-blue-600 px-4 py-2.5 text-sm font-bold text-white shadow-sm transition hover:bg-blue-700"
+                        class="primary-btn"
                     >
 
                         <span class="text-lg leading-none">
@@ -111,7 +99,7 @@
 
 
                     {{-- TOTAL --}}
-                    <div class="rounded-2xl border border-slate-200 bg-white p-4 shadow-sm">
+                    <div class="rounded-lg border border-slate-200 bg-white p-4 shadow-sm">
 
                         <div class="flex items-center justify-between">
 
@@ -138,7 +126,7 @@
 
 
                     {{-- ADMIN --}}
-                    <div class="rounded-2xl border border-slate-200 bg-white p-4 shadow-sm">
+                    <div class="rounded-lg border border-slate-200 bg-white p-4 shadow-sm">
 
                         <div class="flex items-center justify-between">
 
@@ -165,7 +153,7 @@
 
 
                     {{-- PETUGAS --}}
-                    <div class="rounded-2xl border border-slate-200 bg-white p-4 shadow-sm">
+                    <div class="rounded-lg border border-slate-200 bg-white p-4 shadow-sm">
 
                         <div class="flex items-center justify-between">
 
@@ -196,7 +184,7 @@
                 {{-- =================================================
                     TABEL PENGGUNA
                 ================================================== --}}
-                <div class="overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm">
+                <div class="overflow-hidden rounded-lg border border-slate-200 bg-white shadow-sm">
 
 
                     {{-- HEADER TABEL --}}
@@ -244,29 +232,29 @@
                     ================================================== --}}
                     <div class="overflow-x-auto">
 
-                        <table class="w-full min-w-[700px] text-sm">
+                        <table class="sipper-data-table min-w-[700px] text-sm">
 
-                            <thead class="bg-slate-50">
+                            <thead>
 
                                 <tr class="border-b border-slate-200 text-left">
 
-                                    <th class="px-5 py-3 font-bold text-slate-600">
+                                    <th>
                                         No
                                     </th>
 
-                                    <th class="px-5 py-3 font-bold text-slate-600">
+                                    <th>
                                         Pengguna
                                     </th>
 
-                                    <th class="px-5 py-3 font-bold text-slate-600">
+                                    <th>
                                         Username
                                     </th>
 
-                                    <th class="px-5 py-3 font-bold text-slate-600">
+                                    <th>
                                         Role
                                     </th>
 
-                                    <th class="px-5 py-3 text-right font-bold text-slate-600">
+                                    <th class="sipper-table-actions">
                                         Aksi
                                     </th>
 
@@ -300,7 +288,7 @@
 
 
                                         {{-- NAMA --}}
-                                        <td class="px-5 py-4">
+                                        <td class="sipper-table-actions px-5 py-4">
 
                                             <div class="flex items-center gap-3">
 

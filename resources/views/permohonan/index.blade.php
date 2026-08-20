@@ -492,13 +492,12 @@
 <main class="sipper-content">
     @include('layouts.header', ['pageTitle' => 'Data Permohonan'])
 
-    <div class="sipper-page">
-        <div class="sipper-panel">
-            <div class="page-top">
-                <div>
-                    <p class="page-badge">SIPPER</p>
-                    <h1 class="page-title">Data Permohonan</h1>
-                    <p class="page-subtitle">Manajemen, pencarian, dan filter komprehensif data permohonan layanan.</p>
+    <div class="page-shell">
+        <div class="form-page-container">
+            <div class="form-header">
+                <div class="form-title-group">
+                    <h1>Data Permohonan</h1>
+                    <p>Kelola dan cari data permohonan layanan.</p>
                 </div>
                 <a href="{{ route('permohonan.create') }}" class="primary-btn">+ Tambah Permohonan Baru</a>
             </div>
@@ -605,7 +604,7 @@
                 </div>
 
                 <div class="table-wrap">
-                    <table>
+                    <table class="sipper-data-table">
                         <thead>
                             <tr>
                                 <th style="width:5%;">No</th>

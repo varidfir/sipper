@@ -14,7 +14,7 @@
     --sip-sidebar-bg: #0d3969;
     --sip-topbar-bg: color-mix(in srgb, var(--sip-sidebar-bg) 92%, white);
     --sip-sidebar-hover: rgba(255, 255, 255, 0.07);
-    --sip-sidebar-active: #2f80ed;
+    --sip-sidebar-active: rgba(25, 92, 170, 0.82);
 
     --sip-sidebar-text: rgba(239, 246, 255, 0.92);
     --sip-sidebar-title: rgba(203, 219, 239, 0.72);
@@ -83,6 +83,74 @@ body {
 *::before,
 *::after {
     box-sizing: border-box;
+}
+
+.sipper-data-table {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0;
+    table-layout: auto;
+}
+
+.sipper-data-table th:first-child,
+.sipper-data-table td:first-child,
+.sipper-data-table th:last-child,
+.sipper-data-table td:last-child {
+    width: 1%;
+    white-space: nowrap;
+}
+
+.sipper-data-table thead th {
+    padding: 10px 12px !important;
+    border-right: 1px solid #d7dde3 !important;
+    border-bottom: 1px solid #cbd3dc !important;
+    background: #eef1f4 !important;
+    color: #374151 !important;
+    font-size: 10px !important;
+    font-weight: 800 !important;
+    letter-spacing: .04em;
+    line-height: 1.2;
+    text-align: center;
+    text-transform: uppercase;
+    vertical-align: middle;
+    white-space: nowrap;
+}
+
+.sipper-data-table thead th:last-child,
+.sipper-data-table tbody td:last-child {
+    border-right: 0 !important;
+}
+
+.sipper-data-table th:first-child,
+.sipper-data-table td:first-child {
+    text-align: center;
+}
+
+.sipper-data-table tbody td {
+    padding: 11px 12px;
+    border-right: 1px solid #e1e5e9;
+    border-bottom: 1px solid #e1e5e9;
+    color: #374151;
+    vertical-align: middle;
+}
+
+.sipper-data-table tbody tr:last-child td {
+    border-bottom: 0;
+}
+
+.sipper-data-table tbody tr:hover {
+    background: #f4f8ff;
+}
+
+.sipper-table-actions {
+    text-align: center !important;
+}
+
+.sipper-table-actions .desa-row-actions,
+.sipper-table-actions .kecamatan-row-actions,
+.sipper-table-actions .jenis-row-actions,
+.sipper-table-actions > div {
+    justify-content: center;
 }
 
 button,
@@ -2084,6 +2152,11 @@ textarea.input-control {
 
 .dashboard-lower > * {
     min-width: 0;
+}
+
+.dashboard-main-panel > .dashboard-stats,
+.dashboard-main-panel > .dashboard-lower {
+    width: auto;
 }
 
 .dashboard-table-wrap {

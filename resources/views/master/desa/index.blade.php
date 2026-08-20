@@ -41,27 +41,16 @@
 
 <main class="sipper-content">
     @include('layouts.header', ['pageTitle' => 'Wilayah Desa/Kelurahan'])
-    <div class="desa-page">
-        <div class="desa-panel">
+    <div class="page-shell">
+        <div class="form-page-container">
 
             {{-- HEADER --}}
-            <div class="desa-header">
-                    <div>
-                        <p class="desa-kicker">
-                            ADMINISTRASI
-                        </p>
-                        <h1 class="desa-title">
-                            Data Desa/Kelurahan
-                        </h1>
-                        <p class="desa-subtitle">
-                            Kelola data desa dan kelurahan dalam wilayah kecamatan.
-                        </p>
-                    </div>
-                    <div class="desa-actions">
-                        <a href="{{ route('desa.create') }}" class="desa-button desa-button-primary">
-                            + Tambah
-                        </a>
-                    </div>
+            <div class="form-header">
+                <div class="form-title-group">
+                    <h1>Data Desa/Kelurahan</h1>
+                    <p>Kelola data desa dan kelurahan dalam wilayah kecamatan.</p>
+                </div>
+                <a href="{{ route('desa.create') }}" class="primary-btn">+ Tambah Desa</a>
             </div>
 
             {{-- NOTIFIKASI --}}
@@ -81,15 +70,15 @@
                     </div>
 
                     <div class="desa-table-wrap">
-                        <table class="desa-table">
-                            <thead><tr><th class="desa-number">No</th><th>Nama Desa/Kelurahan</th><th>Kecamatan</th><th style="text-align:right">Aksi</th></tr></thead>
+                        <table class="desa-table sipper-data-table">
+                            <thead><tr><th class="desa-number">No</th><th>Nama Desa/Kelurahan</th><th>Kecamatan</th><th class="sipper-table-actions">Aksi</th></tr></thead>
                             <tbody>
                         @forelse($desas as $desa)
                             <tr>
                                 <td class="desa-number">{{ $loop->iteration }}</td>
                                 <td class="desa-name">{{ $desa->nama_desa }}</td>
                                 <td class="desa-district">{{ $desa->kecamatan->nama_kecamatan ?? '-' }}</td>
-                                <td><div class="desa-row-actions">
+                                <td class="sipper-table-actions"><div class="desa-row-actions">
                                     <a href="{{ route('desa.edit', $desa) }}" class="desa-action desa-edit">
                                         Edit
                                     </a>

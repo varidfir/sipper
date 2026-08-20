@@ -40,28 +40,17 @@
 
 <main class="sipper-content">
     @include('layouts.header', ['pageTitle' => 'Wilayah Kecamatan'])
-    <div class="kecamatan-page">
-        <div class="kecamatan-panel">
+    <div class="page-shell">
+        <div class="form-page-container">
 
             {{-- HEADER --}}
-            <div class="kecamatan-header">
-                <div>
-                        <p class="kecamatan-kicker">
-                            ADMINISTRASI
-                        </p>
-                        <h1 class="kecamatan-title">
-                            Data Kecamatan
-                        </h1>
-                        <p class="kecamatan-subtitle">
-                            Kelola data kecamatan dalam wilayah kerja.
-                        </p>
-                    </div>
-                    <div class="kecamatan-actions">
-                        <a href="{{ route('kecamatan.create') }}" class="kecamatan-button kecamatan-button-primary">
-                            + Tambah
-                        </a>
-                    </div>
+            <div class="form-header">
+                <div class="form-title-group">
+                    <h1>Data Kecamatan</h1>
+                    <p>Kelola data kecamatan dalam wilayah kerja.</p>
                 </div>
+                <a href="{{ route('kecamatan.create') }}" class="primary-btn">+ Tambah Kecamatan</a>
+            </div>
 
             {{-- NOTIFIKASI --}}
             @if(session('status'))
@@ -80,14 +69,14 @@
                     </div>
 
                     <div class="kecamatan-table-wrap">
-                        <table class="kecamatan-table">
-                            <thead><tr><th class="kecamatan-number">No</th><th>Nama Kecamatan</th><th style="text-align:right">Aksi</th></tr></thead>
+                        <table class="kecamatan-table sipper-data-table">
+                            <thead><tr><th class="kecamatan-number">No</th><th>Nama Kecamatan</th><th class="sipper-table-actions">Aksi</th></tr></thead>
                             <tbody>
                         @forelse($kecamatans as $kecamatan)
                             <tr>
                                 <td class="kecamatan-number">{{ $loop->iteration }}</td>
                                 <td class="kecamatan-name">{{ $kecamatan->nama_kecamatan }}</td>
-                                <td><div class="kecamatan-row-actions">
+                                <td class="sipper-table-actions"><div class="kecamatan-row-actions">
                                     <a href="{{ route('kecamatan.edit', $kecamatan) }}" class="kecamatan-action kecamatan-edit">
                                         Edit
                                     </a>

@@ -337,6 +337,43 @@
 
                     </a>
 
+
+                    {{-- Kelola Petugas --}}
+                    <a
+                        href="{{ route('user.index') }}"
+                        class="{{ request()->routeIs('user.*') ? 'active' : '' }}"
+                    >
+
+                        <span class="sipper-nav-icon">
+
+                            <svg
+                                viewBox="0 0 24 24"
+                                fill="none"
+                                stroke="currentColor"
+                            >
+                                <circle cx="9" cy="8" r="3" />
+                                <path
+                                    d="M3 20V18C3 15.8 5.7 14 9 14C12.3 14 15 15.8 15 18V20"
+                                    stroke-linecap="round"
+                                />
+                                <path
+                                    d="M16 5.5C17.7 5.8 19 7.1 19 8.7C19 10.1 18.1 11.3 16.8 11.7"
+                                    stroke-linecap="round"
+                                />
+                                <path
+                                    d="M17 14.3C19.4 14.8 21 16.3 21 18V20"
+                                    stroke-linecap="round"
+                                />
+                            </svg>
+
+                        </span>
+
+                        <span class="sipper-nav-label">
+                            Kelola Petugas
+                        </span>
+
+                    </a>
+
                 </nav>
 
             </div>

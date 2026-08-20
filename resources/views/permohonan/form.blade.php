@@ -294,10 +294,6 @@
                                        class="jenis-select"
                                        value="{{ $group->jenisPelayanans->first()?->id }}"
                                        disabled>
-                                <div class="md:col-span-2 rounded-2xl bg-white p-4">
-                                    <p class="text-sm font-bold text-slate-800">Pelayanan: KIA</p>
-                                    <p class="mt-1 text-xs text-slate-500">Tidak ada data tambahan yang perlu diisi.</p>
-                                </div>
                             @endif
 
                             {{-- SURAT PINDAH --}}
@@ -307,15 +303,15 @@
                                        class="jenis-select"
                                        value="{{ $group->jenisPelayanans->first()?->id }}"
                                        disabled>
-                                <div class="form-field-keterangan md:col-span-2">
+                                <div class="form-field-keterangan form-field-surat-pindah">
                                     <label class="mb-1.5 block text-sm font-bold text-slate-700">
-                                        Keterangan (siapa pemohonnya) <span class="text-red-500">*</span>
+                                        Keterangan Pemohon <span class="text-red-500">*</span>
                                     </label>
                                     <input type="text"
                                            name="detail_data[keterangan]"
                                            value="{{ $detail['keterangan'] ?? '' }}"
                                            class="w-full rounded-xl border border-slate-300 bg-white px-3 py-2.5"
-                                           placeholder="Contoh: Kepala keluarga / anggota keluarga">
+                                           placeholder="Contoh: Kepala keluarga atau anggota keluarga">
                                 </div>
                             @endif
 
@@ -326,7 +322,7 @@
                                        class="jenis-select"
                                        value="{{ $group->jenisPelayanans->first()?->id }}"
                                        disabled>
-                                <div class="form-field-keterangan md:col-span-2">
+                                <div class="form-field-keterangan form-field-perekaman">
                                     <label class="mb-1.5 block text-sm font-bold text-slate-700">
                                         Keterangan (pemula) <span class="text-red-500">*</span>
                                     </label>

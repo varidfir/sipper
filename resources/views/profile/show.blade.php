@@ -23,9 +23,14 @@
 @include('layouts.sidebar')
 <main class="sipper-content">
 @include('layouts.header', ['pageTitle' => 'Pengaturan Akun'])
-<div class="page">
-    <div class="top">
-        <div><a class="back" href="{{ route('dashboard') }}">← Kembali ke Dashboard</a><h1>Pengaturan Akun</h1><p class="sub">Kelola profil dan keamanan akun {{ $user->role === 'admin' ? 'admin' : 'petugas' }}.</p></div>
+<div class="page-shell profile-page">
+    <div class="form-page-container">
+    <div class="form-header">
+        <div class="form-title-group">
+            <h1>Pengaturan Akun</h1>
+            <p>Kelola profil dan keamanan akun {{ $user->role === 'admin' ? 'admin' : 'petugas' }}.</p>
+        </div>
+        <a class="btn-back" href="{{ route('dashboard') }}">← Kembali</a>
     </div>
 
     @if(session('status'))<div class="alert">✓ {{ session('status') }}</div>@endif
@@ -71,11 +76,12 @@
                         </div>
                         <div class="actions"><button class="btn" type="submit">Ubah Password</button></div>
                     </form>
-                </div</main>
->
+                </div>
             </section>
         </div>
     </div>
 </div>
+</div>
+</main>
 </body>
 </html>

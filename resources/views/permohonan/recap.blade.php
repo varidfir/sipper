@@ -441,22 +441,15 @@
 
         @include('layouts.header', ['pageTitle' => 'Rekapitulasi'])
 
-        <div class="recap-page">
+        <div class="page-shell">
 
-            <div class="recap-panel">
+            <div class="form-page-container">
 
-                <div class="recap-title">
-                    <p class="text-xs font-bold uppercase tracking-[0.14em] text-blue-600">
-                        Laporan pelayanan
-                    </p>
-
-                    <h1 class="mt-1 text-2xl font-bold tracking-tight text-slate-900">
-                        Rekapitulasi
-                    </h1>
-
-                    <p class="mt-1 text-sm text-slate-500">
-                        Ringkasan permohonan berdasarkan periode dan kategori.
-                    </p>
+                <div class="form-header">
+                    <div class="form-title-group">
+                        <h1>Rekapitulasi</h1>
+                        <p>Ringkasan permohonan berdasarkan periode dan kategori.</p>
+                    </div>
                 </div>
 
                 {{-- =====================================================
@@ -734,7 +727,7 @@
 
                         <div class="overflow-x-auto">
 
-                            <table class="recap-table w-full text-sm">
+                            <table class="recap-table sipper-data-table w-full text-sm">
 
                                 <thead class="bg-slate-50">
 
