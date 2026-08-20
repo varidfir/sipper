@@ -5,6 +5,18 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{{ isset($permohonan) ? 'Edit Rekap' : 'Input Rekap' }} - SIPPER</title>
     @vite(['resources/css/app.css', 'resources/js/app.js'])
+    <style>
+        .autocomplete { position: relative; }
+        .autocomplete-control { position: relative; }
+        .autocomplete-control .autocomplete-input { padding-right: 42px; }
+        .autocomplete-toggle { position: absolute; top: 1px; right: 1px; bottom: 1px; width: 36px; border: 0; border-left: 1px solid #e2e8f0; border-radius: 0 11px 11px 0; background: #f8fafc; color: #64748b; cursor: pointer; }
+        .autocomplete-toggle:hover { background: #eff6ff; color: #2563eb; }
+        .autocomplete-menu { position: absolute; z-index: 20; top: calc(100% + 4px); left: 0; right: 0; max-height: 220px; overflow-y: auto; border: 1px solid #cbd5e1; border-radius: 8px; background: #fff; box-shadow: 0 8px 20px rgba(15, 23, 42, .12); }
+        .autocomplete-menu[hidden] { display: none; }
+        .autocomplete-option { display: block; width: 100%; padding: 9px 12px; border: 0; background: #fff; color: #334155; text-align: left; font-size: 14px; cursor: pointer; }
+        .autocomplete-option[hidden] { display: none; }
+        .autocomplete-option:hover, .autocomplete-option.is-active { background: #eff6ff; color: #1d4ed8; }
+    </style>
 </head>
 <body>
 <div class="app">
@@ -25,6 +37,8 @@
     $detail = old('detail_data', $permohonan->detail_data ?? []);
     $selectedKecamatanId = old('kecamatan_id', $permohonan->kecamatan_id ?? '');
     $selectedDesaId = old('desa_id', $permohonan->desa_id ?? '');
+    $selectedKecamatan = $kecamatans->firstWhere('id', (int) $selectedKecamatanId);
+    $selectedDesa = $desas->firstWhere('id', (int) $selectedDesaId);
 @endphp
 
 <div class="form-header">
@@ -100,36 +114,47 @@
                             <label class="mb-1.5 block text-sm font-bold text-slate-700">
                                 Desa/Kelurahan <span class="text-red-500">*</span>
                             </label>
-                            <select name="desa_id"
-                                    id="desa_id"
-                                    required
-                                    class="w-full rounded-xl border border-slate-300 bg-white px-3 py-2.5 outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-100">
-                                <option value="">Pilih Desa/Kelurahan</option>
-                                @foreach($desas as $desa)
-                                    <option value="{{ $desa->id }}"
-                                            data-kecamatan="{{ $desa->kecamatan_id }}"
-                                            {{ (string)$selectedDesaId === (string)$desa->id ? 'selected' : '' }}>
-                                        {{ $desa->nama_desa }}
-                                    </option>
-                                @endforeach
-                            </select>
+                            <div class="autocomplete" data-autocomplete data-filter-by="kecamatan_id">
+                                <input type="hidden" name="desa_id" id="desa_id" value="{{ $selectedDesaId }}">
+                                    <div class="autocomplete-control">
+                                     <input type="text" id="desa_search" autocomplete="off" required
+                                         value="{{ $selectedDesa?->nama_desa ?? '' }}"
+                                         placeholder="Ketik atau pilih desa/kelurahan"
+                                         class="autocomplete-input w-full rounded-xl border border-slate-300 bg-white px-3 py-2.5 outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-100">
+                                     <button type="button" class="autocomplete-toggle" aria-label="Tampilkan pilihan desa" aria-expanded="false">&#9662;</button>
+                                    </div>
+                                <div class="autocomplete-menu" role="listbox" hidden>
+                                    @foreach($desas as $desa)
+                                        <button type="button" class="autocomplete-option" role="option"
+                                                data-value="{{ $desa->id }}" data-kecamatan_id="{{ $desa->kecamatan_id }}">
+                                            {{ $desa->nama_desa }}
+                                        </button>
+                                    @endforeach
+                                </div>
+                            </div>
                         </div>
 
                         <div class="form-field-kecamatan">
                             <label class="mb-1.5 block text-sm font-bold text-slate-700">
                                 Kecamatan <span class="text-red-500">*</span>
                             </label>
-                            <select name="kecamatan_id"
-                                    id="kecamatan_id"
-                                    required
-                                    class="w-full rounded-xl border border-slate-300 bg-white px-3 py-2.5 outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-100">
-                                <option value="">Pilih Kecamatan</option>
-                                @foreach($kecamatans as $kecamatan)
-                                    <option value="{{ $kecamatan->id }}" {{ (string)$selectedKecamatanId === (string)$kecamatan->id ? 'selected' : '' }}>
-                                        {{ $kecamatan->nama_kecamatan }}
-                                    </option>
-                                @endforeach
-                            </select>
+                            <div class="autocomplete" data-autocomplete>
+                                <input type="hidden" name="kecamatan_id" id="kecamatan_id" value="{{ $selectedKecamatanId }}">
+                                    <div class="autocomplete-control">
+                                     <input type="text" id="kecamatan_search" autocomplete="off" required
+                                         value="{{ $selectedKecamatan?->nama_kecamatan ?? '' }}"
+                                         placeholder="Ketik atau pilih kecamatan"
+                                         class="autocomplete-input w-full rounded-xl border border-slate-300 bg-white px-3 py-2.5 outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-100">
+                                     <button type="button" class="autocomplete-toggle" aria-label="Tampilkan pilihan kecamatan" aria-expanded="false">&#9662;</button>
+                                    </div>
+                                <div class="autocomplete-menu" role="listbox" hidden>
+                                    @foreach($kecamatans as $kecamatan)
+                                        <button type="button" class="autocomplete-option" role="option" data-value="{{ $kecamatan->id }}">
+                                            {{ $kecamatan->nama_kecamatan }}
+                                        </button>
+                                    @endforeach
+                                </div>
+                            </div>
                         </div>
 
                         <div class="form-field-date">
@@ -163,14 +188,21 @@
                                     <label class="mb-1.5 block text-sm font-bold text-slate-700">
                                         Jenis KK <span class="text-red-500">*</span>
                                     </label>
-                                    <select name="jenis_pelayanan_id" class="jenis-select w-full rounded-xl border border-slate-300 bg-white px-3 py-2.5" required disabled>
-                                        <option value="">Pilih jenis KK</option>
-                                        @foreach($group->jenisPelayanans as $jenis)
-                                            <option value="{{ $jenis->id }}" {{ (int)$selectedJenisId === (int)$jenis->id ? 'selected' : '' }}>
-                                                {{ $jenis->nama_pelayanan }}
-                                            </option>
-                                        @endforeach
-                                    </select>
+                                    <div class="autocomplete service-autocomplete" data-autocomplete>
+                                        <input type="hidden" name="jenis_pelayanan_id" class="jenis-select" value="{{ $selectedJenisId }}" disabled>
+                                             <div class="autocomplete-control">
+                                              <input type="text" autocomplete="off" required disabled
+                                                  value="{{ $selectedJenis?->nama_pelayanan ?? '' }}"
+                                                  placeholder="Ketik atau pilih jenis KK"
+                                                  class="autocomplete-input w-full rounded-xl border border-slate-300 bg-white px-3 py-2.5">
+                                              <button type="button" class="autocomplete-toggle" aria-label="Tampilkan pilihan jenis KK" aria-expanded="false">&#9662;</button>
+                                             </div>
+                                        <div class="autocomplete-menu" role="listbox" hidden>
+                                            @foreach($group->jenisPelayanans as $jenis)
+                                                <button type="button" class="autocomplete-option" role="option" data-value="{{ $jenis->id }}">{{ $jenis->nama_pelayanan }}</button>
+                                            @endforeach
+                                        </div>
+                                    </div>
                                 </div>
 
                                 <div class="form-field-keterangan">
@@ -191,14 +223,21 @@
                                     <label class="mb-1.5 block text-sm font-bold text-slate-700">
                                         Jenis Akta <span class="text-red-500">*</span>
                                     </label>
-                                    <select name="jenis_pelayanan_id" class="jenis-select w-full rounded-xl border border-slate-300 bg-white px-3 py-2.5" required disabled>
-                                        <option value="">Pilih jenis akta</option>
-                                        @foreach($group->jenisPelayanans as $jenis)
-                                            <option value="{{ $jenis->id }}" {{ (int)$selectedJenisId === (int)$jenis->id ? 'selected' : '' }}>
-                                                {{ $jenis->nama_pelayanan }}
-                                            </option>
-                                        @endforeach
-                                    </select>
+                                    <div class="autocomplete service-autocomplete" data-autocomplete>
+                                        <input type="hidden" name="jenis_pelayanan_id" class="jenis-select" value="{{ $selectedJenisId }}" disabled>
+                                             <div class="autocomplete-control">
+                                              <input type="text" autocomplete="off" required disabled
+                                                  value="{{ $selectedJenis?->nama_pelayanan ?? '' }}"
+                                                  placeholder="Ketik atau pilih jenis akta"
+                                                  class="autocomplete-input w-full rounded-xl border border-slate-300 bg-white px-3 py-2.5">
+                                              <button type="button" class="autocomplete-toggle" aria-label="Tampilkan pilihan jenis akta" aria-expanded="false">&#9662;</button>
+                                             </div>
+                                        <div class="autocomplete-menu" role="listbox" hidden>
+                                            @foreach($group->jenisPelayanans as $jenis)
+                                                <button type="button" class="autocomplete-option" role="option" data-value="{{ $jenis->id }}">{{ $jenis->nama_pelayanan }}</button>
+                                            @endforeach
+                                        </div>
+                                    </div>
                                 </div>
 
                                 <div class="form-field-keterangan">
@@ -219,14 +258,21 @@
                                     <label class="mb-1.5 block text-sm font-bold text-slate-700">
                                         Jenis KTP <span class="text-red-500">*</span>
                                     </label>
-                                    <select name="jenis_pelayanan_id" class="jenis-select w-full rounded-xl border border-slate-300 bg-white px-3 py-2.5" required disabled>
-                                        <option value="">Pilih jenis KTP</option>
-                                        @foreach($group->jenisPelayanans as $jenis)
-                                            <option value="{{ $jenis->id }}" {{ (int)$selectedJenisId === (int)$jenis->id ? 'selected' : '' }}>
-                                                {{ $jenis->nama_pelayanan }}
-                                            </option>
-                                        @endforeach
-                                    </select>
+                                    <div class="autocomplete service-autocomplete" data-autocomplete>
+                                        <input type="hidden" name="jenis_pelayanan_id" class="jenis-select" value="{{ $selectedJenisId }}" disabled>
+                                             <div class="autocomplete-control">
+                                              <input type="text" autocomplete="off" required disabled
+                                                  value="{{ $selectedJenis?->nama_pelayanan ?? '' }}"
+                                                  placeholder="Ketik atau pilih jenis KTP"
+                                                  class="autocomplete-input w-full rounded-xl border border-slate-300 bg-white px-3 py-2.5">
+                                              <button type="button" class="autocomplete-toggle" aria-label="Tampilkan pilihan jenis KTP" aria-expanded="false">&#9662;</button>
+                                             </div>
+                                        <div class="autocomplete-menu" role="listbox" hidden>
+                                            @foreach($group->jenisPelayanans as $jenis)
+                                                <button type="button" class="autocomplete-option" role="option" data-value="{{ $jenis->id }}">{{ $jenis->nama_pelayanan }}</button>
+                                            @endforeach
+                                        </div>
+                                    </div>
                                 </div>
 
                                 <div class="form-field-keterangan">
@@ -320,20 +366,108 @@ document.addEventListener('DOMContentLoaded', () => {
     const kecamatan = document.getElementById('kecamatan_id');
     const desa = document.getElementById('desa_id');
 
-    function filterDesa() {
-        const kecamatanId = kecamatan.value;
+    function setupAutocomplete(container) {
+        const input = container.querySelector('.autocomplete-input');
+        const hidden = container.querySelector('input[type="hidden"]');
+        const menu = container.querySelector('.autocomplete-menu');
+        const toggle = container.querySelector('.autocomplete-toggle');
+        const options = [...container.querySelectorAll('.autocomplete-option')];
+        let visibleOptions = [];
+        let activeIndex = -1;
 
-        [...desa.options].forEach(option => {
-            if (!option.value) {
-                option.hidden = false;
-                return;
+        function render(openMenu = false) {
+            const query = input.value.trim().toLowerCase();
+            const filterBy = container.dataset.filterBy;
+            const filterValue = filterBy ? document.getElementById(filterBy)?.value : '';
+
+            visibleOptions = options.filter(option => {
+                const matchesText = option.textContent.trim().toLowerCase().includes(query);
+                const matchesFilter = !filterBy || option.dataset[filterBy] === filterValue;
+                option.hidden = !matchesText || !matchesFilter;
+                option.classList.remove('is-active');
+                return !option.hidden;
+            });
+
+            activeIndex = visibleOptions.length ? 0 : -1;
+            if (visibleOptions[0]) visibleOptions[0].classList.add('is-active');
+            menu.hidden = !openMenu || !visibleOptions.length;
+            toggle?.setAttribute('aria-expanded', String(!menu.hidden));
+        }
+
+        function choose(option) {
+            input.value = option.textContent.trim();
+            hidden.value = option.dataset.value;
+            menu.hidden = true;
+            toggle?.setAttribute('aria-expanded', 'false');
+            input.setCustomValidity('');
+            input.dispatchEvent(new Event('change', { bubbles: true }));
+        }
+
+        input.addEventListener('focus', () => render(false));
+        input.addEventListener('input', () => {
+            hidden.value = '';
+            input.setCustomValidity('');
+            render(true);
+        });
+        input.addEventListener('keydown', event => {
+            if (event.key === 'ArrowDown' || event.key === 'ArrowUp') {
+                event.preventDefault();
+                if (menu.hidden) return;
+                if (!visibleOptions.length) return;
+                activeIndex = (activeIndex + (event.key === 'ArrowDown' ? 1 : -1) + visibleOptions.length) % visibleOptions.length;
+                visibleOptions.forEach(option => option.classList.remove('is-active'));
+                visibleOptions[activeIndex].classList.add('is-active');
+                visibleOptions[activeIndex].scrollIntoView({ block: 'nearest' });
             }
 
-            option.hidden = option.dataset.kecamatan !== kecamatanId;
-        });
+            if (event.key === 'Enter' && !menu.hidden && visibleOptions[activeIndex]) {
+                event.preventDefault();
+                choose(visibleOptions[activeIndex]);
+            }
 
-        if (desa.value && desa.selectedOptions[0]?.dataset.kecamatan !== kecamatanId) {
+            if (event.key === 'Escape') {
+                menu.hidden = true;
+                toggle?.setAttribute('aria-expanded', 'false');
+            }
+        });
+        toggle?.addEventListener('mousedown', event => event.preventDefault());
+        toggle?.addEventListener('click', () => {
+            if (menu.hidden) {
+                input.focus();
+                render(true);
+            } else {
+                menu.hidden = true;
+                toggle.setAttribute('aria-expanded', 'false');
+            }
+        });
+        options.forEach(option => option.addEventListener('mousedown', event => {
+            event.preventDefault();
+            choose(option);
+        }));
+        input.addEventListener('blur', () => window.setTimeout(() => {
+            menu.hidden = true;
+            toggle?.setAttribute('aria-expanded', 'false');
+            if (container.classList.contains('service-autocomplete') && !hidden.value) {
+                input.value = '';
+            }
+        }, 120));
+
+        return { render };
+    }
+
+    const autocompleteInstances = [...document.querySelectorAll('[data-autocomplete]')]
+        .map(container => ({ container, instance: setupAutocomplete(container) }));
+    const desaAutocomplete = autocompleteInstances.find(item => item.container.dataset.filterBy === 'kecamatan_id')?.instance;
+
+    function filterDesa() {
+        const selectedOption = document.querySelector('#desa_search')?.value;
+        desaAutocomplete?.render();
+        const desaOption = document.querySelector(`#desa_search`)?.closest('[data-autocomplete]')?.querySelector(`.autocomplete-option[data-value="${desa.value}"]`);
+        if (desa.value && (!desaOption || desaOption.dataset.kecamatan_id !== kecamatan.value)) {
             desa.value = '';
+            document.getElementById('desa_search').value = '';
+        } else if (selectedOption) {
+            desaAutocomplete?.render();
         }
     }
 
@@ -359,6 +493,9 @@ document.addEventListener('DOMContentLoaded', () => {
             panel.querySelectorAll('.jenis-select').forEach(input => {
                 input.disabled = !active;
             });
+            panel.querySelectorAll('.service-autocomplete .autocomplete-input').forEach(input => {
+                input.disabled = !active;
+            });
 
             // Hanya field pada panel aktif yang wajib diisi.
             panel.querySelectorAll('input[required], select[required]').forEach(input => {
@@ -378,6 +515,66 @@ document.addEventListener('DOMContentLoaded', () => {
 
     tabs.forEach(tab => {
         tab.addEventListener('click', () => activate(tab.dataset.group));
+    });
+
+    function focusCategory(index) {
+        if (!tabs.length) return;
+
+        const nextIndex = (index + tabs.length) % tabs.length;
+        tabs[nextIndex].focus();
+        activate(tabs[nextIndex].dataset.group);
+    }
+
+    tabs.forEach((tab, index) => {
+        tab.addEventListener('keydown', event => {
+            if (event.key === 'Enter' || event.key === ' ') {
+                event.preventDefault();
+                activate(tab.dataset.group);
+            }
+
+            if (event.key === 'ArrowDown' || event.key === 'ArrowRight') {
+                event.preventDefault();
+                focusCategory(index + 1);
+            }
+
+            if (event.key === 'ArrowUp' || event.key === 'ArrowLeft') {
+                event.preventDefault();
+                focusCategory(index - 1);
+            }
+        });
+    });
+
+    const form = document.querySelector('.form-content');
+    form.addEventListener('submit', event => {
+        const invalidService = [...form.querySelectorAll('.service-autocomplete')]
+            .map(container => ({
+                input: container.querySelector('.autocomplete-input'),
+                hidden: container.querySelector('input[type="hidden"]'),
+            }))
+            .find(field => !field.input.disabled && !field.hidden.value);
+
+        if (invalidService) {
+            event.preventDefault();
+            invalidService.input.setCustomValidity('Pilih jenis pelayanan dari opsi yang tersedia.');
+            invalidService.input.reportValidity();
+            invalidService.input.focus();
+        }
+    });
+    form.addEventListener('keydown', event => {
+        if (event.target.closest('[data-autocomplete]')) return;
+        if (event.key !== 'Enter' || event.target.matches('textarea, button, a')) return;
+
+        event.preventDefault();
+        const fields = [...form.querySelectorAll('input:not([type="hidden"]):not([disabled]), select:not([disabled]), textarea:not([disabled])')]
+            .filter(field => field.offsetParent !== null);
+        const currentIndex = fields.indexOf(event.target);
+        const nextField = fields[currentIndex + 1];
+
+        if (nextField) {
+            nextField.focus();
+        } else {
+            form.querySelector('button[type="submit"]')?.focus();
+        }
     });
 
     const initial = selectedGroup.value;
