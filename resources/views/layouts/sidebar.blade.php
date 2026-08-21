@@ -12,19 +12,14 @@
 
         <div class="sipper-brand-logo">
             <img
-                src="{{ asset('images/logo-magetan.svg') }}"
-                alt="Logo Kabupaten Magetan"
+                src="{{ asset('images/logo-go-digital.svg') }}"
+                alt="Logo GO Digital Disdukcapil Magetan"
             />
         </div>
 
         <div class="sipper-brand-text">
-            <span class="sipper-brand-name">
-                Dispendukcapil
-            </span>
-
-            <span class="sipper-brand-sub">
-                Kabupaten Magetan
-            </span>
+            <span class="sipper-brand-name">Disdukcapil</span>
+            <span class="sipper-brand-sub">Kabupaten Magetan</span>
         </div>
 
     </a>

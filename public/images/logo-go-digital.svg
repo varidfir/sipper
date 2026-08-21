@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 768 768" role="img" aria-labelledby="title desc">
+  <title id="title">GO Digital Disdukcapil Magetan</title>
+  <desc id="desc">Logo GO Digital Disdukcapil Magetan</desc>
+  <circle cx="384" cy="384" r="374" fill="#5ed9ed"/>
+  <text x="384" y="145" text-anchor="middle" fill="#00802b" font-family="Georgia, serif" font-size="102" font-weight="700">GO</text>
+  <text x="384" y="199" text-anchor="middle" fill="#1239d5" font-family="Arial, sans-serif" font-size="58" font-weight="700" letter-spacing="-3">DIGITAL</text>
+  <path d="M318 365c-34-40-93-45-130-8-43 43-43 126 0 169 39 39 107 37 144-5 17-19 27-45 27-73H249" fill="none" stroke="#f20b0b" stroke-width="62" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M418 365c35-40 95-45 132-7 43 44 42 126-2 168-38 37-103 34-137-4" fill="none" stroke="#fff000" stroke-width="62" stroke-linecap="round" stroke-linejoin="round"/>
+  <circle cx="500" cy="425" r="71" fill="#5ed9ed"/>
+  <path d="M476 384l66 41-66 41z" fill="#f20b0b"/>
+  <text x="384" y="607" text-anchor="middle" fill="#1239d5" font-family="Arial, sans-serif" font-size="52" font-weight="700">DISDUKCAPIL</text>
+  <text x="384" y="670" text-anchor="middle" fill="#c51b1b" font-family="Georgia, serif" font-size="43" font-weight="700">MAGETAN</text>
+</svg>

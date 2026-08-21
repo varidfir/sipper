@@ -213,7 +213,7 @@ textarea {
 
     transform: translateY(-8px);
 
-    gap: 11px;
+    gap: 10px;
 
     flex: 0 0 auto;
 
@@ -226,10 +226,10 @@ textarea {
 }
 
 .sipper-brand-logo {
-    width: 36px;
-    height: 44px;
+    width: 58px;
+    height: 58px;
 
-    flex: 0 0 36px;
+    flex: 0 0 58px;
 
     display: flex;
     align-items: center;
