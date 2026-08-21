@@ -85,6 +85,47 @@ body {
     box-sizing: border-box;
 }
 
+.login-page {
+    position: fixed;
+    inset: 0;
+    overflow: hidden;
+    width: 100%;
+    height: 100vh;
+    height: 100dvh;
+    min-height: 100vh;
+    min-height: 100dvh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background:
+        linear-gradient(rgba(7, 55, 105, 0.42), rgba(13, 57, 105, 0.54)),
+        url('/images/gedung-disdukcapil.webp') center center / cover no-repeat;
+    background-attachment: fixed;
+}
+
+html:has(body.login-page),
+body.login-page {
+    height: 100%;
+    min-height: 100%;
+    zoom: 1;
+}
+
+.login-page::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(135deg, rgba(29, 97, 232, 0.08), rgba(7, 44, 86, 0.08));
+    pointer-events: none;
+}
+
+.login-card {
+    position: relative;
+    z-index: 1;
+    background: rgba(255, 255, 255, 0.92);
+    border: 1px solid rgba(255, 255, 255, 0.7);
+    backdrop-filter: blur(4px);
+}
+
 .sipper-data-table {
     width: 100%;
     border-collapse: separate;
@@ -1887,6 +1928,99 @@ textarea.input-control {
     .btn-simpan {
         width: 100%;
     }
+}
+
+/* Dashboard follows the compact service-workspace layout. */
+.dashboard-main-panel {
+    border-radius: 4px;
+    box-shadow: 0 3px 12px rgba(15, 23, 42, 0.06);
+}
+
+.dashboard-heading {
+    padding: 20px 22px 16px;
+    background: #ffffff;
+}
+
+.dashboard-heading h1 {
+    margin-top: 0;
+    font-size: 21px;
+}
+
+.dashboard-heading p {
+    font-size: 12px;
+}
+
+.dashboard-service-banner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    margin: 0 24px 16px;
+    padding: 10px 14px;
+    background: var(--sip-primary);
+    color: #ffffff;
+}
+
+.dashboard-service-banner strong {
+    font-size: 13px;
+}
+
+.dashboard-service-banner span {
+    font-size: 11px;
+    opacity: 0.9;
+}
+
+.dashboard-main-panel > .dashboard-stats,
+.dashboard-main-panel > .dashboard-panel,
+.dashboard-main-panel > .dashboard-lower {
+    margin-right: 24px;
+    margin-left: 24px;
+}
+
+.dashboard-stats {
+    gap: 12px;
+    margin-bottom: 16px;
+}
+
+.dashboard-stat {
+    min-height: 104px;
+    padding: 16px;
+    border-radius: 4px;
+    box-shadow: none;
+}
+
+.dashboard-stat strong {
+    font-size: 25px;
+}
+
+.dashboard-service-panel,
+.dashboard-lower .dashboard-panel {
+    border-radius: 4px;
+    box-shadow: none;
+}
+
+.dashboard-panel-heading {
+    padding: 14px 16px;
+}
+
+.dashboard-panel-heading h2 {
+    font-size: 14px;
+}
+
+.dashboard-categories {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 8px;
+    padding: 14px 16px 16px;
+}
+
+.dashboard-category {
+    padding: 11px;
+    border-radius: 3px;
+}
+
+.dashboard-lower {
+    gap: 12px;
+    margin-top: 12px;
 }
 
 /* =========================================================

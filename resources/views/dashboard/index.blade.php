@@ -18,9 +18,14 @@
                 <section class="form-header dashboard-heading">
                     <div class="form-title-group">
                         <h1>Dashboard Utama</h1>
-                        <p>Pantau aktivitas pelayanan dan data rekap secara menyeluruh.</p>
+                        <p>Ringkasan pelayanan administrasi kependudukan Kabupaten Magetan.</p>
                     </div>
                     <a href="{{ route('permohonan.create') }}" class="primary-btn">+ Input Rekap Baru</a>
+                </section>
+
+                <section class="dashboard-service-banner">
+                    <strong>Ringkasan Pelayanan</strong>
+                    <span>Pantau aktivitas dan data rekap secara menyeluruh</span>
                 </section>
 
                 <section class="dashboard-stats" aria-label="Ringkasan rekap">
@@ -29,7 +34,7 @@
                     <div class="dashboard-stat"><div><span>Rekap bulan ini</span><strong>{{ number_format($permohonanBulanIni) }}</strong><small>Data masuk bulan berjalan</small></div><div class="dashboard-stat-icon" aria-hidden="true">▦</div></div>
                 </section>
 
-                <section class="dashboard-panel">
+                <section class="dashboard-panel dashboard-service-panel">
                     <div class="dashboard-panel-heading"><div><h2>Rekap berdasarkan jenis</h2><p>Jumlah data yang tercatat untuk setiap kelompok pelayanan.</p></div><a href="{{ route('permohonan.recap') }}">Lihat rekap <span aria-hidden="true">→</span></a></div>
                     <div class="dashboard-categories">
                         @foreach($categoryTotals as $item)
