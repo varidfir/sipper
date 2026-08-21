@@ -31,11 +31,12 @@
     .jenis-badge { display: inline-flex; padding: 4px 8px; border: 1px solid var(--sip-primary-border); border-radius: 3px; background: var(--sip-primary-soft); color: var(--sip-primary); font-size: 10px; font-weight: 700; }
     .jenis-row-actions { display: flex; align-items: center; justify-content: flex-end; gap: 8px; }
     .jenis-row-actions form { margin: 0; }
-    .jenis-action { display: inline-flex; align-items: center; justify-content: center; min-width: 62px; min-height: 32px; padding: 0 12px; border: 1px solid transparent; border-radius: 4px; font-size: 11px; font-weight: 700; line-height: 1; text-decoration: none; transition: background-color .15s ease, border-color .15s ease, color .15s ease; }
-    .jenis-edit { border-color: var(--sip-primary-border); background: #fff; color: var(--sip-primary); }
-    .jenis-edit:hover { background: var(--sip-primary-soft); border-color: var(--sip-primary); }
+    .jenis-action { display: inline-flex; align-items: center; justify-content: center; min-width: 70px; min-height: 32px; padding: 0 12px; border: 1px solid transparent; border-radius: 8px; font-size: 11px; font-weight: 700; line-height: 1; text-decoration: none; transition: background-color .15s ease, border-color .15s ease, color .15s ease, transform .15s ease; }
+    .jenis-action:hover { transform: translateY(-1px); }
+    .jenis-edit { border-color: var(--sip-primary-border); background: var(--sip-primary-soft); color: var(--sip-primary); }
+    .jenis-edit:hover { background: #dbeafe; border-color: var(--sip-primary); }
     .jenis-delete { border-color: #fecaca; background: #fff; color: #b91c1c; cursor: pointer; }
-    .jenis-delete:hover { background: #fee2e2; }
+    .jenis-delete:hover { background: #fee2e2; border-color: #fca5a5; }
     .jenis-empty { padding: 38px 16px !important; color: #64748b !important; text-align: center; }
     @media (max-width: 640px) { .jenis-page { padding: 12px; } .jenis-panel { width: 100%; } .jenis-header { align-items: flex-start; flex-direction: column; padding: 16px; } .jenis-title { font-size: 19px; } .jenis-actions { width: 100%; } .jenis-button { flex: 1; padding: 0 8px; } .jenis-content { padding: 16px; } .jenis-list-head { align-items: flex-start; flex-direction: column; } .jenis-table { min-width: 560px; } }
 </style>

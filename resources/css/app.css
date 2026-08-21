@@ -26,7 +26,7 @@
     --sip-text: #0f172a;
     --sip-muted: #64748b;
 
-    --sip-primary: #1d61e8;
+    --sip-primary: #1b4eb3d3;
     --sip-primary-hover: #1752ca;
 
     --sip-primary-soft: #eaf3ff;
@@ -273,10 +273,10 @@ textarea {
 }
 
 .sipper-brand-logo {
-    width: 58px;
-    height: 58px;
+    width: 42px;
+    height: 44px;
 
-    flex: 0 0 58px;
+    flex: 0 0 42px;
 
     display: flex;
     align-items: center;

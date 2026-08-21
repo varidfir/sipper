@@ -28,12 +28,14 @@
     .kecamatan-table tbody tr:hover { background: #f4f8ff; }
     .kecamatan-number { width: 60px; color: #94a3b8 !important; }
     .kecamatan-name { color: #1f2937 !important; font-weight: 700; }
-    .kecamatan-row-actions { display: flex; justify-content: flex-end; gap: 6px; }
-    .kecamatan-action { display: inline-flex; align-items: center; justify-content: center; min-height: 29px; padding: 0 10px; border-radius: 3px; font-size: 11px; font-weight: 700; text-decoration: none; }
-    .kecamatan-edit { border: 1px solid var(--sip-primary-border); background: var(--sip-primary-soft); color: var(--sip-primary); }
-    .kecamatan-edit:hover { background: #dbeafe; }
-    .kecamatan-delete { border: 1px solid #fecaca; background: #fff1f2; color: #b91c1c; cursor: pointer; }
-    .kecamatan-delete:hover { background: #fee2e2; }
+    .kecamatan-row-actions { display: flex; align-items: center; justify-content: flex-end; gap: 8px; }
+    .kecamatan-row-actions form { margin: 0; }
+    .kecamatan-action { display: inline-flex; align-items: center; justify-content: center; min-width: 70px; min-height: 32px; padding: 0 12px; border: 1px solid transparent; border-radius: 8px; font-size: 11px; font-weight: 700; line-height: 1; text-decoration: none; transition: background-color .15s ease, border-color .15s ease, color .15s ease, transform .15s ease; }
+    .kecamatan-action:hover { transform: translateY(-1px); }
+    .kecamatan-edit { border-color: var(--sip-primary-border); background: var(--sip-primary-soft); color: var(--sip-primary); }
+    .kecamatan-edit:hover { background: #dbeafe; border-color: var(--sip-primary); }
+    .kecamatan-delete { border-color: #fecaca; background: #fff; color: #b91c1c; cursor: pointer; }
+    .kecamatan-delete:hover { background: #fee2e2; border-color: #fca5a5; }
     .kecamatan-empty { padding: 38px 16px !important; color: #64748b !important; text-align: center; }
     @media (max-width: 640px) { .kecamatan-page { padding: 12px; } .kecamatan-panel { width: 100%; } .kecamatan-header { align-items: flex-start; flex-direction: column; padding: 16px; } .kecamatan-title { font-size: 19px; } .kecamatan-actions { width: 100%; } .kecamatan-button { flex: 1; padding: 0 8px; } .kecamatan-content { padding: 16px; } .kecamatan-list-head { align-items: flex-start; flex-direction: column; } .kecamatan-table { min-width: 520px; } }
 </style>
