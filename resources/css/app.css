@@ -201,6 +201,12 @@ textarea {
     font: inherit;
 }
 
+.form-content input[type="text"],
+.form-content textarea,
+.wilayah-form-content input[type="text"] {
+    text-transform: uppercase;
+}
+
 
 /* =========================================================
    SIPPER SIDEBAR
