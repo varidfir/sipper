@@ -10,7 +10,7 @@ class UserAdminController extends Controller
 {
     public function index()
     {
-        $users = User::where('role', 'petugas')->latest()->get();
+        $users = User::latest()->get();
         return view('master.user.index', compact('users'));
     }
 
@@ -25,6 +25,7 @@ class UserAdminController extends Controller
             'name' => ['required', 'string', 'max:255'],
             'username' => ['required', 'string', 'max:255', 'unique:users,username'],
             'email' => ['required', 'email', 'max:255', 'unique:users,email'],
+            'role' => ['required', 'in:admin,petugas'],
             'password' => ['required', 'string', 'min:8'],
         ]);
 
@@ -33,7 +34,7 @@ class UserAdminController extends Controller
             'username' => $request->username,
             'email' => $request->email,
             'password' => Hash::make($request->password),
-            'role' => 'petugas',
+            'role' => $request->role,
         ]);
 
         return redirect()->route('user.index')->with('status', 'Petugas berhasil ditambahkan.');
@@ -50,6 +51,7 @@ class UserAdminController extends Controller
             'name' => ['required', 'string', 'max:255'],
             'username' => ['required', 'string', 'max:255', 'unique:users,username,' . $user->id],
             'email' => ['required', 'email', 'max:255', 'unique:users,email,' . $user->id],
+            'role' => ['required', 'in:admin,petugas'],
             'password' => ['nullable', 'string', 'min:8', 'confirmed'],
         ]);
 
@@ -57,6 +59,7 @@ class UserAdminController extends Controller
             'name' => $request->name,
             'username' => $request->username,
             'email' => $request->email,
+            'role' => $request->role,
         ]);
 
         if ($request->filled('password')) {

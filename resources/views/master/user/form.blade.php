@@ -93,6 +93,17 @@
                                 @enderror
                             </div>
 
+                            <div class="petugas-field">
+                                <label for="role">Role <span class="text-red-500">*</span></label>
+                                <select id="role" name="role" required>
+                                    <option value="petugas" {{ old('role', $user->role ?? 'petugas') == 'petugas' ? 'selected' : '' }}>Petugas</option>
+                                    <option value="admin" {{ old('role', $user->role ?? 'petugas') == 'admin' ? 'selected' : '' }}>Admin</option>
+                                </select>
+                                @error('role')
+                                    <div class="petugas-field-error">{{ $message }}</div>
+                                @enderror
+                            </div>
+
                             <div class="petugas-field petugas-field-wide">
                                 <label for="password">{{ isset($user) ? 'Password Baru (opsional)' : 'Password' }} {{ !isset($user) ? '<span class="text-red-500">*</span>' : '' }}</label>
                                 <input type="password" id="password" name="password" {{ isset($user) ? '' : 'required' }} minlength="8" placeholder="{{ isset($user) ? 'Kosongkan jika tidak diubah' : 'Minimal 8 karakter' }}">
