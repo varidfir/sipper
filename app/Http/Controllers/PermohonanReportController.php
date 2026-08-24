@@ -130,7 +130,8 @@ class PermohonanReportController extends Controller
         $kelompokPelayananId = $request->input('kelompok_pelayanan_id');
         $period = $request->input('period', 'daily');
 
-        $query = Permohonan::query();
+        $query = Permohonan::query()
+            ->with('jenisPelayanan');
 
         if ($year) {
             $query->whereYear('tanggal_permohonan', $year);
@@ -146,16 +147,10 @@ class PermohonanReportController extends Controller
             });
         }
 
-        $periodExpression = match ($period) {
-            'monthly' => "DATE_FORMAT(tanggal_permohonan, '%Y-%m-01')",
-            'yearly' => "DATE_FORMAT(tanggal_permohonan, '%Y-01-01')",
-            default => 'DATE(tanggal_permohonan)',
-        };
-
         $data = $query
-            ->selectRaw("{$periodExpression} as period, COUNT(*) as total")
-            ->groupByRaw($periodExpression)
-            ->orderBy('period')
+            ->selectRaw('jenis_pelayanan_id, COUNT(*) as total')
+            ->groupBy('jenis_pelayanan_id')
+            ->orderBy('jenis_pelayanan_id')
             ->get();
 
         $kelompokPelayanans = \App\Models\KelompokPelayanan::query()
@@ -169,16 +164,30 @@ class PermohonanReportController extends Controller
         ];
 
         $selectedKelompok = $kelompokPelayanans->firstWhere('id', $kelompokPelayananId);
-
-        return Pdf::loadView('permohonan.recap-pdf', compact(
+        $printedAt = now();
+        $petugas = $request->user()?->name ?? 'Nama Petugas';
+        $viewData = compact(
             'data',
             'year',
             'month',
             'period',
             'months',
-            'selectedKelompok'
-        ))
-            ->setPaper('a4', 'portrait')
-            ->download('rekapitulasi-' . $year . '.pdf');
+            'selectedKelompok',
+            'printedAt',
+            'petugas'
+        );
+
+        if ($request->boolean('print')) {
+            return response()
+                ->view('permohonan.recap-pdf', $viewData + ['isPrint' => true])
+                ->header('Content-Type', 'text/html; charset=UTF-8');
+        }
+
+        $pdf = Pdf::loadView('permohonan.recap-pdf', $viewData)
+            ->setPaper('a4', 'portrait');
+
+        $filename = 'rekapitulasi-' . $year . '.pdf';
+
+        return $pdf->download($filename);
     }
 }

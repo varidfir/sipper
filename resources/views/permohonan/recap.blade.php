@@ -875,13 +875,20 @@
                         Unduh PDF
                     </a>
 
-                    <button
-                        type="button"
-                        onclick="window.print()"
+                    <a
+                        href="{{ route('permohonan.export', [
+                            'year' => $year,
+                            'month' => $month,
+                            'period' => $period,
+                            'kelompok_pelayanan_id' => $kelompokPelayananId,
+                            'print' => 1,
+                        ]) }}"
+                        target="_blank"
+                        rel="noopener"
                         class="inline-flex h-10 items-center rounded-lg border border-slate-300 bg-white px-4 text-sm font-semibold text-slate-700 transition hover:bg-slate-50"
                     >
-                        Cetak Rekap
-                    </button>
+                        Cetak PDF
+                    </a>
 
                 </div>
 
