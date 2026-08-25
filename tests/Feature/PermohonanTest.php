@@ -24,10 +24,10 @@ class PermohonanTest extends TestCase
             ->map(fn ($name) => strtolower(trim($name)))
             ->all();
 
-        $this->assertContains('kk', $serviceNames);
+        $this->assertContains('kk baru', $serviceNames);
         $this->assertContains('kia', $serviceNames);
         $this->assertContains('surat pindah', $serviceNames);
-        $this->assertContains('perekaman', $serviceNames);
+        $this->assertContains('perekaman ktp-el', $serviceNames);
     }
 
     public function test_create_form_contains_dynamic_detail_groups_for_selected_categories(): void
@@ -37,18 +37,15 @@ class PermohonanTest extends TestCase
             'role' => 'petugas',
         ]);
 
-        JenisPelayanan::query()->delete();
+        $this->seed(JenisPelayananSeeder::class);
 
         $response = $this->actingAs($user)->get(route('permohonan.create'));
 
         $response->assertOk();
-        $response->assertSee('jenis_pelayanan_select', false);
-        $response->assertSee('KK', false);
-        $response->assertSee('KIA', false);
-        $response->assertSee('KTP', false);
-        $response->assertSee('data-detail-group="kk"', false);
-        $response->assertSee('data-detail-group="akta"', false);
-        $response->assertSee('data-detail-group="ktp"', false);
+        $response->assertSee('data-code="KK"', false);
+        $response->assertSee('data-code="AKTA"', false);
+        $response->assertSee('data-code="KTP"', false);
+        $response->assertSee('data-code="KIA"', false);
     }
 
     public function test_petugas_can_store_permohonan_to_database(): void
@@ -83,7 +80,7 @@ class PermohonanTest extends TestCase
 
         $response->assertRedirect(route('permohonan.index'));
         $this->assertDatabaseHas('permohonan', [
-            'nomor_permohonan' => 'P-001',
+            'nomor_permohonan' => 'SIPPER-20260810-0001',
             'nama_pemohon' => 'Budi Santoso',
             'user_id' => $user->id,
         ]);
@@ -123,7 +120,7 @@ class PermohonanTest extends TestCase
         ]);
 
         $response->assertRedirect(route('permohonan.index'));
-        $permohonan = Permohonan::where('nomor_permohonan', 'P-900')->first();
+        $permohonan = Permohonan::where('nama_pemohon', 'Rina')->first();
         $this->assertNotNull($permohonan);
         $this->assertSame('Akta Kelahiran Anak', $permohonan->detail_data['jenis_akta'] ?? null);
         $this->assertSame('K-001', $permohonan->detail_data['nomor_kendali'] ?? null);
@@ -342,9 +339,44 @@ class PermohonanTest extends TestCase
             'keterangan' => 'Rekap',
         ]);
 
-        $response = $this->actingAs($user)->get(route('permohonan.recap', ['period' => 'monthly']));
+        Permohonan::create([
+            'nomor_permohonan' => 'P-701',
+            'nama_pemohon' => 'Indra',
+            'tanggal_permohonan' => '2026-08-20',
+            'jenis_pelayanan_id' => $jenisPelayanan->id,
+            'kecamatan_id' => $kecamatan->id,
+            'desa_id' => $desa->id,
+            'user_id' => $user->id,
+            'keterangan' => 'Rekap bulan yang sama',
+        ]);
+
+        Permohonan::create([
+            'nomor_permohonan' => 'P-702',
+            'nama_pemohon' => 'Joko',
+            'tanggal_permohonan' => '2025-08-10',
+            'jenis_pelayanan_id' => $jenisPelayanan->id,
+            'kecamatan_id' => $kecamatan->id,
+            'desa_id' => $desa->id,
+            'user_id' => $user->id,
+            'keterangan' => 'Rekap tahun lain',
+        ]);
+
+        $response = $this->actingAs($user)->get(route('permohonan.recap', [
+            'period' => 'monthly',
+            'year' => '2026',
+        ]));
         $response->assertOk();
         $response->assertSee('Rekapitulasi');
+        $response->assertSee('2');
+        $response->assertDontSee('Joko');
+
+        $printResponse = $this->actingAs($user)->get(route('permohonan.export', [
+            'period' => 'monthly',
+            'year' => '2026',
+            'print' => 1,
+        ]));
+        $printResponse->assertOk();
+        $printResponse->assertSee('August 2026');
 
         $exportResponse = $this->actingAs($user)->get(route('permohonan.export', ['format' => 'csv']));
         $exportResponse->assertOk();

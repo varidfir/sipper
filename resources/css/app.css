@@ -2283,6 +2283,64 @@ textarea.input-control {
     line-height: 1;
 }
 
+.dashboard-monthly-panel {
+    margin-top: 16px;
+}
+
+.dashboard-chart-total {
+    color: var(--sip-primary);
+    font-size: 12px;
+}
+
+.dashboard-chart {
+    display: grid;
+    grid-template-columns: repeat(12, minmax(26px, 1fr));
+    align-items: end;
+    gap: 12px;
+    min-height: 198px;
+    padding: 20px 24px 16px;
+}
+
+.dashboard-chart-column {
+    display: grid;
+    grid-template-rows: 18px 132px 20px;
+    align-items: end;
+    min-width: 0;
+    height: 170px;
+    text-align: center;
+}
+
+.dashboard-chart-value {
+    color: var(--sip-muted);
+    font-size: 10px;
+    font-weight: 700;
+}
+
+.dashboard-chart-track {
+    display: flex;
+    align-items: end;
+    justify-content: center;
+    width: 100%;
+    height: 132px;
+    border-bottom: 1px solid var(--sip-border);
+    background: repeating-linear-gradient(to top, transparent 0 32px, #eef2f7 33px);
+}
+
+.dashboard-chart-bar {
+    display: block;
+    width: min(24px, 70%);
+    min-height: 3px;
+    border-radius: 4px 4px 0 0;
+    background: linear-gradient(180deg, #2d78e8, #1b4eb3);
+}
+
+.dashboard-chart-label {
+    padding-top: 7px;
+    color: var(--sip-muted);
+    font-size: 10px;
+    font-weight: 700;
+}
+
 .dashboard-lower {
     display: grid;
     grid-template-columns: minmax(0, 1.7fr) minmax(270px, 0.8fr);
@@ -2411,6 +2469,7 @@ textarea.input-control {
 
 @media (max-width: 1100px) {
     .dashboard-categories { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+    .dashboard-chart { gap: 8px; padding-right: 16px; padding-left: 16px; }
     .dashboard-lower { grid-template-columns: 1fr; }
 }
 
@@ -2606,6 +2665,10 @@ textarea.input-control {
 
 @media (max-width: 440px) {
     .dashboard-categories { grid-template-columns: repeat(2, minmax(0, 1fr)); padding: 14px; }
+    .dashboard-chart { gap: 4px; padding-right: 10px; padding-left: 10px; }
+    .dashboard-chart-column { grid-template-rows: 18px 112px 20px; height: 150px; }
+    .dashboard-chart-track { height: 112px; }
+    .dashboard-chart-bar { width: min(18px, 72%); }
     .dashboard-panel-heading { align-items: flex-start; flex-direction: column; }
     .dashboard-table th, .dashboard-table td { padding-right: 14px; padding-left: 14px; }
 }

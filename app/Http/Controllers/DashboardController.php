@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Permohonan;
 use App\Models\KelompokPelayanan;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -27,6 +28,13 @@ class DashboardController extends Controller
         $permohonanBulanIni = Permohonan::whereMonth('tanggal_permohonan', now()->month)
             ->whereYear('tanggal_permohonan', now()->year)
             ->count();
+
+        $monthlyTotals = array_fill(1, 12, 0);
+        Permohonan::whereYear('tanggal_permohonan', now()->year)
+            ->pluck('tanggal_permohonan')
+            ->each(function ($date) use (&$monthlyTotals) {
+                $monthlyTotals[Carbon::parse($date)->month]++;
+            });
 
         $rawTotals = Permohonan::join('jenis_pelayanan', 'permohonan.jenis_pelayanan_id', '=', 'jenis_pelayanan.id')
             ->join('kelompok_pelayanan', 'jenis_pelayanan.kelompok_pelayanan_id', '=', 'kelompok_pelayanan.id')
@@ -74,7 +82,7 @@ class DashboardController extends Controller
 
         return view('dashboard.index', compact(
             'user', 'totalPermohonan', 'permohonanHariIni', 'permohonanBulanIni',
-            'categoryTotals', 'recent', 'kelompokPelayanans', 'groupTotals', 'jenisTotals'
+            'monthlyTotals', 'categoryTotals', 'recent', 'kelompokPelayanans', 'groupTotals', 'jenisTotals'
         ));
     }
 }

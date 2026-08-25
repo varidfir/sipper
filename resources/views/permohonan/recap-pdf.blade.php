@@ -62,10 +62,23 @@
     <h2>REKAPITULASI</h2>
     @if($data->count())
         <table>
-            <thead><tr><th class="no">No</th><th>Jenis Pelayanan</th><th class="number">Jumlah</th></tr></thead>
+            <thead><tr><th class="no">No</th><th>Periode</th><th class="number">Jumlah</th></tr></thead>
             <tbody>
                 @foreach($data as $index => $item)
-                    <tr><td class="no">{{ $index + 1 }}</td><td>{{ $item->jenisPelayanan?->nama_pelayanan ?? '-' }}</td><td class="number">{{ number_format($item->total, 0, ',', '.') }}</td></tr>
+                    @php($date = \Carbon\Carbon::parse($item->period))
+                    <tr>
+                        <td class="no">{{ $index + 1 }}</td>
+                        <td>
+                            @if($period === 'yearly')
+                                {{ $date->format('Y') }}
+                            @elseif($period === 'monthly')
+                                {{ $date->translatedFormat('F Y') }}
+                            @else
+                                {{ $date->translatedFormat('d F Y') }}
+                            @endif
+                        </td>
+                        <td class="number">{{ number_format($item->total, 0, ',', '.') }}</td>
+                    </tr>
                 @endforeach
             </tbody>
             <tfoot><tr><td></td><td>TOTAL</td><td class="number">{{ number_format($data->sum('total'), 0, ',', '.') }}</td></tr></tfoot>
@@ -76,7 +89,7 @@
 
     <h2>RINGKASAN</h2>
     <table class="summary">
-        <tr><td class="label">Jumlah Jenis Pelayanan</td><td>{{ $data->count() }}</td></tr>
+        <tr><td class="label">Jumlah Periode</td><td>{{ $data->count() }}</td></tr>
         <tr><td class="label">Total Rekapitulasi</td><td>{{ number_format($data->sum('total'), 0, ',', '.') }}</td></tr>
     </table>
 

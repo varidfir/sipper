@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Permohonan;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Validation\Rule;
 
 class PermohonanApiController extends Controller
 {
@@ -68,7 +69,9 @@ class PermohonanApiController extends Controller
     public function store(Request $request)
     {
         try {
-            $data = $request->validate(Permohonan::rules());
+            $data = $request->validate(array_merge(Permohonan::rules(), [
+                'nomor_permohonan' => ['required', 'string', 'max:50', 'unique:permohonan,nomor_permohonan'],
+            ]));
             $data['user_id'] = Auth::id();
 
             $permohonan = Permohonan::create($data);
@@ -99,7 +102,14 @@ class PermohonanApiController extends Controller
     public function update(Request $request, Permohonan $permohonan)
     {
         try {
-            $data = $request->validate(Permohonan::rules($permohonan->id));
+            $data = $request->validate(array_merge(Permohonan::rules($permohonan->id), [
+                'nomor_permohonan' => [
+                    'required',
+                    'string',
+                    'max:50',
+                    Rule::unique('permohonan', 'nomor_permohonan')->ignore($permohonan->id),
+                ],
+            ]));
             $data['user_id'] = Auth::id();
 
             $permohonan->update($data);

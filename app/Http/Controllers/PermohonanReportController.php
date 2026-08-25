@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Permohonan;
 use Barryvdh\DomPDF\Facade\Pdf;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -53,17 +54,7 @@ class PermohonanReportController extends Controller
         // DATA REKAP
         // ==============================
 
-        $periodExpression = match ($period) {
-            'monthly' => "DATE_FORMAT(tanggal_permohonan, '%Y-%m-01')",
-            'yearly' => "DATE_FORMAT(tanggal_permohonan, '%Y-01-01')",
-            default => 'DATE(tanggal_permohonan)',
-        };
-
-        $data = $query
-            ->selectRaw("{$periodExpression} as period, COUNT(*) as total")
-            ->groupByRaw($periodExpression)
-            ->orderBy('period')
-            ->get();
+        $data = $this->groupByPeriod($query->get(), $period);
 
         // ==============================
         // DATA KATEGORI
@@ -78,11 +69,12 @@ class PermohonanReportController extends Controller
         // ==============================
 
         $years = Permohonan::query()
-            ->selectRaw('YEAR(tanggal_permohonan) as year')
             ->whereNotNull('tanggal_permohonan')
-            ->distinct()
-            ->orderByDesc('year')
-            ->pluck('year');
+            ->pluck('tanggal_permohonan')
+            ->map(fn ($date) => Carbon::parse($date)->year)
+            ->unique()
+            ->sortDesc()
+            ->values();
 
         // Jika belum ada data, tetap tampilkan tahun sekarang
         if ($years->isEmpty()) {
@@ -147,11 +139,7 @@ class PermohonanReportController extends Controller
             });
         }
 
-        $data = $query
-            ->selectRaw('jenis_pelayanan_id, COUNT(*) as total')
-            ->groupBy('jenis_pelayanan_id')
-            ->orderBy('jenis_pelayanan_id')
-            ->get();
+        $data = $this->groupByPeriod($query->get(), $period);
 
         $kelompokPelayanans = \App\Models\KelompokPelayanan::query()
             ->orderBy('kode')
@@ -189,5 +177,25 @@ class PermohonanReportController extends Controller
         $filename = 'rekapitulasi-' . $year . '.pdf';
 
         return $pdf->download($filename);
+    }
+
+    private function groupByPeriod($permohonan, string $period)
+    {
+        return $permohonan
+            ->groupBy(function (Permohonan $item) use ($period) {
+                $date = Carbon::parse($item->tanggal_permohonan);
+
+                return match ($period) {
+                    'monthly' => $date->startOfMonth()->toDateString(),
+                    'yearly' => $date->startOfYear()->toDateString(),
+                    default => $date->toDateString(),
+                };
+            })
+            ->map(fn ($items, $periodValue) => (object) [
+                'period' => $periodValue,
+                'total' => $items->count(),
+            ])
+            ->sortBy('period')
+            ->values();
     }
 }

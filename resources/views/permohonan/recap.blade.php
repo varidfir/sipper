@@ -427,7 +427,7 @@
     </style>
 </head>
 
-<body class="min-h-screen overflow-x-hidden bg-slate-100 text-slate-800">
+<body data-recap-page class="min-h-screen overflow-x-hidden bg-slate-100 text-slate-800">
 
     {{-- =========================================================
         SIDEBAR
@@ -680,7 +680,7 @@
                                 Total Permohonan
                             </small>
 
-                            <strong class="text-xl font-bold text-blue-600">
+                                <strong class="text-xl font-bold text-blue-600" data-recap-total>
                                 {{ $data->sum('total') }}
                             </strong>
 
@@ -712,7 +712,7 @@
 
                             </div>
 
-                            <span class="recap-count text-sm font-semibold text-slate-500">
+                                <span class="recap-count text-sm font-semibold text-slate-500" data-recap-count>
                                 {{ $data->count() }} periode
                             </span>
 
@@ -749,7 +749,7 @@
 
                                 </thead>
 
-                                <tbody class="divide-y divide-slate-100">
+                                <tbody class="divide-y divide-slate-100" data-recap-body>
 
                                     @foreach($data as $index => $item)
 
@@ -813,7 +813,7 @@
                                         <td class="px-4 py-4 text-right sm:px-5">
 
                                             <span class="inline-flex min-w-[80px] justify-center rounded-lg bg-blue-600 px-3 py-1.5 font-bold text-white">
-                                                {{ $data->sum('total') }}
+                                                <span data-recap-total>{{ $data->sum('total') }}</span>
                                             </span>
 
                                         </td>

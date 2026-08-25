@@ -10,6 +10,8 @@ class JenisPelayananSeeder extends Seeder
 {
     public function run(): void
     {
+        $this->call(KelompokPelayananSeeder::class);
+
         $data = [
             'KK' => [
                 [

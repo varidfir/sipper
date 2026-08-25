@@ -33,6 +33,12 @@ class PermohonanReportApiController extends Controller
             $query->where('jenis_pelayanan_id', $request->input('jenis_pelayanan_id'));
         }
 
+        if ($request->filled('kelompok_pelayanan_id')) {
+            $query->whereHas('jenisPelayanan', function ($query) use ($request) {
+                $query->where('kelompok_pelayanan_id', $request->input('kelompok_pelayanan_id'));
+            });
+        }
+
         if ($request->filled('kecamatan_id')) {
             $query->where('kecamatan_id', $request->input('kecamatan_id'));
         }
@@ -72,6 +78,7 @@ class PermohonanReportApiController extends Controller
                 'month' => $request->input('month'),
                 'date' => $request->input('date'),
                 'jenis_pelayanan_id' => $request->input('jenis_pelayanan_id'),
+                'kelompok_pelayanan_id' => $request->input('kelompok_pelayanan_id'),
                 'kecamatan_id' => $request->input('kecamatan_id'),
                 'desa_id' => $request->input('desa_id'),
             ],

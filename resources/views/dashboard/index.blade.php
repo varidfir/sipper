@@ -34,6 +34,31 @@
                     <div class="dashboard-stat"><div><span>Rekap bulan ini</span><strong>{{ number_format($permohonanBulanIni) }}</strong><small>Data masuk bulan berjalan</small></div><div class="dashboard-stat-icon" aria-hidden="true">▦</div></div>
                 </section>
 
+                <section class="dashboard-panel dashboard-monthly-panel">
+                    <div class="dashboard-panel-heading">
+                        <div>
+                            <h2>Permohonan per bulan</h2>
+                            <p>Jumlah permohonan pada tahun {{ now()->year }}.</p>
+                        </div>
+                        <strong class="dashboard-chart-total">{{ number_format(array_sum($monthlyTotals)) }} total</strong>
+                    </div>
+                    <div class="dashboard-chart" aria-label="Grafik permohonan per bulan tahun {{ now()->year }}">
+                        @foreach(['Jan', 'Feb', 'Mar', 'Apr', 'Mei', 'Jun', 'Jul', 'Agu', 'Sep', 'Okt', 'Nov', 'Des'] as $monthIndex => $monthLabel)
+                            @php
+                                $monthTotal = $monthlyTotals[$monthIndex + 1] ?? 0;
+                                $chartHeight = $monthTotal ? max(8, ($monthTotal / max($monthlyTotals)) * 100) : 3;
+                            @endphp
+                            <div class="dashboard-chart-column">
+                                <span class="dashboard-chart-value">{{ $monthTotal ?: '' }}</span>
+                                <div class="dashboard-chart-track">
+                                    <span class="dashboard-chart-bar" @style(['height' => $chartHeight . '%'])></span>
+                                </div>
+                                <span class="dashboard-chart-label">{{ $monthLabel }}</span>
+                            </div>
+                        @endforeach
+                    </div>
+                </section>
+
                 <section class="dashboard-panel dashboard-service-panel">
                     <div class="dashboard-panel-heading"><div><h2>Rekap berdasarkan jenis</h2><p>Jumlah data yang tercatat untuk setiap kelompok pelayanan.</p></div><a href="{{ route('permohonan.recap') }}">Lihat rekap <span aria-hidden="true">→</span></a></div>
                     <div class="dashboard-categories">
