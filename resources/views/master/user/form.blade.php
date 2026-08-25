@@ -59,7 +59,7 @@
             @endif
 
             <div class="petugas-form-content">
-                <form method="POST" action="{{ isset($user) ? route('user.update', $user) : route('user.store') }}">
+                <form method="POST" autocomplete="off" action="{{ isset($user) ? route('user.update', $user) : route('user.store') }}">
                     @csrf
                     @if(isset($user)) @method('PUT') @endif
 
@@ -106,7 +106,7 @@
 
                             <div class="petugas-field petugas-field-wide">
                                 <label for="password">{{ isset($user) ? 'Password Baru (opsional)' : 'Password' }} {{ !isset($user) ? '<span class="text-red-500">*</span>' : '' }}</label>
-                                <input type="password" id="password" name="password" {{ isset($user) ? '' : 'required' }} minlength="8" placeholder="{{ isset($user) ? 'Kosongkan jika tidak diubah' : 'Minimal 8 karakter' }}">
+                                <input type="password" id="password" name="password" autocomplete="new-password" {{ isset($user) ? '' : 'required' }} minlength="8" placeholder="{{ isset($user) ? 'Kosongkan jika tidak diubah' : 'Minimal 8 karakter' }}">
                                 @if(isset($user))
                                     <div class="petugas-field-note">Kosongkan jika tidak ingin mengubah password.</div>
                                 @else
@@ -120,7 +120,7 @@
                             @if(isset($user))
                                 <div class="petugas-field petugas-field-wide">
                                     <label for="password_confirmation">Konfirmasi Password Baru</label>
-                                    <input type="password" id="password_confirmation" name="password_confirmation" minlength="8" placeholder="Ulangi password baru">
+                                    <input type="password" id="password_confirmation" name="password_confirmation" autocomplete="new-password" minlength="8" placeholder="Ulangi password baru">
                                 </div>
                             @endif
                         </div>

@@ -18,7 +18,7 @@ Route::get('/', function () {
         return redirect()->route('dashboard');
     }
 
-    return view('welcome');
+    return redirect()->route('login');
 });
 
 Route::get('/login', [LoginController::class, 'showLoginForm'])->name('login');
