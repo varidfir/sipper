@@ -17,7 +17,7 @@
     .petugas-fields { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px 20px; padding: 16px; }
     .petugas-field { display: flex; flex-direction: column; }
     .petugas-field label { display: block; margin-bottom: 6px; color: #334155; font-size: 11px; font-weight: 700; }
-    .petugas-field input, .petugas-field select { width: 100%; height: 40px; border: 1px solid #cbd5e1; border-radius: 8px; background: #fff; padding: 0 12px; color: #334155; font-size: 12px; }
+    .petugas-field input, .petugas-field select { width: 100%; height: 36px; border: 1px solid #cbd5e1; border-radius: 2px; appearance: none; background-color: #fff; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='%23334155'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='m6 9 6 6 6-6'/%3E%3C/svg%3E"); background-repeat: no-repeat; background-position: right 10px center; background-size: 14px 14px; padding: 0 34px 0 10px; color: #334155; font-size: 12px; }
     .petugas-field input:focus, .petugas-field select:focus { border-color: var(--sip-primary); outline: 0; box-shadow: 0 0 0 3px rgba(29, 97, 232, .12); }
     .petugas-field input::placeholder { color: #94a3b8; }
     .petugas-field-wide { grid-column: 1 / -1; }

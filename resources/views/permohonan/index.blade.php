@@ -95,7 +95,7 @@
             background: #f6f8fb;
             border: 1px solid var(--line);
             border-radius: 14px;
-            overflow: hidden;
+            overflow: visible;
         }
 
         .filter-head {
@@ -133,13 +133,19 @@
         .field input,
         .field select {
             width: 100%;
-            min-height: 36px;
+            height: 36px;
             border: 1px solid var(--line-strong);
-            border-radius: 10px;
-            background: #fff;
+            border-radius: 2px;
+            appearance: none;
+            background-color: #fff;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='%23334155'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='m6 9 6 6 6-6'/%3E%3C/svg%3E");
+            background-repeat: no-repeat;
+            background-position: right 10px center;
+            background-size: 14px 14px;
             color: var(--text);
-            padding: 8px 12px;
-            font-size: 13px;
+            padding: 0 10px;
+            padding-right: 34px;
+            font-size: 12px;
             outline: none;
             transition: border-color .15s, box-shadow .15s;
         }
@@ -149,6 +155,99 @@
             border-color: var(--sip-primary);
             box-shadow: 0 0 0 3px rgba(29, 97, 232, .12);
         }
+
+        .service-picker { position: relative; }
+        .service-picker-toggle {
+            width: 100%;
+            height: 36px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 8px;
+            border: 1px solid var(--line-strong);
+            border-radius: 2px;
+            background: #fff;
+            color: var(--text);
+            padding: 0 10px;
+            font-size: 12px;
+            line-height: 1;
+            text-align: left;
+            cursor: pointer;
+            box-sizing: border-box;
+        }
+        .service-picker-toggle:focus,
+        .service-picker.is-open .service-picker-toggle {
+            border-color: var(--sip-primary);
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(29, 97, 232, .12);
+        }
+        .service-picker-chevron {
+            flex: 0 0 auto;
+            width: 7px;
+            height: 7px;
+            border-right: 1.5px solid #334155;
+            border-bottom: 1.5px solid #334155;
+            font-size: 0;
+            transform: rotate(45deg) translate(-2px, -2px);
+            transition: transform .15s;
+        }
+        .service-picker.is-open .service-picker-chevron { transform: rotate(225deg) translate(-2px, -2px); }
+        .service-picker-menu {
+            position: absolute;
+            z-index: 30;
+            top: calc(100% + 6px);
+            left: 0;
+            width: 100%;
+            max-width: 100%;
+            max-height: 280px;
+            display: block;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 4px;
+            overflow-y: auto;
+            padding: 8px;
+            border: 1px solid var(--line-strong);
+            border-radius: 2px;
+            background: #fff;
+            box-shadow: 0 12px 24px rgba(15, 23, 42, .16);
+            opacity: 0;
+            visibility: hidden;
+            pointer-events: none;
+            transform: translateY(-8px) scaleY(.96);
+            transform-origin: top center;
+            transition: opacity .18s ease, transform .18s ease, visibility 0s linear .18s;
+        }
+        .service-picker.is-open .service-picker-menu {
+            opacity: 1;
+            visibility: visible;
+            pointer-events: auto;
+            transform: translateY(0) scaleY(1);
+            transition-delay: 0s;
+        }
+        .service-picker-option {
+            width: 100%;
+            min-height: 32px;
+            border: 1px solid transparent;
+            border-radius: 2px;
+            background: transparent;
+            color: #344054;
+            padding: 5px 8px;
+            font-size: 11px;
+            line-height: 1.25;
+            white-space: normal;
+            overflow-wrap: anywhere;
+            text-align: left;
+            cursor: pointer;
+        }
+        .service-picker-option:hover,
+        .service-picker-option.is-selected {
+            border-color: var(--sip-primary);
+            background: rgba(29, 97, 232, .08);
+            color: var(--sip-primary);
+            font-weight: 700;
+        }
+        .service-picker-option[hidden] { display: none; }
+        .service-picker-menu::-webkit-scrollbar { width: 6px; }
+        .service-picker-menu::-webkit-scrollbar-thumb { border-radius: 6px; background: #cbd5e1; }
 
         .filter-actions {
             display: flex;
@@ -557,16 +656,32 @@
 
                         <div class="field">
                             <label for="jenis_pelayanan_id">Jenis Layanan</label>
-                            <select id="jenis_pelayanan_id" name="jenis_pelayanan_id">
-                                <option value="">Semua Jenis</option>
-                                @foreach($kelompokPelayanans as $group)
-                                    <optgroup label="{{ $group->nama }}">
+                            @php
+                                $selectedServiceId = (string) request('jenis_pelayanan_id');
+                                $selectedServiceName = 'Semua Jenis';
+                                foreach ($kelompokPelayanans as $serviceGroup) {
+                                    $selectedService = $serviceGroup->jenisPelayanans->firstWhere('id', (int) $selectedServiceId);
+                                    if ($selectedService) {
+                                        $selectedServiceName = $selectedService->nama_pelayanan;
+                                        break;
+                                    }
+                                }
+                            @endphp
+                            <div class="service-picker" data-service-picker>
+                                <input type="hidden" id="jenis_pelayanan_id" name="jenis_pelayanan_id" value="{{ $selectedServiceId }}">
+                                <button type="button" class="service-picker-toggle" data-service-toggle aria-haspopup="listbox" aria-expanded="false">
+                                    <span data-service-label>{{ $selectedServiceName }}</span>
+                                    <span class="service-picker-chevron" aria-hidden="true">&#9662;</span>
+                                </button>
+                                <div class="service-picker-menu" role="listbox" aria-label="Pilih jenis layanan">
+                                    <button type="button" class="service-picker-option {{ $selectedServiceId === '' ? 'is-selected' : '' }}" data-service-option="" data-service-group="" role="option" aria-selected="{{ $selectedServiceId === '' ? 'true' : 'false' }}">Semua Jenis</button>
+                                    @foreach($kelompokPelayanans as $group)
                                         @foreach($group->jenisPelayanans as $jenis)
-                                            <option value="{{ $jenis->id }}" {{ request('jenis_pelayanan_id') == $jenis->id ? 'selected' : '' }}>{{ $jenis->nama_pelayanan }}</option>
+                                            <button type="button" class="service-picker-option" data-service-option="{{ $jenis->id }}" data-service-group="{{ $group->id }}" role="option" aria-selected="{{ $selectedServiceId === (string) $jenis->id ? 'true' : 'false' }}">{{ $jenis->nama_pelayanan }}</button>
                                         @endforeach
-                                    </optgroup>
-                                @endforeach
-                            </select>
+                                    @endforeach
+                                </div>
+                            </div>
                         </div>
 
                         <div class="field">
@@ -649,6 +764,59 @@
         </div>
     </div>
 </main>
+<script>
+    const serviceCategory = document.querySelector('#kelompok_pelayanan_id');
+    const servicePicker = document.querySelector('[data-service-picker]');
+
+    if (serviceCategory && servicePicker) {
+        const serviceToggle = servicePicker.querySelector('[data-service-toggle]');
+        const serviceInput = servicePicker.querySelector('#jenis_pelayanan_id');
+        const serviceLabel = servicePicker.querySelector('[data-service-label]');
+        const serviceOptions = [...servicePicker.querySelectorAll('[data-service-option]')];
+
+        const filterServices = () => {
+            const categoryId = serviceCategory.value;
+            const selectedOption = serviceOptions.find((option) => option.dataset.serviceOption === serviceInput.value);
+            const selectedIsValid = selectedOption && (!categoryId || selectedOption.dataset.serviceGroup === categoryId);
+
+            if (!selectedIsValid && serviceInput.value !== '') {
+                serviceInput.value = '';
+                serviceLabel.textContent = 'Semua Jenis';
+            }
+
+            serviceOptions.forEach((option) => {
+                const isAll = option.dataset.serviceOption === '';
+                option.hidden = !isAll && categoryId !== '' && option.dataset.serviceGroup !== categoryId;
+                option.classList.toggle('is-selected', option.dataset.serviceOption === serviceInput.value);
+                option.setAttribute('aria-selected', option.dataset.serviceOption === serviceInput.value ? 'true' : 'false');
+            });
+        };
+
+        serviceToggle.addEventListener('click', () => {
+            const isOpen = servicePicker.classList.toggle('is-open');
+            serviceToggle.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
+        });
+
+        serviceOptions.forEach((option) => {
+            option.addEventListener('click', () => {
+                serviceInput.value = option.dataset.serviceOption;
+                serviceLabel.textContent = option.textContent;
+                filterServices();
+                servicePicker.classList.remove('is-open');
+                serviceToggle.setAttribute('aria-expanded', 'false');
+            });
+        });
+
+        serviceCategory.addEventListener('change', filterServices);
+        document.addEventListener('click', (event) => {
+            if (!servicePicker.contains(event.target)) {
+                servicePicker.classList.remove('is-open');
+                serviceToggle.setAttribute('aria-expanded', 'false');
+            }
+        });
+        filterServices();
+    }
+</script>
 </body>
 </html>
 

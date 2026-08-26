@@ -37,7 +37,7 @@
         }
 
         .recap-filter {
-            overflow: hidden;
+            overflow: visible;
             border: 1px solid #dbe3ed;
             border-radius: 3px;
             background: #fff;
@@ -45,10 +45,11 @@
         }
 
         .recap-filter-head {
-            padding: 11px 14px;
+            padding: 12px 14px;
             border-bottom: 1px solid #dbe3ed;
             background: #1d61e8;
             color: #fff;
+            border-radius: 3px 3px 0 0;
         }
 
         .recap-filter-head h2 {
@@ -78,17 +79,23 @@
             display: block;
             margin-bottom: 5px;
             color: #475569;
-            font-size: 11px;
+            font-size: 12px;
             font-weight: 700;
         }
 
         .recap-field select {
             width: 100%;
-            height: 35px;
+            height: 36px;
             border: 1px solid #cbd5e1;
             border-radius: 2px;
-            background: #fff;
-            padding: 0 9px;
+            appearance: none;
+            background-color: #fff;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='%23334155'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='m6 9 6 6 6-6'/%3E%3C/svg%3E");
+            background-repeat: no-repeat;
+            background-position: right 10px center;
+            background-size: 14px 14px;
+            padding: 0 10px;
+            padding-right: 34px;
             color: #334155;
             font-size: 12px;
         }
@@ -98,6 +105,93 @@
             outline: 0;
             box-shadow: 0 0 0 2px rgba(59, 130, 246, .12);
         }
+
+        .recap-service-picker { position: relative; }
+        .recap-service-toggle {
+            width: 100%;
+            height: 36px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            border: 1px solid #cbd5e1;
+            border-radius: 2px;
+            background: #fff;
+            padding: 0 10px;
+            color: #334155;
+            font-size: 12px;
+            line-height: 1;
+            text-align: left;
+            cursor: pointer;
+            box-sizing: border-box;
+        }
+        .recap-service-toggle:focus,
+        .recap-service-picker.is-open .recap-service-toggle {
+            border-color: #60a5fa;
+            outline: 0;
+            box-shadow: 0 0 0 2px rgba(59, 130, 246, .12);
+        }
+        .recap-service-chevron {
+            flex: 0 0 auto;
+            width: 7px;
+            height: 7px;
+            border-right: 1.5px solid #334155;
+            border-bottom: 1.5px solid #334155;
+            font-size: 0;
+            transform: rotate(45deg) translate(-2px, -2px);
+            transition: transform .15s;
+        }
+        .recap-service-picker.is-open .recap-service-chevron { transform: rotate(225deg) translate(-2px, -2px); }
+        .recap-service-menu {
+            position: absolute;
+            z-index: 30;
+            top: calc(100% + 5px);
+            left: 0;
+            width: 100%;
+            max-width: 100%;
+            max-height: 250px;
+            display: block;
+            overflow-y: auto;
+            padding: 7px;
+            border: 1px solid #cbd5e1;
+            border-radius: 2px;
+            background: #fff;
+            box-shadow: 0 10px 20px rgba(15, 23, 42, .16);
+            opacity: 0;
+            visibility: hidden;
+            pointer-events: none;
+            transform: translateY(-8px) scaleY(.96);
+            transform-origin: top center;
+            transition: opacity .18s ease, transform .18s ease, visibility 0s linear .18s;
+        }
+        .recap-service-picker.is-open .recap-service-menu {
+            opacity: 1;
+            visibility: visible;
+            pointer-events: auto;
+            transform: translateY(0) scaleY(1);
+            transition-delay: 0s;
+        }
+        .recap-service-option {
+            width: 100%;
+            min-height: 30px;
+            border: 1px solid transparent;
+            border-radius: 2px;
+            background: transparent;
+            color: #334155;
+            padding: 4px 7px;
+            font-size: 11px;
+            white-space: normal;
+            overflow-wrap: anywhere;
+            text-align: left;
+            cursor: pointer;
+        }
+        .recap-service-option:hover,
+        .recap-service-option.is-selected {
+            border-color: #1d61e8;
+            background: #eff6ff;
+            color: #1d61e8;
+            font-weight: 700;
+        }
+        .recap-service-option[hidden] { display: none; }
 
         .recap-filter-actions {
             display: flex;
@@ -111,7 +205,7 @@
             align-items: center;
             justify-content: center;
             width: 100%;
-            height: 35px;
+            height: 36px;
             border-radius: 2px;
             font-size: 12px;
             font-weight: 700;
@@ -602,6 +696,42 @@
 
                         </div>
 
+                        {{-- JENIS LAYANAN --}}
+                        <div
+                            class="recap-field"
+                            style="grid-column: span 2;"
+                        >
+                            <label class="mb-1 block text-xs font-bold text-slate-600">
+                                Jenis Layanan
+                            </label>
+                            @php
+                                $selectedServiceId = (string)($jenisPelayananId ?? '');
+                                $selectedServiceName = 'Semua Jenis';
+                                foreach ($kelompokPelayanans as $serviceGroup) {
+                                    $selectedService = $serviceGroup->jenisPelayanans->firstWhere('id', (int)$selectedServiceId);
+                                    if ($selectedService) {
+                                        $selectedServiceName = $selectedService->nama_pelayanan;
+                                        break;
+                                    }
+                                }
+                            @endphp
+                            <div class="recap-service-picker" data-recap-service-picker>
+                                <input type="hidden" name="jenis_pelayanan_id" value="{{ $selectedServiceId }}">
+                                <button type="button" class="recap-service-toggle" data-recap-service-toggle aria-haspopup="listbox" aria-expanded="false">
+                                    <span data-recap-service-label>{{ $selectedServiceName }}</span>
+                                    <span class="recap-service-chevron" aria-hidden="true">&#9662;</span>
+                                </button>
+                                <div class="recap-service-menu" role="listbox" aria-label="Pilih jenis layanan">
+                                    <button type="button" class="recap-service-option {{ $selectedServiceId === '' ? 'is-selected' : '' }}" data-recap-service-option="" data-recap-service-group="" role="option" aria-selected="{{ $selectedServiceId === '' ? 'true' : 'false' }}">Semua Jenis</button>
+                                    @foreach($kelompokPelayanans as $kelompok)
+                                        @foreach($kelompok->jenisPelayanans as $jenis)
+                                            <button type="button" class="recap-service-option" data-recap-service-option="{{ $jenis->id }}" data-recap-service-group="{{ $kelompok->id }}" role="option" aria-selected="{{ $selectedServiceId === (string)$jenis->id ? 'true' : 'false' }}">{{ $jenis->nama_pelayanan }}</button>
+                                        @endforeach
+                                    @endforeach
+                                </div>
+                            </div>
+                        </div>
+
                         {{-- BUTTON --}}
                         <div class="recap-filter-actions">
 
@@ -667,6 +797,16 @@
 
                                     • Semua Kategori
 
+                                @endif
+
+                                @if($jenisPelayananId)
+                                    @php
+                                        $selectedJenis = $kelompokPelayanans
+                                            ->flatMap->jenisPelayanans
+                                            ->firstWhere('id', $jenisPelayananId);
+                                    @endphp
+
+                                    • {{ $selectedJenis?->nama_pelayanan ?? 'Jenis Layanan' }}
                                 @endif
 
                             </p>
@@ -869,6 +1009,7 @@
                             'month' => $month,
                             'period' => $period,
                             'kelompok_pelayanan_id' => $kelompokPelayananId,
+                            'jenis_pelayanan_id' => $jenisPelayananId,
                         ]) }}"
                         class="inline-flex h-10 items-center rounded-lg bg-emerald-600 px-4 text-sm font-semibold text-white transition hover:bg-emerald-700"
                     >
@@ -881,6 +1022,7 @@
                             'month' => $month,
                             'period' => $period,
                             'kelompok_pelayanan_id' => $kelompokPelayananId,
+                            'jenis_pelayanan_id' => $jenisPelayananId,
                             'print' => 1,
                         ]) }}"
                         target="_blank"
@@ -897,6 +1039,60 @@
         </div>
 
     </main>
+
+    <script>
+        const recapCategory = document.querySelector('select[name="kelompok_pelayanan_id"]');
+        const recapServicePicker = document.querySelector('[data-recap-service-picker]');
+
+        if (recapCategory && recapServicePicker) {
+            const serviceToggle = recapServicePicker.querySelector('[data-recap-service-toggle]');
+            const serviceInput = recapServicePicker.querySelector('input[name="jenis_pelayanan_id"]');
+            const serviceLabel = recapServicePicker.querySelector('[data-recap-service-label]');
+            const serviceOptions = [...recapServicePicker.querySelectorAll('[data-recap-service-option]')];
+
+            const filterRecapServices = () => {
+                const categoryId = recapCategory.value;
+                const selectedOption = serviceOptions.find((option) => option.dataset.recapServiceOption === serviceInput.value);
+                const selectedIsValid = selectedOption && (!categoryId || selectedOption.dataset.recapServiceGroup === categoryId);
+
+                if (!selectedIsValid && serviceInput.value !== '') {
+                    serviceInput.value = '';
+                    serviceLabel.textContent = 'Semua Jenis';
+                }
+
+                serviceOptions.forEach((option) => {
+                    const isAll = option.dataset.recapServiceOption === '';
+                    option.hidden = !isAll && categoryId !== '' && option.dataset.recapServiceGroup !== categoryId;
+                    option.classList.toggle('is-selected', option.dataset.recapServiceOption === serviceInput.value);
+                    option.setAttribute('aria-selected', option.dataset.recapServiceOption === serviceInput.value ? 'true' : 'false');
+                });
+            };
+
+            serviceToggle.addEventListener('click', () => {
+                const isOpen = recapServicePicker.classList.toggle('is-open');
+                serviceToggle.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
+            });
+
+            serviceOptions.forEach((option) => {
+                option.addEventListener('click', () => {
+                    serviceInput.value = option.dataset.recapServiceOption;
+                    serviceLabel.textContent = option.textContent;
+                    filterRecapServices();
+                    recapServicePicker.classList.remove('is-open');
+                    serviceToggle.setAttribute('aria-expanded', 'false');
+                });
+            });
+
+            recapCategory.addEventListener('change', filterRecapServices);
+            document.addEventListener('click', (event) => {
+                if (!recapServicePicker.contains(event.target)) {
+                    recapServicePicker.classList.remove('is-open');
+                    serviceToggle.setAttribute('aria-expanded', 'false');
+                }
+            });
+            filterRecapServices();
+        }
+    </script>
 
 </body>
 

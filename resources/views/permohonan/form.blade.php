@@ -9,11 +9,13 @@
         .autocomplete { position: relative; }
         .autocomplete-control { position: relative; }
         .autocomplete-control .autocomplete-input { padding-right: 42px; }
-        .autocomplete-toggle { position: absolute; top: 1px; right: 1px; bottom: 1px; width: 36px; border: 0; border-left: 1px solid #e2e8f0; border-radius: 0 11px 11px 0; background: #f8fafc; color: #64748b; cursor: pointer; }
-        .autocomplete-toggle:hover { background: #eff6ff; color: #2563eb; }
-        .autocomplete-menu { position: absolute; z-index: 20; top: calc(100% + 4px); left: 0; right: 0; max-height: 220px; overflow-y: auto; border: 1px solid #cbd5e1; border-radius: 8px; background: #fff; box-shadow: 0 8px 20px rgba(15, 23, 42, .12); }
+        .autocomplete-toggle { position: absolute; top: 1px; right: 1px; bottom: 1px; width: 36px; border: 0; border-left: 1px solid #cbd5e1; border-radius: 0 2px 2px 0; background: #fff; color: #334155; cursor: pointer; font-size: 0; }
+        .autocomplete-toggle::after { content: ''; display: block; width: 7px; height: 7px; margin: 0 auto; border-right: 1.5px solid currentColor; border-bottom: 1.5px solid currentColor; transform: rotate(45deg) translate(-2px, -2px); transition: transform .15s ease; }
+        .autocomplete-toggle[aria-expanded="true"]::after { transform: rotate(225deg) translate(-2px, -2px); }
+        .autocomplete-toggle:hover { background: #eff6ff; color: #1d61e8; }
+        .autocomplete-menu { position: absolute; z-index: 20; top: calc(100% + 5px); left: 0; right: 0; max-height: 250px; overflow-y: auto; border: 1px solid #cbd5e1; border-radius: 2px; background: #fff; box-shadow: 0 10px 20px rgba(15, 23, 42, .16); }
         .autocomplete-menu[hidden] { display: none; }
-        .autocomplete-option { display: block; width: 100%; padding: 9px 12px; border: 0; background: #fff; color: #334155; text-align: left; font-size: 14px; cursor: pointer; }
+        .autocomplete-option { display: block; width: 100%; min-height: 30px; padding: 4px 7px; border: 1px solid transparent; border-radius: 2px; background: #fff; color: #334155; text-align: left; font-size: 12px; cursor: pointer; }
         .autocomplete-option[hidden] { display: none; }
         .autocomplete-option:hover, .autocomplete-option.is-active { background: #eff6ff; color: #1d4ed8; }
     </style>

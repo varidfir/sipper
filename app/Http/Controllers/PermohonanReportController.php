@@ -22,6 +22,7 @@ class PermohonanReportController extends Controller
         $year = $request->input('year', date('Y'));
         $month = $request->input('month');
         $kelompokPelayananId = $request->input('kelompok_pelayanan_id');
+        $jenisPelayananId = $request->input('jenis_pelayanan_id');
         $period = $request->input('period', 'daily');
 
         // ==============================
@@ -50,6 +51,10 @@ class PermohonanReportController extends Controller
             });
         }
 
+        if ($jenisPelayananId) {
+            $query->where('jenis_pelayanan_id', $jenisPelayananId);
+        }
+
         // ==============================
         // DATA REKAP
         // ==============================
@@ -61,6 +66,7 @@ class PermohonanReportController extends Controller
         // ==============================
 
         $kelompokPelayanans = \App\Models\KelompokPelayanan::query()
+            ->with('jenisPelayanans')
             ->orderBy('kode')
             ->get();
 
@@ -105,6 +111,7 @@ class PermohonanReportController extends Controller
             'year',
             'month',
             'kelompokPelayananId',
+            'jenisPelayananId',
             'period',
             'kelompokPelayanans',
             'years',
@@ -120,6 +127,7 @@ class PermohonanReportController extends Controller
         $year = $request->input('year', date('Y'));
         $month = $request->input('month');
         $kelompokPelayananId = $request->input('kelompok_pelayanan_id');
+        $jenisPelayananId = $request->input('jenis_pelayanan_id');
         $period = $request->input('period', 'daily');
 
         $query = Permohonan::query()
@@ -137,6 +145,10 @@ class PermohonanReportController extends Controller
             $query->whereHas('jenisPelayanan', function ($q) use ($kelompokPelayananId) {
                 $q->where('kelompok_pelayanan_id', $kelompokPelayananId);
             });
+        }
+
+        if ($jenisPelayananId) {
+            $query->where('jenis_pelayanan_id', $jenisPelayananId);
         }
 
         $data = $this->groupByPeriod($query->get(), $period);
@@ -161,6 +173,7 @@ class PermohonanReportController extends Controller
             'period',
             'months',
             'selectedKelompok',
+            'jenisPelayananId',
             'printedAt',
             'petugas'
         );
