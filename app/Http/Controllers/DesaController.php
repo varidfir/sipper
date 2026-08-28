@@ -22,11 +22,12 @@ class DesaController extends Controller
 
     public function store(Request $request)
     {
-        $data = $request->only('kecamatan_id', 'kecamatan_manual', 'nama_desa');
+        $data = $request->only('kecamatan_id', 'kecamatan_manual', 'nama_desa', 'jenis');
 
         $kecamatanId = $data['kecamatan_id'] ?? null;
         $manualName = trim((string) ($data['kecamatan_manual'] ?? ''));
         $namaDesa = trim((string) ($data['nama_desa'] ?? ''));
+        $jenis = in_array($data['jenis'] ?? '', ['desa', 'kelurahan'], true) ? $data['jenis'] : 'desa';
 
         if ($namaDesa === '') {
             return back()->withErrors(['nama_desa' => 'Nama desa wajib diisi.'])->withInput();
@@ -44,6 +45,7 @@ class DesaController extends Controller
         Desa::create([
             'kecamatan_id' => $kecamatanId,
             'nama_desa' => $namaDesa,
+            'jenis' => $jenis,
         ]);
 
         return redirect()->route('desa.index')->with('status', 'Desa berhasil ditambahkan.');
@@ -57,11 +59,12 @@ class DesaController extends Controller
 
     public function update(Request $request, Desa $desa)
     {
-        $data = $request->only('kecamatan_id', 'kecamatan_manual', 'nama_desa');
+        $data = $request->only('kecamatan_id', 'kecamatan_manual', 'nama_desa', 'jenis');
 
         $kecamatanId = $data['kecamatan_id'] ?? null;
         $manualName = trim((string) ($data['kecamatan_manual'] ?? ''));
         $namaDesa = trim((string) ($data['nama_desa'] ?? ''));
+        $jenis = in_array($data['jenis'] ?? '', ['desa', 'kelurahan'], true) ? $data['jenis'] : ($desa->jenis ?? 'desa');
 
         if ($namaDesa === '') {
             $namaDesa = $desa->nama_desa;
@@ -79,6 +82,7 @@ class DesaController extends Controller
         $desa->update([
             'kecamatan_id' => $kecamatanId,
             'nama_desa' => $namaDesa,
+            'jenis' => $jenis,
         ]);
 
         return redirect()->route('desa.index')->with('status', 'Desa berhasil diperbarui.');

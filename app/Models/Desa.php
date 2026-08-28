@@ -13,6 +13,7 @@ class Desa extends Model
     protected $fillable = [
         'kecamatan_id',
         'nama_desa',
+        'jenis',
     ];
 
     public static function rules(): array

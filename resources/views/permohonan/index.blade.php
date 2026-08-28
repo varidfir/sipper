@@ -690,22 +690,51 @@
 
                         <div class="field">
                             <label for="kecamatan_id">Kecamatan</label>
-                            <select id="kecamatan_id" name="kecamatan_id">
-                                <option value="">Semua Kecamatan</option>
-                                @foreach($kecamatans as $kecamatan)
-                                    <option value="{{ $kecamatan->id }}" {{ request('kecamatan_id') == $kecamatan->id ? 'selected' : '' }}>{{ $kecamatan->nama_kecamatan }}</option>
-                                @endforeach
-                            </select>
+                            @php
+                                $selectedKecamatanId = (string) request('kecamatan_id');
+                                $selectedKecamatan = $kecamatans->firstWhere('id', (int) $selectedKecamatanId);
+                                $selectedKecamatanName = $selectedKecamatan ? $selectedKecamatan->nama_kecamatan : 'Semua Kecamatan';
+                            @endphp
+                            <div class="service-picker" data-kecamatan-picker>
+                                <input type="hidden" id="kecamatan_id" name="kecamatan_id" value="{{ $selectedKecamatanId }}">
+                                <button type="button" class="service-picker-toggle" data-kecamatan-toggle aria-haspopup="listbox" aria-expanded="false">
+                                    <span data-kecamatan-label>{{ $selectedKecamatanName }}</span>
+                                    <span class="service-picker-chevron" aria-hidden="true">&#9662;</span>
+                                </button>
+                                <div class="service-picker-menu" role="listbox" aria-label="Pilih Kecamatan">
+                                    <button type="button" class="service-picker-option {{ $selectedKecamatanId === '' ? 'is-selected' : '' }}" data-kecamatan-option="" role="option" aria-selected="{{ $selectedKecamatanId === '' ? 'true' : 'false' }}">Semua Kecamatan</button>
+                                    @foreach($kecamatans as $kecamatan)
+                                        <button type="button" class="service-picker-option {{ $selectedKecamatanId === (string) $kecamatan->id ? 'is-selected' : '' }}" data-kecamatan-option="{{ $kecamatan->id }}" role="option" aria-selected="{{ $selectedKecamatanId === (string) $kecamatan->id ? 'true' : 'false' }}">{{ $kecamatan->nama_kecamatan }}</button>
+                                    @endforeach
+                                </div>
+                            </div>
                         </div>
 
                         <div class="field">
                             <label for="desa_id">Desa/Kelurahan</label>
-                            <select id="desa_id" name="desa_id">
-                                <option value="">Semua Desa/Kelurahan</option>
-                                @foreach($desas as $desa)
-                                    <option value="{{ $desa->id }}" {{ request('desa_id') == $desa->id ? 'selected' : '' }}>{{ $desa->nama_desa }}</option>
-                                @endforeach
-                            </select>
+                            @php
+                                $selectedDesaId = (string) request('desa_id');
+                                $selectedDesa = $desas->firstWhere('id', (int) $selectedDesaId);
+                                $selectedDesaName = $selectedDesa ? $selectedDesa->nama_desa : 'Semua Desa/Kelurahan';
+                            @endphp
+                            <div class="service-picker" data-desa-picker>
+                                <input type="hidden" id="desa_id" name="desa_id" value="{{ $selectedDesaId }}">
+                                <button type="button" class="service-picker-toggle" data-desa-toggle aria-haspopup="listbox" aria-expanded="false">
+                                    <span data-desa-label>{{ $selectedDesaName }}</span>
+                                    <span class="service-picker-chevron" aria-hidden="true">&#9662;</span>
+                                </button>
+                                <div class="service-picker-menu" role="listbox" aria-label="Pilih Desa/Kelurahan">
+                                    <div style="padding: 4px; position: sticky; top: -8px; background: #fff; z-index: 5; border-bottom: 1px solid #e2e8f0; margin: -8px -8px 4px -8px;">
+                                        <input type="text" data-desa-search placeholder="Cari desa/kelurahan..." style="width:100%; height:32px; padding:0 8px; font-size:11px; border:1px solid #cbd5e1; border-radius:2px; outline:none;" autocomplete="off">
+                                    </div>
+                                    <div data-desa-list>
+                                        <button type="button" class="service-picker-option {{ $selectedDesaId === '' ? 'is-selected' : '' }}" data-desa-option="" data-kecamatan-id="" role="option" aria-selected="{{ $selectedDesaId === '' ? 'true' : 'false' }}">Semua Desa/Kelurahan</button>
+                                        @foreach($desas as $desa)
+                                            <button type="button" class="service-picker-option {{ $selectedDesaId === (string) $desa->id ? 'is-selected' : '' }}" data-desa-option="{{ $desa->id }}" data-kecamatan-id="{{ $desa->kecamatan_id }}" role="option" aria-selected="{{ $selectedDesaId === (string) $desa->id ? 'true' : 'false' }}">{{ $desa->nama_desa }}</button>
+                                        @endforeach
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
 
@@ -769,6 +798,7 @@
     </div>
 </main>
 <script>
+    // Service Picker Logic
     const serviceCategory = document.querySelector('#kelompok_pelayanan_id');
     const servicePicker = document.querySelector('[data-service-picker]');
 
@@ -797,6 +827,7 @@
         };
 
         serviceToggle.addEventListener('click', () => {
+            closeAllPickersExcept(servicePicker);
             const isOpen = servicePicker.classList.toggle('is-open');
             serviceToggle.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
         });
@@ -812,14 +843,117 @@
         });
 
         serviceCategory.addEventListener('change', filterServices);
-        document.addEventListener('click', (event) => {
-            if (!servicePicker.contains(event.target)) {
-                servicePicker.classList.remove('is-open');
-                serviceToggle.setAttribute('aria-expanded', 'false');
-            }
-        });
         filterServices();
     }
+
+    // Kecamatan Picker & Desa Picker Logic
+    const kecamatanPicker = document.querySelector('[data-kecamatan-picker]');
+    const desaPicker = document.querySelector('[data-desa-picker]');
+
+    const closeAllPickersExcept = (current) => {
+        document.querySelectorAll('.service-picker.is-open').forEach(picker => {
+            if (picker !== current) {
+                picker.classList.remove('is-open');
+                const toggle = picker.querySelector('button[aria-expanded]');
+                if (toggle) toggle.setAttribute('aria-expanded', 'false');
+            }
+        });
+    };
+
+    if (kecamatanPicker && desaPicker) {
+        const kecToggle = kecamatanPicker.querySelector('[data-kecamatan-toggle]');
+        const kecInput = kecamatanPicker.querySelector('#kecamatan_id');
+        const kecLabel = kecamatanPicker.querySelector('[data-kecamatan-label]');
+        const kecOptions = [...kecamatanPicker.querySelectorAll('[data-kecamatan-option]')];
+
+        const desaToggle = desaPicker.querySelector('[data-desa-toggle]');
+        const desaInput = desaPicker.querySelector('#desa_id');
+        const desaLabel = desaPicker.querySelector('[data-desa-label]');
+        const desaSearch = desaPicker.querySelector('[data-desa-search]');
+        const desaOptions = [...desaPicker.querySelectorAll('[data-desa-option]')];
+
+        const filterDesaList = () => {
+            const selectedKecId = kecInput.value;
+            const searchVal = (desaSearch ? desaSearch.value : '').toLowerCase().trim();
+
+            let validSelected = false;
+
+            desaOptions.forEach((option) => {
+                const isAll = option.dataset.desaOption === '';
+                const matchKec = !selectedKecId || isAll || option.dataset.kecamatanId === selectedKecId;
+                const matchSearch = isAll || !searchVal || option.textContent.toLowerCase().includes(searchVal);
+
+                const show = matchKec && matchSearch;
+                option.hidden = !show;
+
+                if (option.dataset.desaOption === desaInput.value && show) {
+                    validSelected = true;
+                }
+
+                option.classList.toggle('is-selected', option.dataset.desaOption === desaInput.value);
+                option.setAttribute('aria-selected', option.dataset.desaOption === desaInput.value ? 'true' : 'false');
+            });
+
+            if (!validSelected && desaInput.value !== '') {
+                desaInput.value = '';
+                desaLabel.textContent = 'Semua Desa/Kelurahan';
+            }
+        };
+
+        // Kecamatan events
+        kecToggle.addEventListener('click', () => {
+            closeAllPickersExcept(kecamatanPicker);
+            const isOpen = kecamatanPicker.classList.toggle('is-open');
+            kecToggle.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
+        });
+
+        kecOptions.forEach(option => {
+            option.addEventListener('click', () => {
+                kecInput.value = option.dataset.kecamatanOption;
+                kecLabel.textContent = option.textContent;
+                kecOptions.forEach(o => {
+                    o.classList.toggle('is-selected', o === option);
+                    o.setAttribute('aria-selected', o === option ? 'true' : 'false');
+                });
+                kecamatanPicker.classList.remove('is-open');
+                kecToggle.setAttribute('aria-expanded', 'false');
+                filterDesaList();
+            });
+        });
+
+        // Desa events
+        desaToggle.addEventListener('click', () => {
+            closeAllPickersExcept(desaPicker);
+            const isOpen = desaPicker.classList.toggle('is-open');
+            desaToggle.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
+            if (isOpen && desaSearch) {
+                setTimeout(() => desaSearch.focus(), 50);
+            }
+        });
+
+        if (desaSearch) {
+            desaSearch.addEventListener('input', filterDesaList);
+        }
+
+        desaOptions.forEach(option => {
+            option.addEventListener('click', () => {
+                desaInput.value = option.dataset.desaOption;
+                desaLabel.textContent = option.textContent;
+                filterDesaList();
+                desaPicker.classList.remove('is-open');
+                desaToggle.setAttribute('aria-expanded', 'false');
+            });
+        });
+
+        filterDesaList();
+    }
+
+    // Global click listener to close all pickers
+    document.addEventListener('click', (event) => {
+        if (!event.target.closest('.service-picker')) {
+            closeAllPickersExcept(null);
+        }
+    });
 </script>
 </body>
 </html>

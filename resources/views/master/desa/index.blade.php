@@ -73,12 +73,13 @@
 
                     <div class="desa-table-wrap">
                         <table class="desa-table sipper-data-table">
-                            <thead><tr><th class="desa-number">No</th><th>Nama Desa/Kelurahan</th><th>Kecamatan</th><th class="sipper-table-actions">Aksi</th></tr></thead>
+                            <thead><tr><th class="desa-number">No</th><th>Nama Desa/Kelurahan</th><th>Jenis</th><th>Kecamatan</th><th class="sipper-table-actions">Aksi</th></tr></thead>
                             <tbody>
                         @forelse($desas as $desa)
                             <tr>
                                 <td class="desa-number">{{ $loop->iteration }}</td>
                                 <td class="desa-name">{{ $desa->nama_desa }}</td>
+                                <td><span style="text-transform: capitalize; padding: 2px 8px; border-radius: 4px; font-size: 11px; font-weight: 600; background: {{ ($desa->jenis ?? 'desa') === 'kelurahan' ? '#e0f2fe; color: #0369a1;' : '#f1f5f9; color: #475569;' }}">{{ ucfirst($desa->jenis ?? 'desa') }}</span></td>
                                 <td class="desa-district">{{ $desa->kecamatan->nama_kecamatan ?? '-' }}</td>
                                 <td class="sipper-table-actions"><div class="desa-row-actions">
                                     <a href="{{ route('desa.edit', $desa) }}" class="desa-action desa-edit">
@@ -94,7 +95,7 @@
                                 </div></td>
                             </tr>
                         @empty
-                            <tr><td colspan="4" class="desa-empty">Belum ada data desa/kelurahan.</td></tr>
+                            <tr><td colspan="5" class="desa-empty">Belum ada data desa/kelurahan.</td></tr>
                         @endforelse
                             </tbody>
                         </table>
