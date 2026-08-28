@@ -5,6 +5,35 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dashboard | SIPPER</title>
     @vite(['resources/css/app.css', 'resources/js/app.js'])
+    <style>
+        .primary-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 0 18px;
+            height: 38px;
+            border: none;
+            border-radius: 6px;
+            background: var(--sip-primary, #1d61e8);
+            color: #fff;
+            font-size: 13px;
+            font-weight: 700;
+            text-decoration: none;
+            cursor: pointer;
+            white-space: nowrap;
+            transition: background .15s, box-shadow .15s, transform .1s;
+            box-shadow: 0 2px 8px rgba(29, 97, 232, .25);
+        }
+        .primary-btn:hover {
+            background: var(--sip-primary-hover, #1550c8);
+            box-shadow: 0 4px 14px rgba(29, 97, 232, .35);
+            transform: translateY(-1px);
+        }
+        .primary-btn:active {
+            transform: translateY(0);
+            box-shadow: 0 1px 4px rgba(29, 97, 232, .2);
+        }
+    </style>
 </head>
 <body>
 <div class="dashboard-app">

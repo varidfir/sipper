@@ -412,6 +412,10 @@
             border-bottom: 1px solid var(--line);
         }
 
+        .form-header {
+            padding-right: 20px;
+        }
+
         .page-badge {
             margin-bottom: 5px;
             color: var(--primary);
