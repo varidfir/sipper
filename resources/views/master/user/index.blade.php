@@ -288,7 +288,7 @@
 
 
                                         {{-- NAMA --}}
-                                        <td class="sipper-table-actions px-5 py-4">
+                                        <td class="px-5 py-4">
 
                                             <div class="flex items-center gap-3">
 
@@ -353,7 +353,7 @@
 
 
                                         {{-- AKSI --}}
-                                        <td class="px-5 py-4">
+                                        <td class="sipper-table-actions px-5 py-4">
 
                                             <div class="flex items-center justify-end gap-2">
 
