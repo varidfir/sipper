@@ -188,13 +188,13 @@ class WilayahSeeder extends Seeder
             foreach ($data as $namaKecamatan => $wilayah) {
                 $kecamatan = Kecamatan::whereRaw('LOWER(nama_kecamatan) = ?', [strtolower($namaKecamatan)])->first();
                 if (! $kecamatan) {
-                    $kecamatan = Kecamatan::create(['nama_kecamatan' => $namaKecamatan]);
+                    $kecamatan = Kecamatan::create(['nama_kecamatan' => strtoupper($namaKecamatan)]);
                 } else {
-                    $kecamatan->update(['nama_kecamatan' => $namaKecamatan]);
+                    $kecamatan->update(['nama_kecamatan' => strtoupper($namaKecamatan)]);
                 }
 
                 foreach ($wilayah['desa'] as $namaDesa) {
-                    $payload = ['nama_desa' => $namaDesa];
+                    $payload = ['nama_desa' => strtoupper($namaDesa)];
                     if ($hasJenisColumn) {
                         $payload['jenis'] = 'desa';
                     }
@@ -202,14 +202,14 @@ class WilayahSeeder extends Seeder
                     Desa::updateOrCreate(
                         [
                             'kecamatan_id' => $kecamatan->id,
-                            'nama_desa' => $namaDesa,
+                            'nama_desa' => strtoupper($namaDesa),
                         ],
                         $payload
                     );
                 }
 
                 foreach ($wilayah['kelurahan'] as $namaKelurahan) {
-                    $payload = ['nama_desa' => $namaKelurahan];
+                    $payload = ['nama_desa' => strtoupper($namaKelurahan)];
                     if ($hasJenisColumn) {
                         $payload['jenis'] = 'kelurahan';
                     }
@@ -217,7 +217,7 @@ class WilayahSeeder extends Seeder
                     Desa::updateOrCreate(
                         [
                             'kecamatan_id' => $kecamatan->id,
-                            'nama_desa' => $namaKelurahan,
+                            'nama_desa' => strtoupper($namaKelurahan),
                         ],
                         $payload
                     );
