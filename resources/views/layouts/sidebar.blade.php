@@ -155,47 +155,6 @@
 
                 </a>
 
-
-                {{-- Export Data --}}
-                <a
-                    href="{{ route('permohonan.export') }}"
-                    class="{{ request()->routeIs('permohonan.export') ? 'active' : '' }}"
-                >
-
-                    <span class="sipper-nav-icon">
-
-                        <svg
-                            viewBox="0 0 24 24"
-                            fill="none"
-                            stroke="currentColor"
-                        >
-                            <path
-                                d="M21 15V19C21 20.1046 20.1046 21 19 21H5C3.89543 21 3 20.1046 3 19V15"
-                                stroke-linecap="round"
-                                stroke-linejoin="round"
-                            />
-
-                            <path
-                                d="M7 10L12 15L17 10"
-                                stroke-linecap="round"
-                                stroke-linejoin="round"
-                            />
-
-                            <path
-                                d="M12 15V3"
-                                stroke-linecap="round"
-                                stroke-linejoin="round"
-                            />
-                        </svg>
-
-                    </span>
-
-                    <span class="sipper-nav-label">
-                        Export Data
-                    </span>
-
-                </a>
-
             </nav>
 
         </div>

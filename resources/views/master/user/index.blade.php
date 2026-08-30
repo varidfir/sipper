@@ -5,9 +5,15 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>Kelola Pengguna - Berita Acara</title>
+    <title>Kelola Pengguna - SIPPER</title>
 
     @vite(['resources/css/app.css', 'resources/js/app.js'])
+    <style>
+        .user-button-primary { display: inline-flex; align-items: center; justify-content: center; min-height: 35px; padding: 0 14px; border-radius: 3px; font-size: 12px; font-weight: 700; text-decoration: none; border: 1px solid var(--sip-primary); background: var(--sip-primary); color: #fff; }
+        .user-button-primary:hover { background: var(--sip-primary-hover); }
+        .user-alert { margin: 14px 20px 0; padding: 10px 12px; border: 1px solid var(--sip-primary-border); border-radius: 3px; background: var(--sip-primary-soft); color: var(--sip-primary); font-size: 12px; }
+        .user-alert strong { display: block; margin-bottom: 2px; }
+    </style>
 </head>
 
 
@@ -43,15 +49,9 @@
                     {{-- TOMBOL TAMBAH --}}
                     <a
                         href="{{ route('user.create') }}"
-                        class="primary-btn"
+                        class="user-button-primary"
                     >
-
-                        <span class="text-lg leading-none">
-                            +
-                        </span>
-
-                        Tambah Pengguna
-
+                        <span class="mr-1">+</span> Tambah Pengguna
                     </a>
 
                 </div>

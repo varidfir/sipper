@@ -51,7 +51,7 @@
                     <h1>Data Kecamatan</h1>
                     <p>Kelola data kecamatan dalam wilayah kerja.</p>
                 </div>
-                <a href="{{ route('kecamatan.create') }}" class="primary-btn">+ Tambah Kecamatan</a>
+                <a href="{{ route('kecamatan.create') }}" class="kecamatan-button kecamatan-button-primary">+ Tambah Kecamatan</a>
             </div>
 
             {{-- NOTIFIKASI --}}

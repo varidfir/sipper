@@ -161,36 +161,30 @@
 
                         <div class="wilayah-fields">
                             {{-- Pilih Kecamatan --}}
-                            <div class="wilayah-field">
+                            <div class="wilayah-field wilayah-field-wide">
                                 <label>
-                                    Pilih Kecamatan <span class="text-red-500">*</span>
+                                    Kecamatan <span class="text-red-500">*</span>
                                 </label>
                                 @php
                                     $selectedKecId = old('kecamatan_id', $desa->kecamatan_id ?? '');
                                     $selectedKecObj = $kecamatans->firstWhere('id', (int) $selectedKecId);
-                                    $selectedKecLabel = $selectedKecObj ? $selectedKecObj->nama_kecamatan : '-- Pilih atau Tulis Manual --';
+                                    $selectedKecLabel = $selectedKecObj ? $selectedKecObj->nama_kecamatan : '-- Pilih atau Ketik Baru --';
                                 @endphp
                                 <div class="service-picker" data-form-kec-picker>
                                     <input type="hidden" name="kecamatan_id" value="{{ $selectedKecId }}">
-                                    <button type="button" class="service-picker-toggle" data-form-kec-toggle aria-haspopup="listbox" aria-expanded="false">
-                                        <span data-form-kec-label>{{ $selectedKecLabel }}</span>
+                                    <!-- Add input text for typing manual value, replacing the old toggle button structure -->
+                                    <input type="text" name="kecamatan_manual" value="{{ old('kecamatan_manual') ?? ($selectedKecId ? $selectedKecLabel : old('kecamatan_manual')) }}" placeholder="Ketik nama kecamatan baru atau pilih..." class="w-full" style="padding-right: 30px; background-image: none;" data-form-kec-input autocomplete="off">
+
+                                    <button type="button" class="service-picker-toggle-btn" data-form-kec-toggle style="position: absolute; right: 0; top: 0; height: 36px; width: 30px; display: flex; align-items: center; justify-content: center; background: transparent; border: none; cursor: pointer;">
                                         <span class="service-picker-chevron" aria-hidden="true">&#9662;</span>
                                     </button>
+
                                     <div class="service-picker-menu" role="listbox" aria-label="Pilih Kecamatan">
-                                        <button type="button" class="service-picker-option {{ $selectedKecId == '' ? 'is-selected' : '' }}" data-form-kec-option="" role="option" aria-selected="{{ $selectedKecId == '' ? 'true' : 'false' }}">-- Pilih atau Tulis Manual --</button>
                                         @foreach($kecamatans as $kecamatan)
-                                            <button type="button" class="service-picker-option {{ (string)$selectedKecId === (string)$kecamatan->id ? 'is-selected' : '' }}" data-form-kec-option="{{ $kecamatan->id }}" role="option" aria-selected="{{ (string)$selectedKecId === (string)$kecamatan->id ? 'true' : 'false' }}">{{ $kecamatan->nama_kecamatan }}</button>
+                                            <button type="button" class="service-picker-option {{ (string)$selectedKecId === (string)$kecamatan->id ? 'is-selected' : '' }}" data-form-kec-option="{{ $kecamatan->id }}" data-form-kec-text="{{ $kecamatan->nama_kecamatan }}" role="option" aria-selected="{{ (string)$selectedKecId === (string)$kecamatan->id ? 'true' : 'false' }}">{{ $kecamatan->nama_kecamatan }}</button>
                                         @endforeach
                                     </div>
                                 </div>
-                            </div>
-
-                            {{-- Kecamatan Manual --}}
-                            <div class="wilayah-field">
-                                <label>
-                                    Atau Ketik Nama Kecamatan Baru
-                                </label>
-                                <input type="text" name="kecamatan_manual" value="{{ old('kecamatan_manual') }}" placeholder="Jika ingin membuat kecamatan baru">
                             </div>
 
                             {{-- Nama Desa --}}
@@ -233,32 +227,65 @@
     const formKecPicker = document.querySelector('[data-form-kec-picker]');
     if (formKecPicker) {
         const toggle = formKecPicker.querySelector('[data-form-kec-toggle]');
-        const input = formKecPicker.querySelector('input[name="kecamatan_id"]');
-        const label = formKecPicker.querySelector('[data-form-kec-label]');
+        const inputHidden = formKecPicker.querySelector('input[name="kecamatan_id"]');
+        const inputText = formKecPicker.querySelector('[data-form-kec-input]');
         const options = [...formKecPicker.querySelectorAll('[data-form-kec-option]')];
 
-        toggle.addEventListener('click', () => {
+        // Ensure input text matches selected value on load if ID exists
+        const selectedOpt = options.find(o => o.dataset.formKecOption === inputHidden.value);
+        if (selectedOpt && !inputText.value) {
+            inputText.value = selectedOpt.dataset.formKecText;
+        }
+
+        // Toggle dropdown on button click
+        toggle.addEventListener('click', (e) => {
+            e.preventDefault();
             const isOpen = formKecPicker.classList.toggle('is-open');
-            toggle.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
+            // Reset filters
+            options.forEach(o => o.style.display = 'block');
         });
 
+        // Open and filter on text input
+        inputText.addEventListener('input', (e) => {
+            const val = e.target.value.toLowerCase();
+            formKecPicker.classList.add('is-open');
+
+            // Clear hidden ID if they type something new
+            inputHidden.value = '';
+
+            options.forEach(o => {
+                const text = o.dataset.formKecText.toLowerCase();
+                o.style.display = text.includes(val) ? 'block' : 'none';
+
+                // If exact match, set hidden ID
+                if (text === val) {
+                    inputHidden.value = o.dataset.formKecOption;
+                    o.classList.add('is-selected');
+                } else {
+                    o.classList.remove('is-selected');
+                }
+            });
+        });
+
+        // Select from dropdown
         options.forEach(opt => {
             opt.addEventListener('click', () => {
-                input.value = opt.dataset.formKecOption;
-                label.textContent = opt.textContent;
+                inputHidden.value = opt.dataset.formKecOption;
+                inputText.value = opt.dataset.formKecText;
+
                 options.forEach(o => {
                     o.classList.toggle('is-selected', o === opt);
                     o.setAttribute('aria-selected', o === opt ? 'true' : 'false');
                 });
+
                 formKecPicker.classList.remove('is-open');
-                toggle.setAttribute('aria-expanded', 'false');
             });
         });
 
+        // Close when clicking outside
         document.addEventListener('click', (e) => {
             if (!formKecPicker.contains(e.target)) {
                 formKecPicker.classList.remove('is-open');
-                toggle.setAttribute('aria-expanded', 'false');
             }
         });
     }

@@ -52,7 +52,7 @@
                     <h1>Jenis Pelayanan</h1>
                     <p>Kelola jenis-jenis pelayanan yang tersedia di sistem.</p>
                 </div>
-                <a href="{{ route('jenis-pelayanan.create') }}" class="primary-btn">+ Tambah Jenis Pelayanan</a>
+                <a href="{{ route('jenis-pelayanan.create') }}" class="jenis-button jenis-primary">+ Tambah Jenis Pelayanan</a>
             </div>
 
             {{-- NOTIFIKASI --}}

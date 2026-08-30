@@ -52,7 +52,7 @@
                     <h1>Data Desa/Kelurahan</h1>
                     <p>Kelola data desa dan kelurahan dalam wilayah kecamatan.</p>
                 </div>
-                <a href="{{ route('desa.create') }}" class="primary-btn">+ Tambah Desa</a>
+                <a href="{{ route('desa.create') }}" class="desa-button desa-button-primary">+ Tambah Desa</a>
             </div>
 
             {{-- NOTIFIKASI --}}
