@@ -20,13 +20,13 @@
         }
 
         .recap-title {
-            margin-bottom: 8px;
+            margin-bottom: 6px;
         }
 
         .recap-title h1 {
             margin: 2px 0 0;
             color: #0f172a;
-            font-size: 19px;
+            font-size: 18px;
             line-height: 1.2;
         }
 
@@ -39,163 +39,210 @@
         .recap-filter {
             overflow: visible;
             border: 1px solid #dbe3ed;
-            border-radius: 3px;
+            border-radius: 4px;
             background: #fff;
             box-shadow: 0 1px 3px rgba(15, 23, 42, .04);
+            margin-bottom: 8px;
         }
 
         .recap-filter-head {
-            padding: 7px 10px;
+            padding: 6px 12px;
             border-bottom: 1px solid #dbe3ed;
-            background: #1d61e8;
+            background: var(--sip-sidebar-bg, #0d3969);
             color: #fff;
             border-radius: 3px 3px 0 0;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
         }
 
         .recap-filter-head h2 {
             margin: 0;
-            font-size: 12px;
+            font-size: 11.5px;
+            font-weight: 700;
+            letter-spacing: .02em;
         }
 
         .recap-filter-head p {
-            margin: 1px 0 0;
-            color: #dbeafe;
+            margin: 0;
+            color: rgba(255, 255, 255, 0.75);
             font-size: 10px;
         }
 
         .recap-filter-form {
             display: grid;
-            grid-template-columns: repeat(8, minmax(0, 1fr));
+            grid-template-columns: repeat(12, minmax(0, 1fr));
             gap: 6px 8px;
             align-items: end;
-            padding: 8px;
+            padding: 8px 10px 10px;
         }
 
         .recap-field {
             min-width: 0;
+            display: flex;
+            flex-direction: column;
+            gap: 2px;
         }
+
+        .recap-field-period { grid-column: span 2; }
+        .recap-field-year { grid-column: span 1; }
+        .recap-field-month { grid-column: span 2; }
+        .recap-field-category { grid-column: span 2; }
+        .recap-field-service { grid-column: span 3; }
 
         .recap-field label {
             display: block;
-            margin-bottom: 2px;
+            margin: 0;
             color: #475569;
             font-size: 10px;
             font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: .02em;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
         }
 
-        .recap-field select {
-            width: 100%;
-            height: 32px;
-            border: 1px solid #cbd5e1;
-            border-radius: 2px;
-            appearance: none;
-            background-color: #fff;
-            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='%23334155'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='m6 9 6 6 6-6'/%3E%3C/svg%3E");
-            background-repeat: no-repeat;
-            background-position: right 7px center;
-            background-size: 12px 12px;
-            padding: 0 7px;
-            padding-right: 28px;
-            color: #334155;
-            font-size: 11px;
-        }
-
-        .recap-field select:focus {
-            border-color: #60a5fa;
-            outline: 0;
-            box-shadow: 0 0 0 2px rgba(59, 130, 246, .12);
-        }
-
-        .recap-service-picker { position: relative; }
+        .recap-field select,
         .recap-service-toggle {
             width: 100%;
             height: 32px;
+            border: 1px solid #cbd5e1;
+            border-radius: 3px;
+            background-color: #fff;
+            color: #1e293b;
+            font-size: 11px;
+            font-weight: 500;
+            padding: 0 8px;
+            outline: none;
+            box-sizing: border-box;
+            transition: border-color .15s, box-shadow .15s;
+        }
+
+        .recap-field select {
+            appearance: none;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='%23475569'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='m6 9 6 6 6-6'/%3E%3C/svg%3E");
+            background-repeat: no-repeat;
+            background-position: right 6px center;
+            background-size: 11px 11px;
+            padding-right: 22px;
+            cursor: pointer;
+        }
+
+        .recap-field select:focus,
+        .recap-service-toggle:focus,
+        .recap-service-picker.is-open .recap-service-toggle {
+            border-color: var(--sip-primary, #1d61e8);
+            outline: 0;
+            box-shadow: 0 0 0 2px rgba(29, 97, 232, .15);
+        }
+
+        .recap-service-picker {
+            position: relative;
+            width: 100%;
+        }
+
+        .recap-service-toggle {
             display: flex;
             align-items: center;
             justify-content: space-between;
-            border: 1px solid #cbd5e1;
-            border-radius: 2px;
-            background: #fff;
-            padding: 0 7px;
-            color: #334155;
-            font-size: 11px;
-            line-height: 1;
-            text-align: left;
+            gap: 4px;
             cursor: pointer;
-            box-sizing: border-box;
+            text-align: left;
         }
-        .recap-service-toggle:focus,
-        .recap-service-picker.is-open .recap-service-toggle {
-            border-color: #60a5fa;
-            outline: 0;
-            box-shadow: 0 0 0 2px rgba(59, 130, 246, .12);
+
+        .recap-service-toggle > span:first-child {
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            display: block;
         }
+
         .recap-service-chevron {
             flex: 0 0 auto;
-            width: 6px;
-            height: 6px;
-            border-right: 1.5px solid #334155;
-            border-bottom: 1.5px solid #334155;
+            width: 5px;
+            height: 5px;
+            border-right: 1.5px solid #475569;
+            border-bottom: 1.5px solid #475569;
             font-size: 0;
-            transform: rotate(45deg) translate(-2px, -2px);
+            transform: rotate(45deg) translate(-1px, -1px);
             transition: transform .15s;
         }
-        .recap-service-picker.is-open .recap-service-chevron { transform: rotate(225deg) translate(-2px, -2px); }
+
+        .recap-service-picker.is-open .recap-service-chevron {
+            transform: rotate(225deg) translate(-1px, -1px);
+        }
+
         .recap-service-menu {
             position: absolute;
-            z-index: 30;
-            top: calc(100% + 4px);
+            z-index: 50;
+            top: calc(100% + 3px);
             left: 0;
             width: 100%;
-            max-width: 100%;
-            max-height: 200px;
-            display: block;
+            min-width: 220px;
+            max-height: 180px;
             overflow-y: auto;
-            padding: 5px;
+            padding: 4px;
             border: 1px solid #cbd5e1;
-            border-radius: 2px;
+            border-radius: 4px;
             background: #fff;
-            box-shadow: 0 10px 20px rgba(15, 23, 42, .16);
+            box-shadow: 0 10px 22px rgba(15, 23, 42, .14);
             opacity: 0;
             visibility: hidden;
             pointer-events: none;
-            transform: translateY(-8px) scaleY(.96);
-            transform-origin: top center;
-            transition: opacity .18s ease, transform .18s ease, visibility 0s linear .18s;
+            transform: translateY(-4px);
+            transition: opacity .15s ease, transform .15s ease, visibility 0s linear .15s;
         }
+
         .recap-service-picker.is-open .recap-service-menu {
             opacity: 1;
             visibility: visible;
             pointer-events: auto;
-            transform: translateY(0) scaleY(1);
+            transform: translateY(0);
             transition-delay: 0s;
         }
+
         .recap-service-option {
             width: 100%;
-            min-height: 26px;
+            min-height: 25px;
             border: 1px solid transparent;
-            border-radius: 2px;
+            border-radius: 3px;
             background: transparent;
             color: #334155;
-            padding: 3px 5px;
-            font-size: 10px;
+            padding: 3px 6px;
+            font-size: 10.5px;
+            line-height: 1.3;
             white-space: normal;
             overflow-wrap: anywhere;
             text-align: left;
             cursor: pointer;
+            transition: background .12s, color .12s;
         }
+
         .recap-service-option:hover,
         .recap-service-option.is-selected {
-            border-color: #1d61e8;
-            background: #eff6ff;
-            color: #1d61e8;
+            border-color: var(--sip-primary, #1d61e8);
+            background: rgba(29, 97, 232, .08);
+            color: var(--sip-primary, #1d61e8);
             font-weight: 700;
         }
-        .recap-service-option[hidden] { display: none; }
+
+        .recap-service-option[hidden] {
+            display: none !important;
+        }
+
+        .recap-service-menu::-webkit-scrollbar {
+            width: 5px;
+        }
+
+        .recap-service-menu::-webkit-scrollbar-thumb {
+            border-radius: 4px;
+            background: #cbd5e1;
+        }
 
         .recap-filter-actions {
             display: flex;
-            gap: 6px;
+            gap: 5px;
             grid-column: span 2;
         }
 
@@ -204,36 +251,48 @@
             display: inline-flex;
             align-items: center;
             justify-content: center;
-            width: 100%;
             height: 32px;
-            border-radius: 2px;
+            border-radius: 3px;
             font-size: 11px;
             font-weight: 700;
             text-decoration: none;
+            cursor: pointer;
+            box-sizing: border-box;
+            transition: background .15s, border-color .15s, color .15s;
         }
 
         .recap-filter-actions button {
-            border: 1px solid #1d61e8;
-            background: #1d61e8;
+            flex: 1.2;
+            border: 1px solid var(--sip-primary, #1d61e8);
+            background: var(--sip-primary, #1d61e8);
             color: #fff;
-            cursor: pointer;
+        }
+
+        .recap-filter-actions button:hover {
+            background: var(--sip-primary-hover, #1752ca);
         }
 
         .recap-filter-actions a {
+            flex: 0.8;
             border: 1px solid #cbd5e1;
-            background: #fff;
-            color: #334155;
+            background: #f8fafc;
+            color: #475569;
+        }
+
+        .recap-filter-actions a:hover {
+            background: #f1f5f9;
+            color: #1e293b;
         }
 
         .recap-summary {
             display: flex;
             align-items: center;
             justify-content: space-between;
-            gap: 10px;
-            margin: 8px 0;
-            padding: 8px 10px;
+            gap: 8px;
+            margin: 6px 0 10px;
+            padding: 6px 12px;
             border: 1px solid #bfdbfe;
-            border-radius: 3px;
+            border-radius: 4px;
             background: #eff6ff;
         }
 
@@ -472,24 +531,30 @@
             background: var(--sip-primary-soft);
         }
 
-        @media (max-width: 900px) {
+        @media (max-width: 1024px) {
             .recap-filter-form {
-                grid-template-columns: repeat(4, minmax(0, 1fr));
+                grid-template-columns: repeat(6, minmax(0, 1fr));
             }
 
-            .recap-filter-actions {
-                grid-column: span 2;
-            }
+            .recap-field-period { grid-column: span 2; }
+            .recap-field-year { grid-column: span 2; }
+            .recap-field-month { grid-column: span 2; }
+            .recap-field-category { grid-column: span 2; }
+            .recap-field-service { grid-column: span 2; }
+            .recap-filter-actions { grid-column: span 2; }
         }
 
-        @media (max-width: 600px) {
+        @media (max-width: 640px) {
             .recap-filter-form {
                 grid-template-columns: 1fr 1fr;
             }
 
-            .recap-filter-actions {
-                grid-column: span 2;
-            }
+            .recap-field-period { grid-column: span 1; }
+            .recap-field-year { grid-column: span 1; }
+            .recap-field-month { grid-column: span 1; }
+            .recap-field-category { grid-column: span 1; }
+            .recap-field-service { grid-column: span 2; }
+            .recap-filter-actions { grid-column: span 2; }
 
             .recap-summary {
                 align-items: flex-start;
@@ -543,10 +608,7 @@
 
                     <div class="recap-filter-head">
                         <h2>Filter Data</h2>
-
-                        <p>
-                            Pilih periode dan kategori yang ingin ditampilkan.
-                        </p>
+                        <p>Pilih periode dan kategori yang ingin ditampilkan.</p>
                     </div>
 
                     <form
@@ -556,182 +618,86 @@
                     >
 
                         {{-- PERIODE --}}
-                        <div class="recap-field">
-
-                            <label class="mb-1 block text-xs font-bold text-slate-600">
-                                Periode
-                            </label>
-
-                            <select
-                                name="period"
-                                class="h-10 w-full rounded-lg border border-slate-300 bg-white px-3 text-sm focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500"
-                            >
-
-                                <option
-                                    value="daily"
-                                    {{ ($period ?? 'daily') === 'daily' ? 'selected' : '' }}
-                                >
-                                    Harian
-                                </option>
-
-                                <option
-                                    value="monthly"
-                                    {{ ($period ?? '') === 'monthly' ? 'selected' : '' }}
-                                >
-                                    Bulanan
-                                </option>
-
-                                <option
-                                    value="yearly"
-                                    {{ ($period ?? '') === 'yearly' ? 'selected' : '' }}
-                                >
-                                    Tahunan
-                                </option>
-
+                        <div class="recap-field recap-field-period">
+                            <label for="period_select">Periode</label>
+                            <select id="period_select" name="period">
+                                <option value="daily" {{ ($period ?? 'daily') === 'daily' ? 'selected' : '' }}>Harian</option>
+                                <option value="monthly" {{ ($period ?? '') === 'monthly' ? 'selected' : '' }}>Bulanan</option>
+                                <option value="yearly" {{ ($period ?? '') === 'yearly' ? 'selected' : '' }}>Tahunan</option>
                             </select>
-
                         </div>
 
                         {{-- TAHUN --}}
-                        <div class="recap-field">
-
-                            <label class="mb-1 block text-xs font-bold text-slate-600">
-                                Tahun
-                            </label>
-
-                            <select
-                                name="year"
-                                class="h-10 w-full rounded-lg border border-slate-300 bg-white px-3 text-sm focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500"
-                            >
-
+                        <div class="recap-field recap-field-year">
+                            <label for="year_select">Tahun</label>
+                            <select id="year_select" name="year">
                                 @for($y = now()->year; $y >= now()->year - 5; $y--)
-
-                                    <option
-                                        value="{{ $y }}"
-                                        {{ (int)($year ?? now()->year) === $y ? 'selected' : '' }}
-                                    >
-                                        {{ $y }}
-                                    </option>
-
+                                    <option value="{{ $y }}" {{ (int)($year ?? now()->year) === $y ? 'selected' : '' }}>{{ $y }}</option>
                                 @endfor
-
                             </select>
-
                         </div>
 
                         {{-- BULAN --}}
-                        <div class="recap-field">
-
-                            <label class="mb-1 block text-xs font-bold text-slate-600">
-                                Bulan
-                            </label>
-
-                            <select
-                                name="month"
-                                class="h-10 w-full rounded-lg border border-slate-300 bg-white px-3 text-sm focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500"
-                            >
-
-                                <option value="">
-                                    Semua Bulan
-                                </option>
-
+                        <div class="recap-field recap-field-month">
+                            <label for="month_select">Bulan</label>
+                            <select id="month_select" name="month">
+                                <option value="">Semua Bulan</option>
                                 @foreach($months as $number => $name)
-
-                                    <option
-                                        value="{{ $number }}"
-                                        {{ (string)($month ?? '') === (string)$number ? 'selected' : '' }}
-                                    >
-                                        {{ $name }}
-                                    </option>
-
+                                    <option value="{{ $number }}" {{ (string)($month ?? '') === (string)$number ? 'selected' : '' }}>{{ $name }}</option>
                                 @endforeach
-
                             </select>
-
                         </div>
 
                         {{-- KATEGORI --}}
-                        <div
-                            class="recap-field"
-                            style="grid-column: span 2;"
-                        >
-
-                            <label class="mb-1 block text-xs font-bold text-slate-600">
-                                Kategori Permohonan
-                            </label>
-
-                            <select
-                                name="kelompok_pelayanan_id"
-                                class="h-10 w-full rounded-lg border border-slate-300 bg-white px-3 text-sm focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500"
-                            >
-
-                                <option value="">
-                                    Semua Kategori
-                                </option>
-
+                        <div class="recap-field recap-field-category">
+                            <label for="kelompok_select">Kategori</label>
+                            <select id="kelompok_select" name="kelompok_pelayanan_id">
+                                <option value="">Semua Kategori</option>
                                 @foreach($kelompokPelayanans as $kelompok)
-
-                                    <option
-                                        value="{{ $kelompok->id }}"
-                                        {{ (string)($kelompokPelayananId ?? '') === (string)$kelompok->id ? 'selected' : '' }}
-                                    >
-                                        {{ $kelompok->kode === 'SURAT_PINDAH'
-                                            ? 'SURAT PINDAH'
-                                            : $kelompok->kode }}
+                                    <option value="{{ $kelompok->id }}" {{ (string)($kelompokPelayananId ?? '') === (string)$kelompok->id ? 'selected' : '' }}>
+                                        {{ $kelompok->kode === 'SURAT_PINDAH' ? 'SURAT PINDAH' : $kelompok->kode }}
                                     </option>
-
                                 @endforeach
-
                             </select>
-
                         </div>
 
                         {{-- JENIS LAYANAN --}}
-                        <div
-                            class="recap-field"
-                            style="grid-column: span 2;"
-                        >
-                            <label class="mb-1 block text-xs font-bold text-slate-600">
-                                Jenis Layanan
-                            </label>
-                            <select
-                                name="jenis_pelayanan_id"
-                                class="h-10 w-full rounded-lg border border-slate-300 bg-white px-3 text-sm focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500"
-                            >
-                                <option value="">
-                                    Semua Jenis
-                                </option>
-
-                                @foreach($kelompokPelayanans as $kelompok)
-                                    @foreach($kelompok->jenisPelayanans as $jenis)
-                                        <option
-                                            value="{{ $jenis->id }}"
-                                            {{ (string)($jenisPelayananId ?? '') === (string)$jenis->id ? 'selected' : '' }}
-                                        >
-                                            {{ $jenis->nama_pelayanan }}
-                                        </option>
+                        <div class="recap-field recap-field-service">
+                            <label for="jenis_service_input">Jenis Layanan</label>
+                            @php
+                                $selectedServiceId = (string) ($jenisPelayananId ?? '');
+                                $selectedServiceName = 'Semua Jenis';
+                                if ($selectedServiceId !== '') {
+                                    foreach ($kelompokPelayanans as $serviceGroup) {
+                                        $found = $serviceGroup->jenisPelayanans->firstWhere('id', (int) $selectedServiceId);
+                                        if ($found) {
+                                            $selectedServiceName = $found->nama_pelayanan;
+                                            break;
+                                        }
+                                    }
+                                }
+                            @endphp
+                            <div class="recap-service-picker" data-recap-service-picker>
+                                <input type="hidden" id="jenis_service_input" name="jenis_pelayanan_id" value="{{ $selectedServiceId }}">
+                                <button type="button" class="recap-service-toggle" data-recap-service-toggle aria-haspopup="listbox" aria-expanded="false">
+                                    <span data-recap-service-label>{{ $selectedServiceName }}</span>
+                                    <span class="recap-service-chevron" aria-hidden="true">&#9662;</span>
+                                </button>
+                                <div class="recap-service-menu" role="listbox" aria-label="Pilih jenis layanan">
+                                    <button type="button" class="recap-service-option {{ $selectedServiceId === '' ? 'is-selected' : '' }}" data-recap-service-option="" data-recap-service-group="" role="option" aria-selected="{{ $selectedServiceId === '' ? 'true' : 'false' }}">Semua Jenis</button>
+                                    @foreach($kelompokPelayanans as $group)
+                                        @foreach($group->jenisPelayanans as $jenis)
+                                            <button type="button" class="recap-service-option {{ $selectedServiceId === (string) $jenis->id ? 'is-selected' : '' }}" data-recap-service-option="{{ $jenis->id }}" data-recap-service-group="{{ $group->id }}" role="option" aria-selected="{{ $selectedServiceId === (string) $jenis->id ? 'true' : 'false' }}">{{ $jenis->nama_pelayanan }}</button>
+                                        @endforeach
                                     @endforeach
-                                @endforeach
-                            </select>
+                                </div>
+                            </div>
                         </div>
 
                         {{-- BUTTON --}}
                         <div class="recap-filter-actions">
-
-                            <button
-                                type="submit"
-                                class="h-10 flex-1 rounded-lg bg-blue-600 px-4 text-sm font-bold text-white transition hover:bg-blue-700"
-                            >
-                                Filter
-                            </button>
-
-                            <a
-                                href="{{ route('permohonan.recap') }}"
-                                class="h-10 flex-1 rounded-lg border border-slate-300 bg-white px-4 text-sm font-bold text-slate-700 transition hover:bg-slate-50"
-                            >
-                                Reset
-                            </a>
-
+                            <button type="submit">Filter</button>
+                            <a href="{{ route('permohonan.recap') }}">Reset</a>
                         </div>
 
                     </form>
@@ -741,9 +707,9 @@
                 {{-- =====================================================
                     RINGKASAN FILTER AKTIF
                 ====================================================== --}}
-                <div class="recap-summary mb-4 rounded-xl border border-blue-100 bg-blue-50 px-4 py-3 sm:px-5">
+                <div class="recap-summary mb-3 rounded-lg border border-blue-100 bg-blue-50 px-3 py-2 sm:px-4">
 
-                    <div class="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+                    <div class="flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between">
 
                         <div>
 
@@ -751,7 +717,7 @@
                                 Filter Aktif
                             </p>
 
-                            <p class="recap-summary-value mt-1 text-sm font-semibold text-slate-800">
+                            <p class="recap-summary-value mt-0.5 text-xs font-semibold text-slate-800">
 
                                 Tahun {{ $year }}
 

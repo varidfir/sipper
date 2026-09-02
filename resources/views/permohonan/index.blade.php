@@ -616,7 +616,7 @@
 
                 <form method="GET" action="{{ route('permohonan.index') }}">
                     <div class="filter-grid">
-                        <div class="field wide">
+                        <div class="field">
                             <label for="search">Pencarian</label>
                             <input id="search" name="search" value="{{ request('search') }}" placeholder="Nomor, nama, keterangan">
                         </div>
