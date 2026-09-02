@@ -43,11 +43,36 @@
             </button>
 
             <div id="top-profile-menu" class="top-profile-menu" hidden>
-                <a href="{{ route('profile.show') }}" class="top-profile-menu-link">Profil</a>
-                <form method="POST" action="{{ route('logout') }}">
-                    @csrf
-                    <button type="submit" class="top-profile-menu-link top-profile-logout">Logout</button>
-                </form>
+                <div class="profile-card">
+                    <div class="profile-card-background"></div>
+                    <div class="profile-card-content">
+                        <div class="profile-card-avatar">
+                            {{ strtoupper(substr($headerUser?->name ?? 'A', 0, 1)) }}
+                        </div>
+                        <div class="profile-card-info">
+                            <div class="profile-card-id">{{ str_pad($headerUser?->id ?? 1, 18, '0', STR_PAD_LEFT) }}</div>
+                            <div class="profile-card-name">{{ $headerUser?->name ?? 'Administrator' }}</div>
+                            <div class="profile-card-email">{{ $headerUser?->email ?? 'admin@example.com' }}</div>
+                        </div>
+                    </div>
+                    <div class="profile-card-actions">
+                        <a href="{{ route('profile.show') }}" class="profile-card-action">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+                                <path d="M12 12C14.21 12 16 10.21 16 8C16 5.79 14.21 4 12 4C9.79 4 8 5.79 8 8C8 10.21 9.79 12 12 12ZM12 14C9.33 14 4 15.34 4 18V20H20V18C20 15.34 14.67 14 12 14Z" stroke-linecap="round" stroke-linejoin="round" />
+                            </svg>
+                            Profil
+                        </a>
+                        <form method="POST" action="{{ route('logout') }}" style="display:contents;">
+                            @csrf
+                            <button type="submit" class="profile-card-action profile-card-logout">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+                                    <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4M16 17l5-5-5-5M21 12H9" stroke-linecap="round" stroke-linejoin="round" />
+                                </svg>
+                                Keluar
+                            </button>
+                        </form>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
