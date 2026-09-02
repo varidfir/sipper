@@ -99,12 +99,12 @@
         }
 
         .filter-head {
-            padding: 18px 20px 8px;
+            padding: 8px 12px 5px;
         }
 
         .filter-head h2 {
             margin: 0;
-            font-size: 15px;
+            font-size: 12px;
             font-weight: 700;
             color: #1f2937;
         }
@@ -112,20 +112,20 @@
         .filter-grid {
             display: grid;
             grid-template-columns: repeat(4, minmax(0, 1fr));
-            gap: 18px 18px;
-            padding: 16px 20px 20px;
+            gap: 8px 12px;
+            padding: 10px 12px 12px;
         }
 
         .field {
             display: flex;
             flex-direction: column;
-            gap: 8px;
+            gap: 4px;
         }
 
         .field.wide { grid-column: span 2; }
 
         .field label {
-            font-size: 12px;
+            font-size: 10px;
             font-weight: 600;
             color: #475467;
         }
@@ -133,19 +133,19 @@
         .field input,
         .field select {
             width: 100%;
-            height: 36px;
+            height: 32px;
             border: 1px solid var(--line-strong);
             border-radius: 2px;
             appearance: none;
             background-color: #fff;
             background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='%23334155'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='m6 9 6 6 6-6'/%3E%3C/svg%3E");
             background-repeat: no-repeat;
-            background-position: right 10px center;
-            background-size: 14px 14px;
+            background-position: right 7px center;
+            background-size: 12px 12px;
             color: var(--text);
-            padding: 0 10px;
-            padding-right: 34px;
-            font-size: 12px;
+            padding: 0 8px;
+            padding-right: 30px;
+            font-size: 11px;
             outline: none;
             transition: border-color .15s, box-shadow .15s;
         }
@@ -159,17 +159,17 @@
         .service-picker { position: relative; }
         .service-picker-toggle {
             width: 100%;
-            height: 36px;
+            height: 32px;
             display: flex;
             align-items: center;
             justify-content: space-between;
-            gap: 8px;
+            gap: 6px;
             border: 1px solid var(--line-strong);
             border-radius: 2px;
             background: #fff;
             color: var(--text);
-            padding: 0 10px;
-            font-size: 12px;
+            padding: 0 8px;
+            font-size: 11px;
             line-height: 1;
             text-align: left;
             cursor: pointer;
@@ -183,8 +183,8 @@
         }
         .service-picker-chevron {
             flex: 0 0 auto;
-            width: 7px;
-            height: 7px;
+            width: 6px;
+            height: 6px;
             border-right: 1.5px solid #334155;
             border-bottom: 1.5px solid #334155;
             font-size: 0;
@@ -195,16 +195,16 @@
         .service-picker-menu {
             position: absolute;
             z-index: 30;
-            top: calc(100% + 6px);
+            top: calc(100% + 4px);
             left: 0;
             width: 100%;
             max-width: 100%;
-            max-height: 280px;
+            max-height: 200px;
             display: block;
             grid-template-columns: repeat(2, minmax(0, 1fr));
-            gap: 4px;
+            gap: 3px;
             overflow-y: auto;
-            padding: 8px;
+            padding: 5px;
             border: 1px solid var(--line-strong);
             border-radius: 2px;
             background: #fff;
@@ -225,13 +225,13 @@
         }
         .service-picker-option {
             width: 100%;
-            min-height: 32px;
+            min-height: 26px;
             border: 1px solid transparent;
             border-radius: 2px;
             background: transparent;
             color: #344054;
-            padding: 5px 8px;
-            font-size: 11px;
+            padding: 3px 6px;
+            font-size: 10px;
             line-height: 1.25;
             white-space: normal;
             overflow-wrap: anywhere;
@@ -252,8 +252,8 @@
         .filter-actions {
             display: flex;
             align-items: center;
-            gap: 10px;
-            padding: 0 20px 18px;
+            gap: 6px;
+            padding: 0 12px 10px;
         }
 
         .btn-secondary {

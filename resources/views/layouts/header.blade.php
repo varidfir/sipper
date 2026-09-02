@@ -50,7 +50,6 @@
                             {{ strtoupper(substr($headerUser?->name ?? 'A', 0, 1)) }}
                         </div>
                         <div class="profile-card-info">
-                            <div class="profile-card-id">{{ str_pad($headerUser?->id ?? 1, 18, '0', STR_PAD_LEFT) }}</div>
                             <div class="profile-card-name">{{ $headerUser?->name ?? 'Administrator' }}</div>
                             <div class="profile-card-email">{{ $headerUser?->email ?? 'admin@example.com' }}</div>
                         </div>

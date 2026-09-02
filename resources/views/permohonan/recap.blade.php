@@ -11,7 +11,7 @@
 
     <style>
         .recap-page {
-            padding: 18px clamp(16px, 3vw, 32px) 32px;
+            padding: 10px clamp(12px, 3vw, 20px) 16px;
         }
 
         .recap-panel {
@@ -20,20 +20,20 @@
         }
 
         .recap-title {
-            margin-bottom: 16px;
+            margin-bottom: 8px;
         }
 
         .recap-title h1 {
-            margin: 4px 0 0;
+            margin: 2px 0 0;
             color: #0f172a;
-            font-size: 22px;
+            font-size: 19px;
             line-height: 1.2;
         }
 
         .recap-title p {
-            margin: 5px 0 0;
+            margin: 2px 0 0;
             color: #64748b;
-            font-size: 12px;
+            font-size: 11px;
         }
 
         .recap-filter {
@@ -45,7 +45,7 @@
         }
 
         .recap-filter-head {
-            padding: 12px 14px;
+            padding: 7px 10px;
             border-bottom: 1px solid #dbe3ed;
             background: #1d61e8;
             color: #fff;
@@ -54,21 +54,21 @@
 
         .recap-filter-head h2 {
             margin: 0;
-            font-size: 13px;
+            font-size: 12px;
         }
 
         .recap-filter-head p {
-            margin: 2px 0 0;
+            margin: 1px 0 0;
             color: #dbeafe;
-            font-size: 11px;
+            font-size: 10px;
         }
 
         .recap-filter-form {
             display: grid;
             grid-template-columns: repeat(8, minmax(0, 1fr));
-            gap: 12px 14px;
+            gap: 6px 8px;
             align-items: end;
-            padding: 14px;
+            padding: 8px;
         }
 
         .recap-field {
@@ -77,27 +77,27 @@
 
         .recap-field label {
             display: block;
-            margin-bottom: 5px;
+            margin-bottom: 2px;
             color: #475569;
-            font-size: 12px;
+            font-size: 10px;
             font-weight: 700;
         }
 
         .recap-field select {
             width: 100%;
-            height: 36px;
+            height: 32px;
             border: 1px solid #cbd5e1;
             border-radius: 2px;
             appearance: none;
             background-color: #fff;
             background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='%23334155'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='m6 9 6 6 6-6'/%3E%3C/svg%3E");
             background-repeat: no-repeat;
-            background-position: right 10px center;
-            background-size: 14px 14px;
-            padding: 0 10px;
-            padding-right: 34px;
+            background-position: right 7px center;
+            background-size: 12px 12px;
+            padding: 0 7px;
+            padding-right: 28px;
             color: #334155;
-            font-size: 12px;
+            font-size: 11px;
         }
 
         .recap-field select:focus {
@@ -109,16 +109,16 @@
         .recap-service-picker { position: relative; }
         .recap-service-toggle {
             width: 100%;
-            height: 36px;
+            height: 32px;
             display: flex;
             align-items: center;
             justify-content: space-between;
             border: 1px solid #cbd5e1;
             border-radius: 2px;
             background: #fff;
-            padding: 0 10px;
+            padding: 0 7px;
             color: #334155;
-            font-size: 12px;
+            font-size: 11px;
             line-height: 1;
             text-align: left;
             cursor: pointer;
@@ -132,8 +132,8 @@
         }
         .recap-service-chevron {
             flex: 0 0 auto;
-            width: 7px;
-            height: 7px;
+            width: 6px;
+            height: 6px;
             border-right: 1.5px solid #334155;
             border-bottom: 1.5px solid #334155;
             font-size: 0;
@@ -144,14 +144,14 @@
         .recap-service-menu {
             position: absolute;
             z-index: 30;
-            top: calc(100% + 5px);
+            top: calc(100% + 4px);
             left: 0;
             width: 100%;
             max-width: 100%;
-            max-height: 250px;
+            max-height: 200px;
             display: block;
             overflow-y: auto;
-            padding: 7px;
+            padding: 5px;
             border: 1px solid #cbd5e1;
             border-radius: 2px;
             background: #fff;
@@ -172,13 +172,13 @@
         }
         .recap-service-option {
             width: 100%;
-            min-height: 30px;
+            min-height: 26px;
             border: 1px solid transparent;
             border-radius: 2px;
             background: transparent;
             color: #334155;
-            padding: 4px 7px;
-            font-size: 11px;
+            padding: 3px 5px;
+            font-size: 10px;
             white-space: normal;
             overflow-wrap: anywhere;
             text-align: left;
@@ -195,7 +195,7 @@
 
         .recap-filter-actions {
             display: flex;
-            gap: 8px;
+            gap: 6px;
             grid-column: span 2;
         }
 
@@ -205,9 +205,9 @@
             align-items: center;
             justify-content: center;
             width: 100%;
-            height: 36px;
+            height: 32px;
             border-radius: 2px;
-            font-size: 12px;
+            font-size: 11px;
             font-weight: 700;
             text-decoration: none;
         }
@@ -229,9 +229,9 @@
             display: flex;
             align-items: center;
             justify-content: space-between;
-            gap: 16px;
-            margin: 16px 0;
-            padding: 12px 14px;
+            gap: 10px;
+            margin: 8px 0;
+            padding: 8px 10px;
             border: 1px solid #bfdbfe;
             border-radius: 3px;
             background: #eff6ff;
@@ -239,22 +239,22 @@
 
         .recap-summary-label {
             color: #1d4ed8;
-            font-size: 10px;
+            font-size: 9px;
             font-weight: 800;
             letter-spacing: .08em;
             text-transform: uppercase;
         }
 
         .recap-summary-value {
-            margin-top: 4px;
+            margin-top: 2px;
             color: #1e3a8a;
-            font-size: 12px;
+            font-size: 11px;
             font-weight: 700;
         }
 
         .recap-total {
-            min-width: 140px;
-            padding: 7px 12px;
+            min-width: 120px;
+            padding: 5px 10px;
             border: 1px solid #bfdbfe;
             border-radius: 2px;
             background: #fff;
@@ -264,14 +264,14 @@
         .recap-total small {
             display: block;
             color: #64748b;
-            font-size: 10px;
+            font-size: 9px;
         }
 
         .recap-total strong {
             display: block;
-            margin-top: 2px;
+            margin-top: 1px;
             color: #1d61e8;
-            font-size: 18px;
+            font-size: 16px;
         }
 
         .recap-results {
@@ -286,26 +286,26 @@
             display: flex;
             align-items: center;
             justify-content: space-between;
-            gap: 12px;
-            padding: 13px 14px;
+            gap: 8px;
+            padding: 8px 10px;
             border-bottom: 1px solid #dbe3ed;
         }
 
         .recap-results-head h2 {
             margin: 0;
             color: #0f172a;
-            font-size: 14px;
+            font-size: 12px;
         }
 
         .recap-results-head p {
-            margin: 3px 0 0;
+            margin: 1px 0 0;
             color: #64748b;
-            font-size: 11px;
+            font-size: 10px;
         }
 
         .recap-count {
             color: #64748b;
-            font-size: 11px;
+            font-size: 10px;
             font-weight: 700;
             white-space: nowrap;
         }
@@ -313,21 +313,21 @@
         .recap-table {
             width: 100%;
             border-collapse: collapse;
-            font-size: 12px;
+            font-size: 11px;
         }
 
         .recap-table th {
-            padding: 10px 14px;
+            padding: 7px 10px;
             border-bottom: 1px solid #dbe3ed;
             background: #eff6ff;
             color: #1e40af;
-            font-size: 10px;
+            font-size: 9px;
             text-align: left;
             text-transform: uppercase;
         }
 
         .recap-table td {
-            padding: 11px 14px;
+            padding: 7px 10px;
             border-bottom: 1px solid #edf2f7;
             color: #475569;
         }
@@ -347,9 +347,9 @@
 
         .recap-number {
             display: inline-flex;
-            min-width: 70px;
+            min-width: 60px;
             justify-content: center;
-            padding: 4px 8px;
+            padding: 3px 6px;
             border: 1px solid #bfdbfe;
             border-radius: 2px;
             background: #eff6ff;
@@ -368,35 +368,35 @@
         }
 
         .recap-empty {
-            padding: 42px 16px;
+            padding: 30px 12px;
             text-align: center;
         }
 
         .recap-empty strong {
             display: block;
             color: #334155;
-            font-size: 13px;
+            font-size: 12px;
         }
 
         .recap-empty p {
-            margin: 5px 0 14px;
+            margin: 3px 0 10px;
             color: #64748b;
-            font-size: 12px;
+            font-size: 11px;
         }
 
         .recap-export {
             display: flex;
             justify-content: flex-end;
-            gap: 8px;
-            margin-top: 14px;
+            gap: 6px;
+            margin-top: 8px;
         }
 
         .recap-export a,
         .recap-export button {
-            height: 35px;
-            padding: 0 14px;
+            height: 32px;
+            padding: 0 12px;
             border-radius: 2px;
-            font-size: 12px;
+            font-size: 11px;
             font-weight: 700;
         }
 
@@ -506,16 +506,6 @@
 
             .recap-table {
                 min-width: 520px;
-            }
-
-            .recap-export {
-                justify-content: stretch;
-            }
-
-            .recap-export a,
-            .recap-export button {
-                flex: 1;
-                text-align: center;
             }
         }
     </style>
@@ -704,32 +694,25 @@
                             <label class="mb-1 block text-xs font-bold text-slate-600">
                                 Jenis Layanan
                             </label>
-                            @php
-                                $selectedServiceId = (string)($jenisPelayananId ?? '');
-                                $selectedServiceName = 'Semua Jenis';
-                                foreach ($kelompokPelayanans as $serviceGroup) {
-                                    $selectedService = $serviceGroup->jenisPelayanans->firstWhere('id', (int)$selectedServiceId);
-                                    if ($selectedService) {
-                                        $selectedServiceName = $selectedService->nama_pelayanan;
-                                        break;
-                                    }
-                                }
-                            @endphp
-                            <div class="recap-service-picker" data-recap-service-picker>
-                                <input type="hidden" name="jenis_pelayanan_id" value="{{ $selectedServiceId }}">
-                                <button type="button" class="recap-service-toggle" data-recap-service-toggle aria-haspopup="listbox" aria-expanded="false">
-                                    <span data-recap-service-label>{{ $selectedServiceName }}</span>
-                                    <span class="recap-service-chevron" aria-hidden="true">&#9662;</span>
-                                </button>
-                                <div class="recap-service-menu" role="listbox" aria-label="Pilih jenis layanan">
-                                    <button type="button" class="recap-service-option {{ $selectedServiceId === '' ? 'is-selected' : '' }}" data-recap-service-option="" data-recap-service-group="" role="option" aria-selected="{{ $selectedServiceId === '' ? 'true' : 'false' }}">Semua Jenis</button>
-                                    @foreach($kelompokPelayanans as $kelompok)
-                                        @foreach($kelompok->jenisPelayanans as $jenis)
-                                            <button type="button" class="recap-service-option" data-recap-service-option="{{ $jenis->id }}" data-recap-service-group="{{ $kelompok->id }}" role="option" aria-selected="{{ $selectedServiceId === (string)$jenis->id ? 'true' : 'false' }}">{{ $jenis->nama_pelayanan }}</button>
-                                        @endforeach
+                            <select
+                                name="jenis_pelayanan_id"
+                                class="h-10 w-full rounded-lg border border-slate-300 bg-white px-3 text-sm focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500"
+                            >
+                                <option value="">
+                                    Semua Jenis
+                                </option>
+
+                                @foreach($kelompokPelayanans as $kelompok)
+                                    @foreach($kelompok->jenisPelayanans as $jenis)
+                                        <option
+                                            value="{{ $jenis->id }}"
+                                            {{ (string)($jenisPelayananId ?? '') === (string)$jenis->id ? 'selected' : '' }}
+                                        >
+                                            {{ $jenis->nama_pelayanan }}
+                                        </option>
                                     @endforeach
-                                </div>
-                            </div>
+                                @endforeach
+                            </select>
                         </div>
 
                         {{-- BUTTON --}}
