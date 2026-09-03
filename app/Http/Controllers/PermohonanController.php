@@ -20,7 +20,7 @@ class PermohonanController extends Controller
             'desa',
             'jenisPelayanan.kelompokPelayanan',
             'user',
-        ])->latest('tanggal_permohonan')->latest('id');
+        ])->orderBy('tanggal_permohonan', 'asc')->orderBy('id', 'asc');
 
         if ($request->filled('search')) {
             $search = $request->input('search');

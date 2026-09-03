@@ -548,12 +548,6 @@
             font-weight: 700;
         }
 
-        .application-number {
-            margin-top: 3px;
-            color: #8b93a4;
-            font-size: 10px;
-        }
-
         .status-badge {
             display: inline-flex;
             align-items: center;
@@ -767,7 +761,7 @@
                                 <th style="width:16%;">Jenis Layanan</th>
                                 <th style="width:14%;">Kecamatan</th>
                                 <th style="width:14%;">Desa/Kelurahan</th>
-                                <th style="width:9%;">Status</th>
+                                <th style="width:9%;">Keterangan</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -777,15 +771,12 @@
                                 <td>{{ $permohonan->tanggal_permohonan?->format('d/m/Y') ?? '-' }}</td>
                                 <td>
                                     <div class="applicant-name">{{ $permohonan->nama_pemohon }}</div>
-                                    <div class="application-number">{{ $permohonan->nomor_permohonan ?? '-' }}</div>
                                 </td>
                                 <td>{{ $permohonan->jenisPelayanan?->kelompokPelayanan?->nama ?? '-' }}</td>
                                 <td>{{ $permohonan->jenisPelayanan?->nama_pelayanan ?? '-' }}</td>
                                 <td>{{ $permohonan->kecamatan?->nama_kecamatan ?? '-' }}</td>
                                 <td>{{ $permohonan->desa?->nama_desa ?? '-' }}</td>
-                                <td>
-                                    <span class="status-badge">Aktif</span>
-                                </td>
+                                <td>{{ $permohonan->keterangan ?? '-' }}</td>
                             </tr>
                         @empty
                             <tr>
