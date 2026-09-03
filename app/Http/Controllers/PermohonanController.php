@@ -112,11 +112,12 @@ class PermohonanController extends Controller
         $data['nomor_permohonan'] = $this->generateNomorPermohonan($data['tanggal_permohonan']);
         $data['user_id'] = Auth::id();
         $data['detail_data'] = $this->cleanDetailData($request->input('detail_data', []));
+        $data['keterangan'] = $request->input('keterangan', $data['detail_data']['keterangan'] ?? null);
 
         Permohonan::create($data);
 
         return redirect()
-            ->route('permohonan.index')
+            ->route('permohonan.create')
             ->with('status', 'Data permohonan berhasil disimpan.');
     }
 
@@ -163,11 +164,12 @@ class PermohonanController extends Controller
         $data['nomor_permohonan'] = $permohonan->nomor_permohonan;
         $data['user_id'] = Auth::id();
         $data['detail_data'] = $this->cleanDetailData($request->input('detail_data', []));
+        $data['keterangan'] = $request->input('keterangan', $data['detail_data']['keterangan'] ?? null);
 
         $permohonan->update($data);
 
         return redirect()
-            ->route('permohonan.index')
+            ->route('permohonan.create')
             ->with('status', 'Data permohonan berhasil diperbarui.');
     }
 

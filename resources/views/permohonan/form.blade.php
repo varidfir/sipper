@@ -18,6 +18,41 @@
         .autocomplete-option { display: block; width: 100%; min-height: 30px; padding: 4px 7px; border: 1px solid transparent; border-radius: 2px; background: #fff; color: #334155; text-align: left; font-size: 12px; cursor: pointer; }
         .autocomplete-option[hidden] { display: none; }
         .autocomplete-option:hover, .autocomplete-option.is-active { background: #eff6ff; color: #1d4ed8; }
+
+        #success-notification {
+            position: fixed;
+            z-index: 100;
+            top: 50%;
+            left: 50%;
+            width: min(320px, calc(100vw - 32px));
+            margin: 0;
+            padding: 12px 18px;
+            border: 1px solid #bbf7d0;
+            border-radius: 10px;
+            background: #f0fdf4;
+            box-shadow: 0 12px 30px rgba(15, 23, 42, .16);
+            text-align: center;
+            transform: translate(-50%, -50%) scale(.96);
+            animation: notification-in .35s cubic-bezier(.22, 1, .36, 1) forwards;
+        }
+
+        #success-notification.is-hiding {
+            animation: notification-out .35s ease forwards;
+        }
+
+        @keyframes notification-in {
+            from { opacity: 0; transform: translate(-50%, -50%) scale(.96); }
+            to { opacity: 1; transform: translate(-50%, -50%) scale(1); }
+        }
+
+        @keyframes notification-out {
+            from { opacity: 1; transform: translate(-50%, -50%) scale(1); }
+            to { opacity: 0; transform: translate(-50%, -50%) scale(.98); }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            #success-notification { animation: none; }
+        }
     </style>
 </head>
 <body>
@@ -45,7 +80,7 @@
 
 <div class="form-header">
     <div class="form-title-group">
-        <h1>{{ isset($permohonan) ? 'Edit Data Rekap' : 'Input Rekap Baru' }}</h1>
+        <h1>{{ isset($permohonan) ? 'Edit Data Rekap' : 'REGISTRASI' }}</h1>
         <p>Isi data sesuai jenis pelayanan yang dipilih.</p>
     </div>
     <a href="{{ route('permohonan.index') }}" class="btn-back">← Kembali</a>
@@ -65,6 +100,12 @@
                             <li>{{ $error }}</li>
                         @endforeach
                     </ul>
+                </div>
+            @endif
+
+            @if(session('status'))
+                <div id="success-notification" class="mb-6 rounded-2xl border border-green-200 bg-green-50 p-4 text-sm font-bold text-green-700">
+                    {{ session('status') }}
                 </div>
             @endif
 
@@ -355,6 +396,12 @@
 </div>
 
 <script>
+const successNotification = document.getElementById('success-notification');
+if (successNotification) {
+    window.setTimeout(() => successNotification.classList.add('is-hiding'), 3600);
+    window.setTimeout(() => successNotification.remove(), 4000);
+}
+
 document.addEventListener('DOMContentLoaded', () => {
     const tabs = [...document.querySelectorAll('.category-tab')];
     const panels = [...document.querySelectorAll('.form-panel')];
@@ -488,10 +535,7 @@ document.addEventListener('DOMContentLoaded', () => {
             const active = panel.dataset.panel === String(groupId);
             panel.classList.toggle('hidden', !active);
 
-            panel.querySelectorAll('.jenis-select').forEach(input => {
-                input.disabled = !active;
-            });
-            panel.querySelectorAll('.service-autocomplete .autocomplete-input').forEach(input => {
+            panel.querySelectorAll('input, select, textarea').forEach(input => {
                 input.disabled = !active;
             });
 

@@ -156,6 +156,11 @@
             box-shadow: 0 0 0 3px rgba(29, 97, 232, .12);
         }
 
+        #search {
+            background-image: none;
+            padding-right: 8px;
+        }
+
         .service-picker { position: relative; }
         .service-picker-toggle {
             width: 100%;
@@ -618,7 +623,7 @@
                     <div class="filter-grid">
                         <div class="field">
                             <label for="search">Pencarian</label>
-                            <input id="search" name="search" value="{{ request('search') }}" placeholder="Nomor, nama, keterangan">
+                            <input id="search" type="text" name="search" value="{{ request('search') }}" placeholder="Nomor, nama, keterangan" autocomplete="off">
                         </div>
 
                         <div class="field">

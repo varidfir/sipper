@@ -78,7 +78,7 @@ class PermohonanTest extends TestCase
 
         $response = $this->actingAs($user)->post(route('permohonan.store'), $payload);
 
-        $response->assertRedirect(route('permohonan.index'));
+        $response->assertRedirect(route('permohonan.create'));
         $this->assertDatabaseHas('permohonan', [
             'nomor_permohonan' => 'SIPPER-20260810-0001',
             'nama_pemohon' => 'Budi Santoso',
@@ -119,7 +119,7 @@ class PermohonanTest extends TestCase
             ],
         ]);
 
-        $response->assertRedirect(route('permohonan.index'));
+        $response->assertRedirect(route('permohonan.create'));
         $permohonan = Permohonan::where('nama_pemohon', 'Rina')->first();
         $this->assertNotNull($permohonan);
         $this->assertSame('Akta Kelahiran Anak', $permohonan->detail_data['jenis_akta'] ?? null);
@@ -165,7 +165,7 @@ class PermohonanTest extends TestCase
             'keterangan' => 'Baru',
         ]);
 
-        $response->assertRedirect(route('permohonan.index'));
+        $response->assertRedirect(route('permohonan.create'));
         $this->assertDatabaseHas('permohonan', [
             'id' => $permohonan->id,
             'nama_pemohon' => 'Andi Wijaya',

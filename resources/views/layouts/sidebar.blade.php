@@ -18,8 +18,8 @@
         </div>
 
         <div class="sipper-brand-text">
-            <span class="sipper-brand-name">Disdukcapil</span>
-            <span class="sipper-brand-sub">Kabupaten Magetan</span>
+            <span class="sipper-brand-name">DISPENDUKCAPIL</span>
+            <span class="sipper-brand-sub">KABUPATEN MAGETAN</span>
         </div>
 
     </a>
